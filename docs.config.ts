@@ -1,0 +1,45 @@
+import type { DocsShellNavItem } from "@/fumadocs-system";
+
+export const docsSite = {
+  metadata: {
+    description: "Topoo desktop documentation, board guides, and TopooUI reference system.",
+    title: "topoo",
+  },
+  shell: {
+    githubCountLabel: "111k",
+    githubHref: "https://github.com/topooAI/topoo",
+    homeAriaLabel: "Topoo home",
+    homeHref: "/docs",
+    navLabelByUrl: {
+      "/docs": "Topoo",
+      "/docs/toagent": "toAgent",
+      "/docs/towork": "toWork",
+      "/docs/toproject": "toProject",
+      "/docs/tomemory": "toMemory",
+      "/docs/topooui": "TopooUI",
+      "/docs/topooui/changelog": "Changelog",
+      "/docs/topooui/cli": "CLI",
+      "/docs/topooui/components": "Components",
+      "/docs/topooui/forms": "Forms",
+      "/docs/topooui/installation": "Installation",
+      "/docs/topooui/mcp": "MCP Server",
+      "/docs/topooui/registry": "Registry",
+      "/docs/topooui/rtl": "RTL",
+      "/docs/topooui/skills": "Skills",
+      "/docs/topooui/theming": "Theming",
+    },
+    newHref: "/docs/topooui",
+    newLabel: "Open UI",
+    primaryNav: [
+      { href: "/docs", label: "Topoo" },
+      { href: "/docs/toagent", label: "toAgent" },
+      { href: "/docs/towork", label: "toWork" },
+      { href: "/docs/toproject", label: "toProject" },
+      { href: "/docs/tomemory", label: "toMemory" },
+      { href: "/docs/topooui", label: "TopooUI" },
+    ] satisfies DocsShellNavItem[],
+    showGithubLink: true,
+    showSearch: true,
+    showPrimaryAction: false,
+  },
+} as const;
