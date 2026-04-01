@@ -45,6 +45,17 @@ The system repository is responsible for:
 - building the static site
 - deploying to `doc.topoo.ai`
 
+## Consumed By Topoodoc
+
+Inside the `topoodoc` system repository:
+
+```bash
+TOPOODOC_CONTENT_REPO=../topoo-docs pnpm content:build
+TOPOODOC_CONTENT_REPO=../topoo-docs pnpm content:deploy
+```
+
+If you keep the two repositories side by side with the default names, `topoodoc` can also use `../topoo-docs` automatically without setting the env var.
+
 ## Current Boards
 
 - `Topoo`
