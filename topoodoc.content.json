@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "title": "topoo",
+    "description": "Topoo desktop documentation, board guides, and TopooUI reference system.",
+    "domain": "doc.topoo.ai"
+  },
+  "shell": {
+    "githubCountLabel": "111k",
+    "githubHref": "https://github.com/topooAI/topoo",
+    "homeAriaLabel": "Topoo home",
+    "homeHref": "/docs",
+    "newHref": "/docs/topooui",
+    "newLabel": "Open UI",
+    "showGithubLink": true,
+    "showPrimaryAction": false,
+    "showSearch": true
+  },
+  "navigation": {
+    "primary": [
+      { "href": "/docs", "label": "Topoo" },
+      { "href": "/docs/toagent", "label": "toAgent" },
+      { "href": "/docs/towork", "label": "toWork" },
+      { "href": "/docs/toproject", "label": "toProject" },
+      { "href": "/docs/tomemory", "label": "toMemory" },
+      { "href": "/docs/topooui", "label": "TopooUI" }
+    ]
+  }
+}

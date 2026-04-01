@@ -1,51 +1,55 @@
-# Topoo Docs
+# Topoo Docs Content
 
-This is the dedicated content repository for `doc.topoo.ai`.
+This repository is the pure content source for `doc.topoo.ai`.
 
-It is intentionally separate from `topoodoc`:
+It does not own:
+- Next.js app code
+- Fumadocs shell code
+- deployment code
+- Cloudflare configuration
+- shared UI components
 
-- `topoodoc`: the reusable Fumadocs system product, starter, and shared shell
-- `topoo-docs`: the actual Topoo documentation site content, navigation, and deployment target
+Those belong to `topoodoc`, which is the documentation system repository.
 
-This repo vendors its own `fumadocs-system/` folder, so it can build and deploy independently.
+## What Lives Here
 
-## Start
+- `content/docs/**`
+- `content/docs/**/meta.json`
+- `topoodoc.content.json`
 
-```bash
-pnpm install
-pnpm dev
-```
+## What Does Not Live Here
 
-## Build
+- `app/`
+- `components/`
+- `fumadocs-system/`
+- `package.json`
+- `next.config.*`
+- `wrangler.jsonc`
 
-```bash
-pnpm build
-```
+## Editing Model
 
-## Deploy
+Edit the documentation content directly under `content/docs/`.
 
-```bash
-pnpm deploy
-```
+Use `topoodoc.content.json` for site-level metadata such as:
+- site title
+- site description
+- primary top navigation
+- docs shell labels
 
-## GitHub Auto Deploy
+## Publishing Model
 
-This repo includes [deploy.yml](/Users/viosson/AITD/1_PROJECTS/P21_AITD_CHATBOX/workspaces/integration/topoo-docs/.github/workflows/deploy.yml).
+This repo is consumed by the `topoodoc` system.
 
-Required GitHub secret:
+The system repository is responsible for:
+- rendering the content with the Topoo docs shell
+- building the static site
+- deploying to `doc.topoo.ai`
 
-- `CLOUDFLARE_API_TOKEN`
+## Current Boards
 
-When that secret is present, every push to `main` can publish `doc.topoo.ai`.
-
-## Structure
-
-- `content/docs/` holds the published board content for Topoo, toAgent, toWork, toProject, toMemory, and TopooUI
-- `docs.config.ts` defines the top navigation and board labels
-- `fumadocs-system/` is the vendored docs shell from the `topoodoc` system repo
-- `wrangler.jsonc` points deployment to `doc.topoo.ai`
-
-## Source Of Truth
-
-This repo is the content source of truth for the docs site.
-It should not depend on the application monorepo at runtime.
+- `Topoo`
+- `toAgent`
+- `toWork`
+- `toProject`
+- `toMemory`
+- `TopooUI`
