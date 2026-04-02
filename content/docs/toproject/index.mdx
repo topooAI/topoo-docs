@@ -13,6 +13,8 @@ Its job is to define:
 - which documents define each major part of the system
 - how those documents relate to each other
 
+It exists to preserve the main argument of the architecture in one readable place before the details split into focused documents.
+
 ## Why This Exists
 The project module reached a point where UI refinement alone was no longer enough.
 
@@ -27,6 +29,10 @@ That made one thing clear:
 The missing piece was not another visual pass.
 
 The missing piece was a project-centered architecture contract.
+
+That is why this index exists first.
+
+If we start from isolated sub-documents without restating the argument, the architecture becomes mechanically structured but intellectually thin. The reader can see the folders and headings, but not the reasoning chain that forced the split.
 
 ## Core Thesis
 `Project` is the git-backed execution container of the agentic platform.
@@ -48,8 +54,18 @@ It is the root coordination object that organizes:
 
 under an agent-led operating model.
 
+This is the sentence that all other documents are meant to defend, refine, or implement.
+
 ## Document Structure
 This architecture is intentionally split into focused documents to avoid one oversized, high-context page.
+
+The split is not for its own sake.
+
+We split because the architecture now has two different reading modes:
+- a reader trying to understand the whole project-centered thesis
+- a reader trying to answer one bounded question, such as git, runtime, or UI mapping
+
+One document cannot do both well without becoming too long and expensive to read.
 
 ### 1. Index
 - [PROJECT_CORE_STRUCTURE.md](/docs/toproject)
@@ -58,18 +74,22 @@ This architecture is intentionally split into focused documents to avoid one ove
 ### 2. Object Model
 - [PROJECT_OBJECT_MODEL.md](/docs/toproject/object-model)
 - Focus: `what` the project-centered object model is and `why` it exists
+- Reason it is separate: this is the semantic center of the system, and it needs uninterrupted narrative space
 
 ### 3. Git Model
 - [PROJECT_GIT_MODEL.md](/docs/toproject/git-model)
 - Focus: `what` git domains exist, why git is core, and how project binds to them conceptually
+- Reason it is separate: git is no longer a tooling footnote; it is part of the project architecture itself
 
 ### 4. Runtime Model
 - [PROJECT_RUNTIME_MODEL.md](/docs/toproject/runtime-model)
 - Focus: `what` the operating layer is, including runtime, execution mode, commands, hooks, automation, and continuity
+- Reason it is separate: runtime logic is essential, but if mixed into the object model it will overpower the project-centered thesis
 
 ### 5. UI Mapping
 - [PROJECT_UI_MAPPING.md](/docs/toproject/ui-mapping)
 - Focus: how the current UI maps to the architecture, what is aligned, and what is still transitional
+- Reason it is separate: current implementation state should not dilute the definition docs
 
 ## Reading Order
 Recommended reading order:
@@ -89,6 +109,11 @@ This defines the root object and its subordinate object types.
 Primary source:
 - `PROJECT_OBJECT_MODEL.md`
 
+This level answers:
+- what is the root object
+- what belongs inside it
+- what semantic chain gives the module coherence
+
 ### 2. Operating Definition
 This defines how the project is allowed to execute and how versioned execution is governed.
 
@@ -96,11 +121,20 @@ Primary sources:
 - `PROJECT_GIT_MODEL.md`
 - `PROJECT_RUNTIME_MODEL.md`
 
+This level answers:
+- how the project is versioned
+- how it is allowed to run
+- how engines, commands, hooks, and continuity relate to project semantics
+
 ### 3. UI And Surface Mapping
 This defines how the current implementation should express the architecture.
 
 Primary source:
 - `PROJECT_UI_MAPPING.md`
+
+This level answers:
+- where the current UI already expresses the architecture
+- where it is still using transitional placeholders
 
 ## Reference Position
 This architecture is informed by agentic platform engineering references such as the Saul Fernandez model, but it is not a direct copy.
@@ -127,6 +161,11 @@ The current implementation direction should converge toward:
 - outcome, workstream, task, activity, and assets as explicit object surfaces
 - overview as a summary surface, not a dumping ground
 - work items, board, and timeline as separate projections over the same execution model
+
+In other words:
+- object semantics must stay stable
+- operating semantics must stay explicit
+- UI projections must stay subordinate to both
 
 ## Non-Goals
 - putting the entire architecture into one endlessly growing page

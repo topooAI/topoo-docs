@@ -7,6 +7,8 @@ This document defines the `what + why` of the project-centered object model.
 
 It does not define detailed implementation flows.
 
+It exists because the hardest project question is not "what fields do we show" but "what is the root object we are actually building around."
+
 ## Core Position
 This architecture is project-centered first.
 
@@ -18,6 +20,10 @@ Not:
 - what tools are available
 - what runtime is active
 - what one engine can do
+
+This ordering matters.
+
+If the architecture starts from tools or runtime, project becomes an afterthought. If it starts from project, tools and runtime become subordinate operating concerns. That is the difference between a product object model and an agent shell.
 
 ## Project As The Root Object
 Project is the root coordination object of the module.
@@ -34,8 +40,14 @@ That means:
 
 Project gives execution data its shared meaning, boundary, and version spine.
 
+That is why `Project` is more than a container. A container can hold unrelated things. A root object gives them common semantics.
+
 ## What Project Owns
 Project owns six kinds of things.
+
+This section is intentionally phrased as ownership rather than inclusion.
+
+The point is not just that these things appear on the screen together. The point is that their meaning depends on project context.
 
 ### 1. Intent
 - summary
@@ -43,16 +55,22 @@ Project owns six kinds of things.
 - scope boundary
 - acceptance framing
 
+Without intent, execution becomes motion without an anchor.
+
 ### 2. Result Structure
 - outcome
 - success criteria
 - result definitions
+
+Without result structure, work can be organized but never actually judged.
 
 ### 3. Execution Structure
 - workstreams
 - tasks
 - dependencies
 - timeline projections
+
+Without execution structure, outcome remains abstract and cannot be operationalized.
 
 ### 4. Operating State
 - status
@@ -62,6 +80,8 @@ Project owns six kinds of things.
 - blocking
 - dates
 
+Without operating state, the project cannot expose its live condition.
+
 ### 5. Operating Evidence
 - activity
 - reviews
@@ -70,11 +90,15 @@ Project owns six kinds of things.
 - automation traces
 - git-related events
 
+Without operating evidence, project history collapses into anecdote rather than record.
+
 ### 6. Knowledge And Artifacts
 - files
 - docs
 - linked artifacts
 - design references
+
+Without knowledge and artifacts, execution loses continuity and recoverability.
 
 ## Canonical Relationship Chain
 The canonical relationship chain is:
@@ -89,6 +113,10 @@ It defines semantic direction:
 - workstream defines strategic lines of effort
 - task defines execution units
 - activity and assets capture what happened and what was produced
+
+This is the key connective logic of the whole model.
+
+Outcome is not just another tab next to Tasks. Workstream is not just another formatting of Tasks. The chain exists to stop those objects from collapsing into each other.
 
 ## Canonical Entity Definitions
 
@@ -114,6 +142,8 @@ Outcome is not:
 - task breakdown
 - timeline itself
 
+This boundary exists because the project previously drifted toward mixing desired result with execution decomposition. The architecture separates them so success remains legible even while execution changes.
+
 ### Workstream
 A structured execution line.
 
@@ -128,6 +158,8 @@ Workstream owns:
 - key risks
 - strategic decomposition of delivery
 
+Risk is included here deliberately. A workstream exists because some line of effort is necessary to produce the outcome under real constraints. If risk is detached entirely, the rationale for the workstream becomes harder to see.
+
 ### Task
 A concrete execution unit.
 
@@ -135,6 +167,8 @@ Task answers:
 - what specific work must be done
 - who or what is progressing it
 - what is its state, timing, and dependency
+
+This is why task must stay downstream from workstream. If task becomes the main abstraction, strategy disappears behind operational rows.
 
 ### Activity
 An execution history object.
@@ -150,6 +184,8 @@ Activity may include:
 - review
 - approval
 - note
+
+This object exists to keep the system honest. A project that can execute but cannot produce a trustworthy history is weakly governable.
 
 ### Asset / File
 A resource object.
@@ -171,6 +207,8 @@ Runtime answers:
 
 ## Deliberate Boundaries
 
+These boundaries matter because the earlier project surface drifted by letting adjacent concepts collapse into each other.
+
 ### Notes Are Not A Top-Level Object Type
 Notes belong under:
 - activity
@@ -185,3 +223,5 @@ Project owns runtime, but is larger than runtime.
 
 ### Project Is Not An Engine
 Project may dispatch into an execution engine, but should not collapse into one.
+
+This is the most important protection against runtime-first architecture taking over the product model.

@@ -10,6 +10,8 @@ It explains:
 - how git should be layered inside a project-centered platform
 - why Cloudflare's git connection is not sufficient by itself
 
+It exists because "git-backed" can sound correct while still remaining underspecified. This document makes that phrase concrete.
+
 ## Core Position
 Git is the hard execution spine of the project.
 
@@ -23,6 +25,8 @@ It is the boundary for:
 
 Because of this, project must be modeled as a git-backed execution container.
 
+The important point is that git is not just attached to the project after the fact. It shapes what the project is allowed to mean operationally.
+
 ## Why Git Is Core
 Without git as a first-class structure:
 - intent changes are weakly versioned
@@ -33,10 +37,14 @@ Without git as a first-class structure:
 
 Git is what turns agentic execution from a stream of actions into a system with durable boundaries.
 
+That is why git belongs in architecture language, not just implementation notes.
+
 ## Git Layers
 The platform should not treat all git concerns as the same thing.
 
 There are at least three different layers:
+
+This separation is necessary because earlier thinking risked collapsing provider behavior, deploy behavior, and project semantics into one vague "git integration."
 
 ### 1. Provider Layer
 This is the layer exposed by Git providers such as GitHub or GitLab.
@@ -53,6 +61,8 @@ This layer answers:
 - where does the versioned source live
 - how does collaboration happen around it
 
+This is the layer GitHub or GitLab is naturally strongest at.
+
 ### 2. Deploy Layer
 This is the layer where runtime platforms connect to git for build and deploy purposes.
 
@@ -68,6 +78,8 @@ It includes:
 This layer answers:
 - how does versioned source reach runtime environments
 
+This is the layer Cloudflare naturally occupies when it connects to a repository for build and deploy.
+
 ### 3. Project Orchestration Layer
 This is the layer that the `project` module must own conceptually.
 
@@ -81,6 +93,8 @@ This layer answers:
 - what role does each repository play in this project
 - how does project intent connect to execution and knowledge
 - what is the version spine of the project as a product object
+
+This is the layer the project module must own conceptually, because neither provider nor deploy platform can define project meaning on their own.
 
 ## Cloudflare Git Connection Is Not The Whole Git Architecture
 Cloudflare can connect a Worker or application to a git repository and use it for build and deploy flows.
@@ -103,6 +117,8 @@ The project must remain the center of git meaning.
 
 Cloudflare is a runtime/deploy edge, not the owner of project semantics.
 
+That distinction protects us from designing the whole platform around a deploy product's view of git.
+
 ## Project-Level Git Registry
 At the project level, git should eventually be represented through an explicit registry of bindings.
 
@@ -114,6 +130,8 @@ Conceptually, a project should know:
 - which repository or branch is connected to deployment targets
 
 This registry is not yet fully implemented, but it is the correct model direction.
+
+The reason to define it now is architectural sequencing. If we wait until implementation pressure is high, git bindings will arrive as ad hoc fields rather than a coherent project layer.
 
 ## Canonical Git Domains
 Project should be able to bind to three versioned domains.
@@ -131,6 +149,8 @@ Examples:
 Question answered:
 - what are we trying to do
 
+This domain exists because project intent also changes over time and needs reviewable history.
+
 ### 2. Execution Domain
 This covers the implementation surface agents actually modify.
 
@@ -145,6 +165,8 @@ Examples:
 Question answered:
 - what is actually being changed
 
+This is the most familiar git domain, but it is not the only one that matters.
+
 ### 3. Knowledge Domain
 This covers supporting knowledge and artifacts.
 
@@ -156,6 +178,8 @@ Examples:
 
 Question answered:
 - what supporting context exists around the project
+
+This domain is what prevents documentation and execution context from being treated as disposable side material.
 
 ## Git Spine Concepts
 At the project level, git should eventually be represented through concepts such as:
@@ -177,6 +201,8 @@ Its role in the git model is:
 - make preview and production progression explicit
 
 This means Cloudflare should be modeled as consuming git state, not defining project git semantics.
+
+That one sentence is the architectural safeguard here.
 
 The correct relationship is:
 
@@ -200,6 +226,8 @@ Project activity should eventually be able to absorb git-derived events such as:
 - deploy promoted
 
 This is how git stops being an invisible implementation detail and becomes part of the project evidence trail.
+
+It also explains why activity and git architecture cannot be designed independently.
 
 ## Deliberate Position
 The exact number of repositories may vary.
