@@ -17,6 +17,17 @@ Those belong to `topoodoc`, which is the documentation system repository.
 - `content/docs/**/meta.json`
 - `topoodoc.content.json`
 
+The content in this repo should stay text-first and schema-safe.
+
+That means:
+- narrative docs
+- metadata
+- ordering
+- links
+- plain markdown or mdx body content for true document pages
+
+It should not contain layout-owned TopooUI board pages or style-defining docs structures.
+
 ## What Does Not Live Here
 
 - `app/`
@@ -63,4 +74,5 @@ If you keep the two repositories side by side with the default names, `topoodoc`
 - `toWork`
 - `toProject`
 - `toMemory`
-- `TopooUI`
+
+`TopooUI` is now system-owned and rendered from `topoodoc`, not from this repo.
