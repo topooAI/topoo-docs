@@ -2,77 +2,189 @@
 title: "Components"
 description: "Reference components available in the shared TopooUI library."
 ---
-export const componentEntries = [
-  { href: "/docs/topooui/components/accordion", title: "Accordion" },
-  { href: "/docs/topooui/components/alert", title: "Alert" },
-  { href: "/docs/topooui/components/alert-dialog", title: "Alert Dialog" },
-  { href: "/docs/topooui/components/aspect-ratio", title: "Aspect Ratio" },
-  { href: "/docs/topooui/components/avatar", title: "Avatar" },
-  { href: "/docs/topooui/components/badge", title: "Badge" },
-  { href: "/docs/topooui/components/breadcrumb", title: "Breadcrumb" },
-  { href: "/docs/topooui/components/button", title: "Button" },
-  { href: "/docs/topooui/components/button-group", title: "Button Group" },
-  { href: "/docs/topooui/components/calendar", title: "Calendar" },
-  { href: "/docs/topooui/components/card", title: "Card" },
-  { href: "/docs/topooui/components/carousel", title: "Carousel" },
-  { href: "/docs/topooui/components/chart", title: "Chart" },
-  { href: "/docs/topooui/components/checkbox", title: "Checkbox" },
-  { href: "/docs/topooui/components/collapsible", title: "Collapsible" },
-  { href: "/docs/topooui/components/combobox", title: "Combobox" },
-  { href: "/docs/topooui/components/command", title: "Command" },
-  { href: "/docs/topooui/components/context-menu", title: "Context Menu" },
-  { href: "/docs/topooui/components/data-table", title: "Data Table" },
-  { href: "/docs/topooui/components/date-picker", title: "Date Picker" },
-  { href: "/docs/topooui/components/dialog", title: "Dialog" },
-  { href: "/docs/topooui/components/direction", title: "Direction" },
-  { href: "/docs/topooui/components/drawer", title: "Drawer" },
-  { href: "/docs/topooui/components/dropdown-menu", title: "Dropdown Menu" },
-  { href: "/docs/topooui/components/empty", title: "Empty" },
-  { href: "/docs/topooui/components/field", title: "Field" },
-  { href: "/docs/topooui/components/form", title: "Form" },
-  { href: "/docs/topooui/components/hover-card", title: "Hover Card" },
-  { href: "/docs/topooui/components/input", title: "Input" },
-  { href: "/docs/topooui/components/input-group", title: "Input Group" },
-  { href: "/docs/topooui/components/input-otp", title: "Input OTP" },
-  { href: "/docs/topooui/components/item", title: "Item" },
-  { href: "/docs/topooui/components/kbd", title: "Kbd" },
-  { href: "/docs/topooui/components/label", title: "Label" },
-  { href: "/docs/topooui/components/menubar", title: "Menubar" },
-  { href: "/docs/topooui/components/native-select", title: "Native Select" },
-  { href: "/docs/topooui/components/navigation-menu", title: "Navigation Menu" },
-  { href: "/docs/topooui/components/pagination", title: "Pagination" },
-  { href: "/docs/topooui/components/popover", title: "Popover" },
-  { href: "/docs/topooui/components/progress", title: "Progress" },
-  { href: "/docs/topooui/components/radio-group", title: "Radio Group" },
-  { href: "/docs/topooui/components/resizable", title: "Resizable" },
-  { href: "/docs/topooui/components/scroll-area", title: "Scroll Area" },
-  { href: "/docs/topooui/components/select", title: "Select" },
-  { href: "/docs/topooui/components/separator", title: "Separator" },
-  { href: "/docs/topooui/components/sheet", title: "Sheet" },
-  { href: "/docs/topooui/components/sidebar", title: "Sidebar" },
-  { href: "/docs/topooui/components/skeleton", title: "Skeleton" },
-  { href: "/docs/topooui/components/slider", title: "Slider" },
-  { href: "/docs/topooui/components/sonner", title: "Sonner" },
-  { href: "/docs/topooui/components/spinner", title: "Spinner" },
-  { href: "/docs/topooui/components/switch", title: "Switch" },
-  { href: "/docs/topooui/components/table", title: "Table" },
-  { href: "/docs/topooui/components/tabs", title: "Tabs" },
-  { href: "/docs/topooui/components/textarea", title: "Textarea" },
-  { href: "/docs/topooui/components/toast", title: "Toast" },
-  { href: "/docs/topooui/components/toggle", title: "Toggle" },
-  { href: "/docs/topooui/components/toggle-group", title: "Toggle Group" },
-  { href: "/docs/topooui/components/tooltip", title: "Tooltip" },
-  { href: "/docs/topooui/components/typography", title: "Typography" },
-];
-
-<div className="not-prose mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
-  {componentEntries.map((entry) => (
-    <a
-      key={entry.href}
-      href={entry.href}
-      className="flex min-h-[82px] items-start rounded-xl border bg-background p-4 text-[15px] font-semibold leading-5 text-foreground no-underline transition-colors hover:bg-accent/30"
-    >
-      {entry.title}
-    </a>
-  ))}
+<div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-x-8 lg:gap-x-16 lg:gap-y-6 xl:gap-x-20">
+<a href="/docs/topooui/components/accordion" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Accordion
+</a>
+<a href="/docs/topooui/components/alert" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Alert
+</a>
+<a href="/docs/topooui/components/alert-dialog" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Alert Dialog
+</a>
+<a href="/docs/topooui/components/aspect-ratio" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Aspect Ratio
+</a>
+<a href="/docs/topooui/components/avatar" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Avatar
+</a>
+<a href="/docs/topooui/components/badge" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Badge
+</a>
+<a href="/docs/topooui/components/breadcrumb" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Breadcrumb
+</a>
+<a href="/docs/topooui/components/button" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Button
+</a>
+<a href="/docs/topooui/components/button-group" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Button Group
+</a>
+<a href="/docs/topooui/components/calendar" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Calendar
+</a>
+<a href="/docs/topooui/components/card" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Card
+</a>
+<a href="/docs/topooui/components/carousel" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Carousel
+</a>
+<a href="/docs/topooui/components/chart" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Chart
+</a>
+<a href="/docs/topooui/components/checkbox" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Checkbox
+</a>
+<a href="/docs/topooui/components/collapsible" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Collapsible
+</a>
+<a href="/docs/topooui/components/combobox" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Combobox
+</a>
+<a href="/docs/topooui/components/command" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Command
+</a>
+<a href="/docs/topooui/components/context-menu" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Context Menu
+</a>
+<a href="/docs/topooui/components/data-table" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Data Table
+</a>
+<a href="/docs/topooui/components/date-picker" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Date Picker
+</a>
+<a href="/docs/topooui/components/dialog" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Dialog
+</a>
+<a href="/docs/topooui/components/direction" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Direction
+</a>
+<a href="/docs/topooui/components/drawer" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Drawer
+</a>
+<a href="/docs/topooui/components/dropdown-menu" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Dropdown Menu
+</a>
+<a href="/docs/topooui/components/empty" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Empty
+</a>
+<a href="/docs/topooui/components/field" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Field
+</a>
+<a href="/docs/topooui/components/form" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Form
+</a>
+<a href="/docs/topooui/components/hover-card" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Hover Card
+</a>
+<a href="/docs/topooui/components/input" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Input
+</a>
+<a href="/docs/topooui/components/input-group" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Input Group
+</a>
+<a href="/docs/topooui/components/input-otp" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Input OTP
+</a>
+<a href="/docs/topooui/components/item" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Item
+</a>
+<a href="/docs/topooui/components/kbd" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Kbd
+</a>
+<a href="/docs/topooui/components/label" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Label
+</a>
+<a href="/docs/topooui/components/menubar" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Menubar
+</a>
+<a href="/docs/topooui/components/native-select" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Native Select
+</a>
+<a href="/docs/topooui/components/navigation-menu" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Navigation Menu
+</a>
+<a href="/docs/topooui/components/pagination" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Pagination
+</a>
+<a href="/docs/topooui/components/popover" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Popover
+</a>
+<a href="/docs/topooui/components/progress" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Progress
+</a>
+<a href="/docs/topooui/components/radio-group" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Radio Group
+</a>
+<a href="/docs/topooui/components/resizable" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Resizable
+</a>
+<a href="/docs/topooui/components/scroll-area" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Scroll Area
+</a>
+<a href="/docs/topooui/components/select" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Select
+</a>
+<a href="/docs/topooui/components/separator" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Separator
+</a>
+<a href="/docs/topooui/components/sheet" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Sheet
+</a>
+<a href="/docs/topooui/components/sidebar" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Sidebar
+</a>
+<a href="/docs/topooui/components/skeleton" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Skeleton
+</a>
+<a href="/docs/topooui/components/slider" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Slider
+</a>
+<a href="/docs/topooui/components/sonner" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Sonner
+</a>
+<a href="/docs/topooui/components/spinner" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Spinner
+</a>
+<a href="/docs/topooui/components/switch" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Switch
+</a>
+<a href="/docs/topooui/components/table" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Table
+</a>
+<a href="/docs/topooui/components/tabs" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Tabs
+</a>
+<a href="/docs/topooui/components/textarea" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Textarea
+</a>
+<a href="/docs/topooui/components/toast" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Toast
+</a>
+<a href="/docs/topooui/components/toggle" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Toggle
+</a>
+<a href="/docs/topooui/components/toggle-group" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Toggle Group
+</a>
+<a href="/docs/topooui/components/tooltip" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Tooltip
+</a>
+<a href="/docs/topooui/components/typography" className="inline-flex items-center gap-2 text-lg font-medium underline-offset-4 hover:underline md:text-base">
+  Typography
+</a>
 </div>
+
+---
+
+Can't find what you need? Try the [registry directory](/docs/topooui/registry) for community-maintained components.
