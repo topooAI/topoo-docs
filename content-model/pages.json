@@ -8,6 +8,14 @@
     "kind": "doc-page"
   },
   {
+    "id": "topoo-core-ideas",
+    "topicId": "topoo-core-ideas",
+    "title": "Core Ideas",
+    "href": "/docs/core-ideas",
+    "file": "content/docs/core-ideas.mdx",
+    "kind": "doc-page"
+  },
+  {
     "id": "toagent-index",
     "topicId": "toagent-core",
     "title": "toAgent",

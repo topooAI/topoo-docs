@@ -4,6 +4,7 @@ This repository now treats documentation as data.
 
 The canonical structure is:
 
+- `boards`
 - `blocks`
 - `topics`
 - `pages`
@@ -22,16 +23,22 @@ Site-level content metadata:
 - board ordering
 - top-level ownership hints
 
-### `blocks.json`
+### `boards.json`
 
-Top-level documentation lanes.
+Top-level documentation surfaces.
 
-Each block is a documentation surface such as:
+Each board is a top navigation lane such as:
 - `topoo`
 - `toagent`
 - `towork`
 - `toproject`
 - `tomemory`
+
+### `blocks.json`
+
+Reusable structural blocks inside a board.
+
+Each block belongs to exactly one board.
 
 ### `topics.json`
 

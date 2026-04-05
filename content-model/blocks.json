@@ -1,37 +1,32 @@
 [
   {
-    "id": "topoo",
+    "id": "topoo-default",
+    "boardId": "topoo",
     "label": "Topoo",
-    "href": "/docs",
-    "kind": "core-ideas",
-    "description": "Core product thinking, operating thesis, and board-level framing."
+    "description": "Default knowledge block for Topoo."
   },
   {
-    "id": "toagent",
+    "id": "toagent-default",
+    "boardId": "toagent",
     "label": "toAgent",
-    "href": "/docs/toagent",
-    "kind": "solution-lane",
-    "description": "Chat surface documentation for agent conversations, orchestration, and outputs."
+    "description": "Default knowledge block for toAgent."
   },
   {
-    "id": "towork",
+    "id": "towork-default",
+    "boardId": "towork",
     "label": "toWork",
-    "href": "/docs/towork",
-    "kind": "solution-lane",
-    "description": "Document surface guidance for work artifacts, editing flows, and publishing."
+    "description": "Default knowledge block for toWork."
   },
   {
-    "id": "toproject",
+    "id": "toproject-default",
+    "boardId": "toproject",
     "label": "toProject",
-    "href": "/docs/toproject",
-    "kind": "solution-lane",
-    "description": "Project structure, architecture contracts, and execution model documentation."
+    "description": "Default knowledge block for toProject."
   },
   {
-    "id": "tomemory",
+    "id": "tomemory-default",
+    "boardId": "tomemory",
     "label": "toMemory",
-    "href": "/docs/tomemory",
-    "kind": "solution-lane",
-    "description": "Memory surface docs for schemas, retrieval contracts, and recall surfaces."
+    "description": "Default knowledge block for toMemory."
   }
 ]

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "topoo",
+    "label": "Topoo",
+    "href": "/docs",
+    "kind": "core-ideas",
+    "description": "Core product thinking, operating thesis, and board-level framing."
+  },
+  {
+    "id": "toagent",
+    "label": "toAgent",
+    "href": "/docs/toagent",
+    "kind": "solution-lane",
+    "description": "Chat surface documentation for agent conversations, orchestration, and outputs."
+  },
+  {
+    "id": "towork",
+    "label": "toWork",
+    "href": "/docs/towork",
+    "kind": "solution-lane",
+    "description": "Document surface guidance for work artifacts, editing flows, and publishing."
+  },
+  {
+    "id": "toproject",
+    "label": "toProject",
+    "href": "/docs/toproject",
+    "kind": "solution-lane",
+    "description": "Project structure, architecture contracts, and execution model documentation."
+  },
+  {
+    "id": "tomemory",
+    "label": "toMemory",
+    "href": "/docs/tomemory",
+    "kind": "solution-lane",
+    "description": "Memory surface docs for schemas, retrieval contracts, and recall surfaces."
+  }
+]
