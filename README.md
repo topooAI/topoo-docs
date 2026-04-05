@@ -2,6 +2,9 @@
 
 This repository is the pure content source for `doc.topoo.ai`.
 
+See also:
+- [`REPO_BOUNDARY.md` in `topoodoc`](https://github.com/topooAI/topoodoc/blob/main/docs/REPO_BOUNDARY.md)
+
 It does not own:
 - Next.js app code
 - Fumadocs shell code
