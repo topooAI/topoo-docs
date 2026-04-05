@@ -19,6 +19,10 @@ Those belong to `topoodoc`, which is the documentation system repository.
 - `content/docs/**`
 - `content/docs/**/meta.json`
 - `topoodoc.content.json`
+- `content-model/site.json`
+- `content-model/blocks.json`
+- `content-model/topics.json`
+- `content-model/pages.json`
 
 The content in this repo should stay text-first and schema-safe.
 
@@ -28,6 +32,7 @@ That means:
 - ordering
 - links
 - plain markdown or mdx body content for true document pages
+- block/topic/page records
 
 It should not contain layout-owned TopooUI board pages or style-defining docs structures.
 
@@ -43,6 +48,15 @@ It should not contain layout-owned TopooUI board pages or style-defining docs st
 ## Editing Model
 
 Edit the documentation content directly under `content/docs/`.
+
+The structural source of truth now lives under `content-model/`.
+
+Use:
+- `blocks.json` for top-level boards
+- `topics.json` for left-nav knowledge lanes
+- `pages.json` for concrete page/file mapping
+
+`content/docs/**` remains the page body layer, but repository structure should now be reasoned about from the data model first, not from folders alone.
 
 Use `topoodoc.content.json` for site-level metadata such as:
 - site title

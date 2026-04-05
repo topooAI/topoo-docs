@@ -1,0 +1,93 @@
+[
+  {
+    "id": "topoo-core",
+    "blockId": "topoo",
+    "label": "Topoo",
+    "href": "/docs",
+    "description": "Topoo core framing and board-level positioning.",
+    "pageIds": [
+      "topoo-index"
+    ]
+  },
+  {
+    "id": "toagent-core",
+    "blockId": "toagent",
+    "label": "toAgent",
+    "href": "/docs/toagent",
+    "description": "Agent conversation and orchestration knowledge.",
+    "pageIds": [
+      "toagent-index"
+    ]
+  },
+  {
+    "id": "towork-core",
+    "blockId": "towork",
+    "label": "toWork",
+    "href": "/docs/towork",
+    "description": "Document workflow and publishing knowledge.",
+    "pageIds": [
+      "towork-index",
+      "towork-publishing-check"
+    ]
+  },
+  {
+    "id": "toproject-core",
+    "blockId": "toproject",
+    "label": "Core Structure",
+    "href": "/docs/toproject",
+    "description": "Project-centered architecture index and executive summary.",
+    "pageIds": [
+      "toproject-index"
+    ]
+  },
+  {
+    "id": "toproject-object-model",
+    "blockId": "toproject",
+    "label": "Object Model",
+    "href": "/docs/toproject/object-model",
+    "description": "Root object semantics and project-centered entity model.",
+    "pageIds": [
+      "toproject-object-model"
+    ]
+  },
+  {
+    "id": "toproject-git-model",
+    "blockId": "toproject",
+    "label": "Git Model",
+    "href": "/docs/toproject/git-model",
+    "description": "Git domains and project-level versioned execution semantics.",
+    "pageIds": [
+      "toproject-git-model"
+    ]
+  },
+  {
+    "id": "toproject-runtime-model",
+    "blockId": "toproject",
+    "label": "Runtime Model",
+    "href": "/docs/toproject/runtime-model",
+    "description": "Runtime, engine, command, and operating-layer definitions.",
+    "pageIds": [
+      "toproject-runtime-model"
+    ]
+  },
+  {
+    "id": "toproject-ui-mapping",
+    "blockId": "toproject",
+    "label": "UI Mapping",
+    "href": "/docs/toproject/ui-mapping",
+    "description": "Current UI-to-architecture mapping and transitional surfaces.",
+    "pageIds": [
+      "toproject-ui-mapping"
+    ]
+  },
+  {
+    "id": "tomemory-core",
+    "blockId": "tomemory",
+    "label": "toMemory",
+    "href": "/docs/tomemory",
+    "description": "Memory-facing documentation lane.",
+    "pageIds": [
+      "tomemory-index"
+    ]
+  }
+]

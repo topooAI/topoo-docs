@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "title": "topoo",
+    "description": "Topoo desktop documentation, board guides, and shared system references.",
+    "domain": "doc.topoo.ai"
+  },
+  "boardOrder": [
+    "topoo",
+    "toagent",
+    "towork",
+    "toproject",
+    "tomemory"
+  ],
+  "systemOwnedBoards": [
+    "topooui"
+  ]
+}
