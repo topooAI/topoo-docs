@@ -24,43 +24,51 @@
     "kind": "doc-page"
   },
   {
+    "id": "topoo-cloud-deployment-index",
+    "topicId": "topoo-cloud-deployment-overview",
+    "title": "Deployment",
+    "href": "/docs/cloud/deployment",
+    "file": "content/docs/cloud/deployment/index.mdx",
+    "kind": "doc-page"
+  },
+  {
     "id": "topoo-cloud-project-control-plane",
     "topicId": "topoo-cloud-project-control-plane",
-    "title": "Cloud Project Control Plane",
-    "href": "/docs/cloud/project-control-plane",
-    "file": "content/docs/cloud/project-control-plane.mdx",
+    "title": "Project",
+    "href": "/docs/cloud/deployment/project",
+    "file": "content/docs/cloud/deployment/project.mdx",
     "kind": "doc-page"
   },
   {
     "id": "topoo-cloud-project-node-model",
     "topicId": "topoo-cloud-project-node-model",
-    "title": "Project and Node Model",
-    "href": "/docs/cloud/project-node-model",
-    "file": "content/docs/cloud/project-node-model.mdx",
+    "title": "Node",
+    "href": "/docs/cloud/deployment/node",
+    "file": "content/docs/cloud/deployment/node.mdx",
     "kind": "doc-page"
   },
   {
     "id": "topoo-cloud-node-lifecycle-model",
     "topicId": "topoo-cloud-node-lifecycle-model",
-    "title": "Node Workbench and Lifecycle Model",
-    "href": "/docs/cloud/node-lifecycle-model",
-    "file": "content/docs/cloud/node-lifecycle-model.mdx",
+    "title": "Node Workbench and Editors",
+    "href": "/docs/cloud/deployment/node-workbench",
+    "file": "content/docs/cloud/deployment/node-workbench.mdx",
     "kind": "doc-page"
   },
   {
     "id": "topoo-cloud-runtime-resource-model",
     "topicId": "topoo-cloud-runtime-resource-model",
-    "title": "Runtime and Resource Model",
-    "href": "/docs/cloud/runtime-resource-model",
-    "file": "content/docs/cloud/runtime-resource-model.mdx",
+    "title": "Runtime and Resources",
+    "href": "/docs/cloud/deployment/runtime",
+    "file": "content/docs/cloud/deployment/runtime.mdx",
     "kind": "doc-page"
   },
   {
     "id": "topoo-cloud-source-deployment-boundary",
     "topicId": "topoo-cloud-source-deployment-boundary",
-    "title": "Source and Deployment Boundary",
-    "href": "/docs/cloud/source-deployment-boundary",
-    "file": "content/docs/cloud/source-deployment-boundary.mdx",
+    "title": "Source-to-Deployment Boundary",
+    "href": "/docs/cloud/deployment/source-to-deployment",
+    "file": "content/docs/cloud/deployment/source-to-deployment.mdx",
     "kind": "doc-page"
   },
   {
@@ -274,25 +282,25 @@
   {
     "id": "topoo-cloud-source-control",
     "topicId": "topoo-cloud-source-control",
-    "title": "Source Control Model",
-    "href": "/docs/cloud/source-control-model",
-    "file": "content/docs/cloud/source-control-model.mdx",
+    "title": "Source and Git",
+    "href": "/docs/cloud/deployment/source-and-git",
+    "file": "content/docs/cloud/deployment/source-and-git.mdx",
     "kind": "doc-page"
   },
   {
     "id": "topoo-cloud-source-control-status",
     "topicId": "topoo-cloud-source-control-status",
-    "title": "Source Control Implementation Status",
-    "href": "/docs/cloud/source-control-status",
-    "file": "content/docs/cloud/source-control-status.mdx",
+    "title": "Source Implementation Status",
+    "href": "/docs/cloud/deployment/source-status",
+    "file": "content/docs/cloud/deployment/source-status.mdx",
     "kind": "doc-page"
   },
   {
     "id": "topoo-cloud-deployment-control-plan",
     "topicId": "topoo-cloud-deployment-control-plan",
-    "title": "Deployment Control Plan",
-    "href": "/docs/cloud/deployment-control-plan",
-    "file": "content/docs/cloud/deployment-control-plan.mdx",
+    "title": "Release Control",
+    "href": "/docs/cloud/deployment/release-control",
+    "file": "content/docs/cloud/deployment/release-control.mdx",
     "kind": "doc-page"
   }
 ]

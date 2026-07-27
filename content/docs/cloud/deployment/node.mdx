@@ -1,21 +1,21 @@
 ---
-title: "Project and Node Model"
-description: "The canonical responsibility, attention, version, and release boundaries for Projects, Nodes, Agents, Sessions, and Submissions."
+title: "Node"
+description: "The canonical code-container, attention, permission, version, and delivery boundary inside a Project."
 ---
 
 This page is the canonical definition of `Project` and `Node` in Topoo Cloud.
 
 The model starts from the problem Topoo needs to solve: a small product may be understandable as one body of work, while a large product contains many distinct problem domains that people, Agents, and programs must advance in parallel without losing context or overwriting one another.
 
-Read [Node Workbench and Lifecycle Model](/docs/cloud/node-lifecycle-model) for the canonical Source, editor, Submission, Node Version, Artifact, Release, and Deployment objects attached to these boundaries.
+Read [Node Workbench and Lifecycle Model](/docs/cloud/deployment/node-workbench) for the canonical Source, editor, Submission, Node Version, Artifact, Release, and Deployment objects attached to these boundaries.
 
 ## Canonical definitions
 
 > **Project is the unified product and release subject exposed to the outside world.**
 
-> **Node is a persistent, problem-oriented responsibility and attention boundary inside a Project.**
+> **Node is a persistent, permission-scoped code container and attention boundary inside a Project.**
 
-A Project organizes Nodes into one coherent product. A Node gives one problem domain a durable identity, bounded context, source scope, version history, and delivery record.
+A Project organizes Nodes into one coherent product. A Node gives one problem domain a durable code container, bounded context, permission scope, version history, and delivery record.
 
 `Node` is not defined first as a file, repository, package, process, server, Agent, Session, or domain. Some Nodes may bind or produce those objects, but none of them alone defines a Node.
 
@@ -213,7 +213,7 @@ The Project changes locally without rebuilding or redefining unrelated responsib
 The following rules must remain true:
 
 1. Project is the external product, environment, domain, and Production authority.
-2. Node is the persistent problem, responsibility, attention, and delivery boundary.
+2. Node is the persistent, permission-scoped code container and attention boundary inside a Project.
 3. Agent is an actor working under Node scope; it is not the Node itself.
 4. Session is an ephemeral execution context attached to a Node.
 5. Submission is proposed work, not deployment authority.

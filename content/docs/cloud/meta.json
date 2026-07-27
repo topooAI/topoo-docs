@@ -2,13 +2,6 @@
   "title": "Topoo Cloud",
   "pages": [
     "index",
-    "project-node-model",
-    "node-lifecycle-model",
-    "project-control-plane",
-    "runtime-resource-model",
-    "source-deployment-boundary",
-    "source-control-model",
-    "source-control-status",
-    "deployment-control-plan"
+    "deployment"
   ]
 }

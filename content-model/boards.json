@@ -7,6 +7,13 @@
     "description": "Core product thinking, operating thesis, and board-level framing."
   },
   {
+    "id": "cloud",
+    "label": "Topoo Cloud",
+    "href": "/docs/cloud",
+    "kind": "platform",
+    "description": "Topoo Cloud product modules, control planes, runtime resources, and operating contracts."
+  },
+  {
     "id": "toagent",
     "label": "toAgent",
     "href": "/docs/toagent",

@@ -8,49 +8,49 @@ Topoo Cloud turns distributed serverless infrastructure into a customer-facing p
 Customers buy and operate Topoo capacity. They should not need to understand which upstream provider implements a runtime, database, storage service, network, or security capability.
 
 <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-  <LinkedCard href="/docs/cloud/project-node-model" className="items-start gap-1 p-6 text-sm md:p-6">
+  <LinkedCard href="/docs/cloud/deployment/node" className="items-start gap-1 p-6 text-sm md:p-6">
     <div className="font-medium">Project &amp; Node Model</div>
     <div className="leading-relaxed text-muted-foreground">
-      Define Project as the unified product and release subject, and Node as the persistent problem, responsibility, attention, and delivery boundary.
+      Define Project as the unified product and release subject, and Node as a permission-scoped code container and attention boundary.
     </div>
   </LinkedCard>
-  <LinkedCard href="/docs/cloud/node-lifecycle-model" className="items-start gap-1 p-6 text-sm md:p-6">
+  <LinkedCard href="/docs/cloud/deployment/node-workbench" className="items-start gap-1 p-6 text-sm md:p-6">
     <div className="font-medium">Node Workbench &amp; Lifecycle</div>
     <div className="leading-relaxed text-muted-foreground">
       Unify Source, editors, Agent Submissions, Node Versions, Artifacts, Project Releases, and Deployments into one lifecycle.
     </div>
   </LinkedCard>
-  <LinkedCard href="/docs/cloud/project-control-plane" className="items-start gap-1 p-6 text-sm md:p-6">
+  <LinkedCard href="/docs/cloud/deployment/project" className="items-start gap-1 p-6 text-sm md:p-6">
     <div className="font-medium">Project Control Plane</div>
     <div className="leading-relaxed text-muted-foreground">
       Define Cloud Project as the integration boundary for modules, runtime resources, domains, source, and deployments.
     </div>
   </LinkedCard>
-  <LinkedCard href="/docs/cloud/runtime-resource-model" className="items-start gap-1 p-6 text-sm md:p-6">
+  <LinkedCard href="/docs/cloud/deployment/runtime" className="items-start gap-1 p-6 text-sm md:p-6">
     <div className="font-medium">Runtime &amp; Resources</div>
     <div className="leading-relaxed text-muted-foreground">
       Describe Topoo-facing Nodes, storage, databases, queues, domains, secrets, and their real operating state.
     </div>
   </LinkedCard>
-  <LinkedCard href="/docs/cloud/source-deployment-boundary" className="items-start gap-1 p-6 text-sm md:p-6">
+  <LinkedCard href="/docs/cloud/deployment/source-to-deployment" className="items-start gap-1 p-6 text-sm md:p-6">
     <div className="font-medium">Source &amp; Deployment</div>
     <div className="leading-relaxed text-muted-foreground">
       Separate code provenance from runtime artifacts while keeping every deployment traceable to its source version.
     </div>
   </LinkedCard>
-  <LinkedCard href="/docs/cloud/source-control-model" className="items-start gap-1 p-6 text-sm md:p-6">
+  <LinkedCard href="/docs/cloud/deployment/source-and-git" className="items-start gap-1 p-6 text-sm md:p-6">
     <div className="font-medium">Source Control Model</div>
     <div className="leading-relaxed text-muted-foreground">
       Map GitHub, Topoo-hosted source, Agent submissions, and deterministic release control into one product model.
     </div>
   </LinkedCard>
-  <LinkedCard href="/docs/cloud/source-control-status" className="items-start gap-1 p-6 text-sm md:p-6">
+  <LinkedCard href="/docs/cloud/deployment/source-status" className="items-start gap-1 p-6 text-sm md:p-6">
     <div className="font-medium">Implementation Status</div>
     <div className="leading-relaxed text-muted-foreground">
       See the binary audit of completed and not-completed source-control capabilities.
     </div>
   </LinkedCard>
-  <LinkedCard href="/docs/cloud/deployment-control-plan" className="items-start gap-1 p-6 text-sm md:p-6">
+  <LinkedCard href="/docs/cloud/deployment/release-control" className="items-start gap-1 p-6 text-sm md:p-6">
     <div className="font-medium">Deployment Control Plan</div>
     <div className="leading-relaxed text-muted-foreground">
       Understand the problem, product direction, and ownership boundaries for Agent submissions and controlled releases.
@@ -64,7 +64,7 @@ Customers buy and operate Topoo capacity. They should not need to understand whi
 |---|---|
 | Workspace | The tenant and policy boundary that owns projects, members, plans, and shared capacity. |
 | Cloud Project | The externally unified product and release subject that organizes Nodes, environments, resources, domains, deployments, and observability. |
-| Node | A persistent, problem-oriented responsibility, attention, version, and delivery boundary inside a Project. |
+| Node | A persistent, permission-scoped code container and attention boundary inside a Project. |
 | Node Workbench | The common editing and lifecycle surface for a Node; specialized visual and no-code editors operate on the same canonical Source. |
 | Agent | An actor that works under a Node's scope, identity, permissions, and operating procedure. |
 | Session | A temporary execution context attached to a Node; it does not define a new responsibility boundary. |

@@ -9,7 +9,13 @@
     "id": "topoo-cloud-platform",
     "boardId": "topoo",
     "label": "Topoo Cloud",
-    "description": "Private cloud control plane, runtime resources, source, and deployment contracts."
+    "description": "Entry point to the Topoo Cloud platform."
+  },
+  {
+    "id": "cloud-deployment",
+    "boardId": "cloud",
+    "label": "Deployment",
+    "description": "Project, Node, source, runtime, release, and operations control."
   },
   {
     "id": "toagent-default",

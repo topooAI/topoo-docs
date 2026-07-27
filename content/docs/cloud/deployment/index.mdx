@@ -1,0 +1,59 @@
+---
+title: "Deployment"
+description: "The Topoo Cloud module that turns a Project and its Nodes into a configured, versioned, running, and operable system."
+---
+
+`Deployment` is the first functional module of Topoo Cloud.
+
+It owns the path from a Project's source and structure to an accepted release running in an Environment. GitHub or another Git provider may supply source history, and Cloudflare or another infrastructure provider may supply runtime capacity. Topoo owns the customer-facing Project model and the control path that connects them.
+
+## Module structure
+
+| Area | Responsibility |
+|---|---|
+| [Project](/docs/cloud/deployment/project) | The complete product, integration boundary, environments, domains, release authority, and operating state. |
+| [Node](/docs/cloud/deployment/node) | A permission-scoped code container that divides attention and responsibility inside a Project. |
+| [Node Workbench and Editors](/docs/cloud/deployment/node-workbench) | The common editing surface plus code and specialized editor modes for a Node. |
+| [Source and Git](/docs/cloud/deployment/source-and-git) | Connected Git providers, Topoo-managed revisions, source provenance, and synchronization. |
+| [Runtime and Resources](/docs/cloud/deployment/runtime) | Execution capacity, persistent resources, bindings, and truthful operating state. |
+| [Release Control](/docs/cloud/deployment/release-control) | Integration, validation, artifacts, Preview, Production promotion, and rollback. |
+
+## Canonical relationship
+
+```text
+Project
+├── Nodes
+├── Source and Git
+├── Configuration and Secrets
+├── Runtime and Resources
+├── Environments and Domains
+├── Releases and Deployments
+└── Observability and Audit
+```
+
+Project is the complete product and final release authority. Nodes divide that Project into bounded code containers that people, teams, and Agents can work on under different permissions. A Node can be edited and versioned independently, but it remains part of the Project and does not gain independent Production authority.
+
+## Provider boundary
+
+```text
+GitHub / Git provider
+→ source and version input
+
+Topoo Cloud
+→ Project, Node, permissions, configuration, release, and operations control plane
+
+Cloudflare / infrastructure provider
+→ runtime, network, storage, and execution capacity
+```
+
+Topoo may depend heavily on GitHub without turning Repository, Branch, Pull Request, or Commit into the Topoo product model. Topoo may also maintain an internal Git-backed revision layer for Node Workspaces, uploaded source, and customers who do not operate GitHub directly.
+
+## Documentation status
+
+These pages combine three kinds of information:
+
+- **Canonical product model** — terms and boundaries that the documentation adopts.
+- **Implementation evidence** — behavior confirmed in current code or a verified runtime.
+- **Target capability** — planned behavior that must not be presented as already complete.
+
+Use [Source Implementation Status](/docs/cloud/deployment/source-status) for the current audited source-control boundary.

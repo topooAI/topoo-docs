@@ -30,10 +30,22 @@
     ]
   },
   {
+    "id": "topoo-cloud-deployment-overview",
+    "blockId": "cloud-deployment",
+    "order": 10,
+    "label": "Overview",
+    "href": "/docs/cloud/deployment",
+    "description": "Deployment as the first Topoo Cloud module and the control path from Project source to an operated system.",
+    "pageIds": [
+      "topoo-cloud-deployment-index"
+    ]
+  },
+  {
     "id": "topoo-cloud-project-control-plane",
-    "blockId": "topoo-cloud-platform",
-    "label": "Project Control Plane",
-    "href": "/docs/cloud/project-control-plane",
+    "blockId": "cloud-deployment",
+    "order": 20,
+    "label": "Project",
+    "href": "/docs/cloud/deployment/project",
     "description": "Cloud Project as the integration boundary for modules, source, runtime resources, and operating state.",
     "pageIds": [
       "topoo-cloud-project-control-plane"
@@ -41,9 +53,10 @@
   },
   {
     "id": "topoo-cloud-project-node-model",
-    "blockId": "topoo-cloud-platform",
-    "label": "Project & Node Model",
-    "href": "/docs/cloud/project-node-model",
+    "blockId": "cloud-deployment",
+    "order": 30,
+    "label": "Node",
+    "href": "/docs/cloud/deployment/node",
     "description": "Canonical problem, responsibility, attention, version, and release boundaries for Projects and Nodes.",
     "pageIds": [
       "topoo-cloud-project-node-model"
@@ -51,9 +64,10 @@
   },
   {
     "id": "topoo-cloud-node-lifecycle-model",
-    "blockId": "topoo-cloud-platform",
-    "label": "Node Workbench & Lifecycle",
-    "href": "/docs/cloud/node-lifecycle-model",
+    "blockId": "cloud-deployment",
+    "order": 40,
+    "label": "Node Workbench & Editors",
+    "href": "/docs/cloud/deployment/node-workbench",
     "description": "Canonical Source, editor, Submission, Node Version, Artifact, Project Release, and Deployment objects.",
     "pageIds": [
       "topoo-cloud-node-lifecycle-model"
@@ -61,9 +75,10 @@
   },
   {
     "id": "topoo-cloud-runtime-resource-model",
-    "blockId": "topoo-cloud-platform",
+    "blockId": "cloud-deployment",
+    "order": 70,
     "label": "Runtime & Resources",
-    "href": "/docs/cloud/runtime-resource-model",
+    "href": "/docs/cloud/deployment/runtime",
     "description": "Topoo-facing execution capacity, persistent resources, and truthful operating state.",
     "pageIds": [
       "topoo-cloud-runtime-resource-model"
@@ -71,9 +86,10 @@
   },
   {
     "id": "topoo-cloud-source-deployment-boundary",
-    "blockId": "topoo-cloud-platform",
-    "label": "Source & Deployment",
-    "href": "/docs/cloud/source-deployment-boundary",
+    "blockId": "cloud-deployment",
+    "order": 60,
+    "label": "Source-to-Deployment Boundary",
+    "href": "/docs/cloud/deployment/source-to-deployment",
     "description": "Code provenance, release control, deployment artifacts, and multi-Agent submission channels.",
     "pageIds": [
       "topoo-cloud-source-deployment-boundary"
@@ -332,9 +348,10 @@
   },
   {
     "id": "topoo-cloud-source-control",
-    "blockId": "topoo-cloud-platform",
-    "label": "Source Control Model",
-    "href": "/docs/cloud/source-control-model",
+    "blockId": "cloud-deployment",
+    "order": 50,
+    "label": "Source & Git",
+    "href": "/docs/cloud/deployment/source-and-git",
     "description": "GitHub-first source mapping, Topoo-hosted Git, Agent submission channels, and deterministic release control.",
     "pageIds": [
       "topoo-cloud-source-control"
@@ -342,9 +359,10 @@
   },
   {
     "id": "topoo-cloud-source-control-status",
-    "blockId": "topoo-cloud-platform",
-    "label": "Source Control Implementation Status",
-    "href": "/docs/cloud/source-control-status",
+    "blockId": "cloud-deployment",
+    "order": 55,
+    "label": "Source Implementation Status",
+    "href": "/docs/cloud/deployment/source-status",
     "description": "Evidence-based implementation audit for source control and Agent release capabilities.",
     "pageIds": [
       "topoo-cloud-source-control-status"
@@ -352,9 +370,10 @@
   },
   {
     "id": "topoo-cloud-deployment-control-plan",
-    "blockId": "topoo-cloud-platform",
-    "label": "Deployment Control Plan",
-    "href": "/docs/cloud/deployment-control-plan",
+    "blockId": "cloud-deployment",
+    "order": 80,
+    "label": "Release Control",
+    "href": "/docs/cloud/deployment/release-control",
     "description": "Problem framing, product direction, and ownership boundaries for controlled Agent releases.",
     "pageIds": [
       "topoo-cloud-deployment-control-plan"
