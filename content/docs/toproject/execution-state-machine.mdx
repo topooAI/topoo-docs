@@ -1,0 +1,40 @@
+---
+title: "Execution State Machine"
+description: "The canonical execution lifecycle for tasks and runs across planning, execution, review, and deploy."
+---
+## Purpose
+This document defines the canonical state machine for project execution.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Execution Architecture` block.
+
+## Core Position
+GitHub has PR state.
+
+Linear has issue state.
+
+`toProject` still needs its own execution state machine.
+
+## Canonical States
+The first version should include:
+- `planned`
+- `queued`
+- `running`
+- `blocked`
+- `awaiting_review`
+- `accepted`
+- `rejected`
+- `deployed`
+- `failed`
+- `archived`
+
+## Why This Matters
+Without a canonical state machine:
+- run history becomes descriptive instead of governable
+- UI fields remain provider-specific
+- agent execution cannot be normalized across runtimes
+
+## Boundary
+This page defines the state graph of execution.
+
+It does not define actor identity or artifact storage.

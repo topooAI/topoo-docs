@@ -1,0 +1,113 @@
+---
+title: "Cloud Project Control Plane"
+description: "How a Topoo Cloud Project integrates product modules, source, runtime resources, and operating state."
+---
+
+A Cloud Project is the integration boundary of Topoo Cloud.
+
+It is also the externally unified product and release subject. Customers, domains, environments, permissions, Production promotion, observability, and audit resolve to the Project even when many independent responsibility domains contribute to it.
+
+Read [Project and Node Model](/docs/cloud/project-node-model) as the canonical definition of the two objects.
+
+It is not only:
+
+- a project list row
+- a source repository
+- a site
+- a runtime process
+- a deployment target
+- a task-management object
+
+It connects those concerns into one operable product boundary.
+
+## What a Cloud Project owns
+
+A Cloud Project owns or binds:
+
+- problem-oriented Nodes and their dependency topology
+- product modules such as sites, workflows, components, data, and forms
+- source bindings such as repository, branch, package, and root path
+- Agent, Session, Submission, and Node delivery relationships
+- runtime and execution policy for runtime-capable Nodes
+- databases, object storage, queues, domains, secrets, and AI capabilities
+- Project Release Candidates and accepted Node versions
+- production and preview deployments of the integrated Project Release
+- logs, metrics, traces, alerts, and audit events
+- workspace-scoped access and environment configuration
+
+This ownership does not mean every capability must be implemented inside the Project page. It means each capability has a stable project relationship and can be discovered, operated, and audited from the same control plane.
+
+## How Project uses Nodes
+
+Node is the Project's durable decomposition boundary for a problem domain.
+
+For a small product, Project may create and hide one default Node. For a large product, Project organizes many Nodes so different Agents, Sessions, programs, source scopes, and review paths can work in parallel without sharing one undifferentiated context.
+
+Project does not treat every file, folder, repository, package, Agent, or Session as a Node. A Node exists when a responsibility needs persistent scope, context, versions, submissions, dependencies, and delivery history.
+
+Project accepts published Node versions into one Release Candidate:
+
+```text
+Node submissions
+→ immutable Node versions
+→ Project Release Candidate
+→ integrated Checks
+→ Preview
+→ Approval
+→ Production
+```
+
+Node publication does not grant Production authority. Project remains the final integration, environment, domain, and deployment boundary.
+
+## Module boundaries
+
+Sites, workflows, components, databases, and storage remain distinct product modules.
+
+The Cloud Project integrates them without erasing their identity:
+
+| Module | Local responsibility | Project responsibility |
+|---|---|---|
+| Site | Pages, content, builds, and site-specific editing | Bind the site to source, domains, environments, deployment, and observability |
+| Workflow | Workflow graph, inputs, steps, and run behavior | Bind runs to runtime capacity, secrets, queues, data, deployment, and audit history |
+| Component | Reusable UI definition or implementation | Track which Node owns it, where it is sourced, versioned, published, and consumed |
+| Data | Database or storage behavior | Assign ownership, environment, access, quota, and dependent modules |
+| Domain | Routing and certificate state | Connect ingress to the correct project, environment, and deployment |
+
+## Control-plane surfaces
+
+The product UI may evolve, but the following responsibilities must remain visible:
+
+- **Overview:** identity, live condition, current environment, key activity, and primary actions
+- **Source:** repository, branch, path, revision, sync, and import state
+- **Topology:** real relationships between modules, Nodes, resources, domains, and deployments
+- **Resources:** runtime, storage, data, network, secrets, and access configuration
+- **Deployments:** production, preview, promotion, rollback, environment, and artifact history
+- **Observability:** requests, executions, errors, latency, logs, traces, alerts, and audit evidence
+
+These are responsibility boundaries, not a requirement that every item must always be a separate top-level tab.
+
+## Scope and ownership
+
+Every controlled operation must resolve to:
+
+`Workspace -> Cloud Project -> Node -> Agent or Session -> Submission or delivery record`
+
+Every runtime operation additionally resolves through:
+
+`Workspace -> Cloud Project -> Environment -> runtime-capable Node or Resource`
+
+Anonymous global runtime state is not a valid customer model.
+
+This scope ensures that:
+
+- usage can be measured against the correct plan
+- resources can be billed and governed correctly
+- secrets and access policies do not leak across projects
+- deployments and incidents have a clear owner
+- dashboards can show real state rather than inferred or decorative values
+
+## Source of truth
+
+Project lists, project details, topology, resources, deployments, usage, and observability must project from the same underlying relationships.
+
+Page-local mock state can support a temporary visual prototype, but it must never be presented as live operational truth.

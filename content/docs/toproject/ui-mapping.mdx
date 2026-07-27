@@ -12,6 +12,43 @@ It distinguishes:
 
 This is the bridge between architecture definition and later implementation work.
 
+Use [Project Execution Architecture](/docs/toproject/execution-architecture) as the system-level reading first.
+
+This file stays implementation-facing.
+
+## Block Position
+Inside the `toProject` board, this page is the primary definition page of the `Surface Mapping` block.
+
+It primarily owns these topics:
+- Control Plane Fields
+- Overview Tab
+- Outcome Tab
+- Workstream Tab
+- Tasks Tab
+- Activity Tab
+- Assets & Files Tab
+- List / Board / Timeline Projections
+- Current Gaps
+
+This page should be read after the definition pages, not before them.
+
+The execution architecture document explains the full operating loop:
+- intent
+- decomposition
+- runtime
+- git
+- evidence
+
+This file only maps those definitions to the current UI.
+
+## Boundary
+This page does not redefine:
+- what project is
+- what git is for
+- what runtime is allowed to do
+
+It only maps those decisions onto current product surfaces.
+
 ## Control Plane Mapping
 The top property area is already close to the intended project control plane.
 
@@ -148,3 +185,15 @@ Based on current alignment, the next implementation priorities are:
 3. strengthen the `Outcome` object
 4. separate workstream data from task-derived display
 5. introduce typed activity events
+
+## Reading Relationship
+Use this page last.
+
+It should be read only after:
+- [PROJECT_OBJECT_MODEL.md](/docs/toproject/object-model)
+- [PROJECT_EXECUTION_ARCHITECTURE.md](/docs/toproject/execution-architecture)
+- [PROJECT_RUNTIME_MODEL.md](/docs/toproject/runtime-model)
+- [PROJECT_GIT_MODEL.md](/docs/toproject/git-model)
+
+Return to the board home for the full structure:
+- [PROJECT_CORE_STRUCTURE.md](/docs/toproject)

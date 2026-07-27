@@ -12,6 +12,23 @@ It explains:
 
 It exists because "git-backed" can sound correct while still remaining underspecified. This document makes that phrase concrete.
 
+## Block Position
+Inside the `toProject` board, this page is the primary definition page of the `Version Spine` block.
+
+It primarily owns these topics:
+- Why Git Is Core
+- Spec Domain
+- Execution Domain
+- Knowledge Domain
+- Review Boundary
+- Project-Level Git Surface
+
+This page should be read after:
+- [PROJECT_OBJECT_MODEL.md](/docs/toproject/object-model)
+- [PROJECT_EXECUTION_ARCHITECTURE.md](/docs/toproject/execution-architecture)
+
+It explains how versioned change supports the project architecture, not how provider tooling works in isolation.
+
 ## Core Position
 Git is the hard execution spine of the project.
 
@@ -238,6 +255,30 @@ What matters is that the architecture explicitly separates:
 - intent
 - execution
 - knowledge
+
+## Boundary
+This page does not define:
+- the root object semantics of project
+- runtime permission posture
+- current UI implementation state
+
+Those belong to:
+- [PROJECT_OBJECT_MODEL.md](/docs/toproject/object-model)
+- [PROJECT_RUNTIME_MODEL.md](/docs/toproject/runtime-model)
+- [PROJECT_UI_MAPPING.md](/docs/toproject/ui-mapping)
+
+## Reading Relationship
+Use this page when the main question is:
+- how does project change become versioned
+- where does review happen
+- how should spec, execution, and knowledge stay separated
+
+Then return to:
+- execution synthesis: [PROJECT_EXECUTION_ARCHITECTURE.md](/docs/toproject/execution-architecture)
+- UI alignment: [PROJECT_UI_MAPPING.md](/docs/toproject/ui-mapping)
+
+Return to the board home for block/topic position:
+- [PROJECT_CORE_STRUCTURE.md](/docs/toproject)
 
 and treats each as versioned.
 

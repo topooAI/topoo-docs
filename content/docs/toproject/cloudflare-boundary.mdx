@@ -1,0 +1,114 @@
+---
+title: "What Cloudflare Owns"
+description: "Cloudflare is the managed runtime, ingress, and deploy edge of the system."
+---
+## Purpose
+This document defines the role of Cloudflare inside the `toProject` architecture.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Boundary & Version Strategy` block.
+
+## Core Position
+Cloudflare is the `managed runtime and ingress edge`.
+
+Cloudflare owns:
+- worker runtime
+- deploy binding
+- request ingress
+- queue / event entry
+- public online service edge
+
+Cloudflare does not own:
+- project meaning
+- project object model
+- source version truth
+- knowledge truth
+- execution semantics
+
+## Why Cloudflare Matters
+Without a managed runtime layer:
+- online agent services remain local-only
+- deployment becomes disconnected from the project system
+- ingress and event handling have no stable home
+
+Cloudflare is where execution becomes reachable and operational online.
+
+## Cloudflare As Runtime Plane
+Inside this architecture, Cloudflare should be read as the managed runtime plane.
+
+It is the place where:
+- public entrypoints exist
+- runtime services stay online
+- deploy targets receive versioned source
+- queues and scheduled triggers can execute
+- webhooks can enter the system
+
+This makes Cloudflare closer to an online execution substrate than a project manager.
+
+## What Cloudflare Should Host
+The first practical Cloudflare layer should be:
+
+- `Workers`
+  for API entrypoints, runtime handlers, webhook ingestion, and lightweight orchestration
+
+- `D1`
+  for structured metadata such as run rows, artifact rows, registry records, and cross-system links
+
+- `R2`
+  for large artifacts such as exported reports, deploy payloads, logs, traces, and generated files
+
+- `Queues`
+  for deferred work, retries, and asynchronous execution flow
+
+- `Cron Triggers`
+  for scheduled runs and recurring maintenance or sync flows
+
+This is the most natural split because it keeps hot metadata, cold storage, and event flow separate.
+
+## Runtime Layers
+The runtime should be read in three layers:
+
+### 1. Local Runtime
+Where direct local execution happens.
+
+Examples:
+- local terminal
+- local worktree
+- local dev environment
+
+### 2. Managed Runtime
+Where platform-managed execution happens.
+
+Examples:
+- Cloudflare Workers
+- Cloudflare Queues
+- Cloudflare scheduled jobs
+
+### 3. External Runtime
+Where third-party execution surfaces live.
+
+Examples:
+- GitHub Actions
+- CI providers
+- remote containers
+- external APIs
+
+The point is not to make everything run inside Cloudflare.
+
+The point is to make Cloudflare the stable managed runtime edge of the system.
+
+## What Cloudflare Should Not Become
+Cloudflare should not become:
+- the project semantic model
+- the source version truth
+- the memory truth
+- the full human task system
+
+If Cloudflare starts owning those layers, runtime concerns swallow the whole architecture.
+
+That is the failure mode this boundary prevents.
+
+## Boundary
+Cloudflare should consume project and git state.
+
+It should not define project semantics.

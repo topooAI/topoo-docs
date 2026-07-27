@@ -1,0 +1,202 @@
+---
+title: "Project and Node Model"
+description: "The canonical responsibility, attention, version, and release boundaries for Projects, Nodes, Agents, Sessions, and Submissions."
+---
+
+This page is the canonical definition of `Project` and `Node` in Topoo Cloud.
+
+The model starts from the problem Topoo needs to solve: a small product may be understandable as one body of work, while a large product contains many distinct problem domains that people, Agents, and programs must advance in parallel without losing context or overwriting one another.
+
+## Canonical definitions
+
+> **Project is the unified product and release subject exposed to the outside world.**
+
+> **Node is a persistent, problem-oriented responsibility and attention boundary inside a Project.**
+
+A Project organizes Nodes into one coherent product. A Node gives one problem domain a durable identity, bounded context, source scope, version history, and delivery record.
+
+`Node` is not defined first as a file, repository, package, process, server, Agent, Session, or domain. Some Nodes may bind or produce those objects, but none of them alone defines a Node.
+
+## Why Node exists
+
+Node exists to make large products understandable and governable.
+
+It provides:
+
+- a clear problem and responsibility boundary
+- durable context that survives individual Agent Sessions
+- a bounded source and resource scope
+- independent work, review, and version history
+- a submission channel for people, Agents, and programs
+- conflict and dependency visibility across parallel work
+- an auditable delivery record that the Project can accept into a release
+
+The primary value of Node is attention management and responsibility isolation. Independent build or runtime behavior may follow from that boundary, but it is not the universal definition.
+
+## Small and large Projects
+
+A small Project may use one default Node:
+
+```text
+Project
+└── Default Node
+```
+
+The user does not need to manage additional structure until the work requires it.
+
+A large Project may contain many problem-oriented Nodes:
+
+```text
+Topoo Cloud Project
+├── UI System Node
+├── Deployment System Node
+├── Authentication Node
+├── Billing Node
+├── Observability Node
+└── Domain System Node
+```
+
+These Nodes may use different Agents, programs, repositories, packages, runtime targets, and review rules while remaining part of one externally unified product.
+
+## Project responsibility
+
+Project owns the unified product boundary:
+
+- product identity and objective
+- Node topology and dependency policy
+- members, permissions, and production authority
+- environments, resources, domains, and routes
+- release candidates and integrated checks
+- Preview and Production promotion
+- observability, audit, and rollback
+- the final set of accepted Node versions that form a Project Release
+
+Project is the authority that decides which accepted work represents the product.
+
+## Node responsibility
+
+Node owns the durable working and delivery boundary for one problem domain:
+
+- problem statement, scope, and acceptance framing
+- Agent identity, prompt, permissions, and operating procedure
+- linked source scope such as repository, branch, root path, or package
+- Sessions and their bounded tasks
+- Submissions, checks, summaries, and review state
+- immutable Node revisions and delivery versions
+- dependencies, consumers, and affected Project surfaces
+- build and Artifact records when the Node produces a buildable output
+
+A Node may be code-producing, package-producing, runtime-capable, workflow-oriented, component-oriented, or coordination-oriented. Runtime is a Node capability or type, not the definition of every Node.
+
+## Agent and Session relationship
+
+Node carries long-lived responsibility. Session carries short-lived attention.
+
+```text
+Node
+├── durable problem and scope
+├── Agent identity, prompt, permissions, and SOP
+├── source and resource boundaries
+├── version and delivery history
+└── Sessions
+    ├── Session 1: optimize the sidebar
+    ├── Session 2: optimize the top bar
+    └── Session 3: refine a component
+```
+
+One Node may receive work from multiple Agents and many Sessions. One Session is not a Node, and creating a new Session does not create a new responsibility boundary.
+
+Sessions may be created in Codex, VS Code, Claude, or another execution client. Topoo does not need to own the chat interface. Topoo provides the Node identity, scoped connection, authority, and Submission channel that the external Session uses.
+
+## Submission and release relationship
+
+Agent work must move through explicit authority boundaries:
+
+```text
+Session
+→ Submission
+→ Node revision or delivery version
+→ Project Release Candidate
+→ immutable Project Artifact or pinned Artifact set
+→ Preview
+→ Approval
+→ Production
+```
+
+Node publication and Project deployment are different:
+
+- **Node publication** creates a new immutable version or deliverable for one responsibility domain.
+- **Project deployment** promotes an accepted combination of Node versions as one product release.
+
+A Node version becoming available must not silently change a Project. The Project explicitly accepts that version into a Release Candidate.
+
+## Source, repository, and monorepo relationship
+
+Repository and Node are not the same object.
+
+- one repository may provide source to one Node
+- one monorepo may provide different root paths to several Nodes
+- one Node may bind more than one source when the responsibility requires it
+- one Project may organize Nodes backed by several repositories
+
+Node boundaries follow problem ownership and delivery responsibility, not repository layout alone.
+
+```text
+Project
+├── Node A ── Repository X / apps/web
+├── Node B ── Repository X / apps/worker
+└── Node C ── Repository Y /
+```
+
+Splitting a Node does not automatically require splitting a Git repository. Splitting a repository does not complete the architecture until the consuming Node records a real, versioned dependency on the separated output.
+
+## Package and runtime examples
+
+TopooUI illustrates why Node cannot be defined only as a running process.
+
+```text
+TopooUI responsibility
+├── versioned @topoo/ui Package Artifact
+└── runtime-capable catalog site
+```
+
+The shared UI responsibility may publish a versioned Package Artifact. Consumer Projects choose when to accept that package version. The catalog site may also run as a site-capable Node and be exposed through a Project-owned domain.
+
+For runtime-capable Nodes, Topoo may record build, Artifact, runtime, deployment, and health state. For non-runtime Nodes, those fields are absent rather than fabricated.
+
+## Release example
+
+```text
+Topoo Cloud Release 101
+├── UI System Node        → Version 13
+├── Deployment System    → Version 8
+├── Authentication Node  → Version 21
+└── Billing Node         → Version 5
+```
+
+If only the UI System Node changes, the next Project Release may pin:
+
+```text
+Topoo Cloud Release 102
+├── UI System Node        → Version 14
+├── Deployment System    → Version 8
+├── Authentication Node  → Version 21
+└── Billing Node         → Version 5
+```
+
+The Project changes locally without rebuilding or redefining unrelated responsibility domains.
+
+## Product invariants
+
+The following rules must remain true:
+
+1. Project is the external product, environment, domain, and Production authority.
+2. Node is the persistent problem, responsibility, attention, and delivery boundary.
+3. Agent is an actor working under Node scope; it is not the Node itself.
+4. Session is an ephemeral execution context attached to a Node.
+5. Submission is proposed work, not deployment authority.
+6. A Node version is immutable after publication.
+7. A Project Release pins the accepted versions of its Nodes.
+8. A Node version does not silently update consuming Projects.
+9. Repository layout does not define Node topology by itself.
+10. Runtime state is shown only for Nodes that actually have a runtime capability.

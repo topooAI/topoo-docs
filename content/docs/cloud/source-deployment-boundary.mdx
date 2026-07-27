@@ -1,0 +1,166 @@
+---
+title: "Source and Deployment Boundary"
+description: "The boundary between code provenance, release control, and runtime artifacts in Topoo Cloud."
+---
+
+Source and deployment are connected but they are not the same object.
+
+Node delivery and Project deployment are also connected but they are not the same authority.
+
+Source explains where a change came from.
+
+Deployment explains which artifact is running, where it is running, and how it reached that environment.
+
+## Source owns
+
+- provider and repository identity
+- branch or reference
+- commit or source revision
+- monorepo root path or package boundary
+- author and review context
+- sync and import state
+
+## Deployment owns
+
+- the accepted Project Release identity
+- the exact Node versions included in that release
+- immutable artifact identity or pinned Artifact set
+- build and release status
+- target environment
+- promotion and rollback history
+- domain and route bindings
+- runtime version
+- operator or Agent
+- deployment time
+
+Every deployment must reference the source revision that produced it, but deployment history must not be reduced to repository history.
+
+## Node delivery and Project deployment
+
+A Node owns one problem-oriented delivery history. It can accept Submissions, produce immutable revisions, and publish a new version or Artifact.
+
+A Project decides which Node versions form the product:
+
+```text
+Session
+→ Submission
+→ Node delivery version
+→ Project Release Candidate
+→ Preview
+→ Approval
+→ Production
+```
+
+Publishing a Node version does not silently update a Project. A Project must explicitly accept that version into a Release Candidate. This preserves local change: one Node can advance while every unchanged Node remains pinned to its previously accepted version.
+
+## Deployment entry modes
+
+Topoo supports three ways to bring work into the deployment system. They share the same release, audit, and runtime model after the source snapshot is created.
+
+| Entry mode | User intent | Topoo responsibility |
+|---|---|---|
+| Manual upload | Drag a local code package into Topoo and run it | Preserve the uploaded snapshot, detect the project and build contract, validate required configuration, build an immutable artifact, and create a deployment |
+| GitHub sync | Keep a Topoo Project connected to a repository and branch | Sync each accepted commit, explain the change, run the configured checks, and create a Preview or Production candidate according to project policy |
+| Topoo-native delivery | Create or change the Project directly in Topoo with people or Agents | Keep the request, working state, review, integration, artifact, and deployment in one continuous project record |
+
+GitHub synchronization does not have to mean that every commit immediately overwrites Production. A Project can choose to:
+
+- synchronize source without deploying
+- automatically create an isolated Preview
+- promote automatically after required checks pass
+- require human approval before Production promotion
+
+The entry mode changes how source arrives. It must not weaken the controls that determine what is allowed to run.
+
+## Change summaries
+
+Every accepted source change must carry a human-readable change summary. A Git commit message may be part of that summary, but it is not the complete audit record.
+
+A change summary should explain:
+
+- what changed
+- why the change was needed
+- who requested it
+- who or which Agent performed it
+- which files, modules, resources, or behaviors may be affected
+- which checks were run and whether they passed
+- which commit, build, artifact, and deployment were produced
+- which approval and promotion decisions were made
+- whether the change was later superseded or rolled back
+
+Topoo should generate an initial summary from the request, source diff, Agent activity, and validation results. The summary remains reviewable so that a person can correct the explanation before promotion.
+
+The result is an audit trail that explains intent, not only file history.
+
+## Release control
+
+Topoo may accept changes from people and multiple Agents, but production promotion must pass through one deterministic release-control path.
+
+The release controller is responsible for:
+
+- accepting channel-specific submissions
+- validating the expected base revision
+- detecting overlapping file or resource ownership
+- building and testing one integrated source state
+- creating a versioned release artifact
+- promoting only the accepted artifact
+- recording who or what submitted, integrated, approved, and deployed the change
+
+An Agent submission is a proposed change, not an instruction to overwrite the current production state.
+
+## Multi-Agent isolation
+
+A Project may have ten or more Agents working at the same time across several Nodes. One Node may also receive work from several Sessions or Agents. Concurrency must not mean that the Agents share one mutable working copy or overwrite one another's unfinished work.
+
+Node carries the durable problem, responsibility, identity, prompt, permissions, source scope, and delivery history. Session is a temporary execution context that may be created in Codex, VS Code, Claude, or another client and attached to that Node.
+
+Each Agent task receives:
+
+- a bounded task and expected base revision
+- an isolated branch or working state
+- an explicit source and resource scope
+- its own change summary, checks, and submission record
+
+Topoo then:
+
+- detects overlapping files, dependencies, resources, and responsibilities
+- keeps unaccepted Agent work outside the integrated source state
+- reviews and merges accepted submissions through release control
+- builds and tests the resulting integrated revision
+- creates a deployment only from that accepted, immutable revision
+
+An Agent can propose a change. It cannot silently redefine the current Project state or independently replace Production.
+
+## Submission channels
+
+Channels can express different authority:
+
+| Channel | Typical authority |
+|---|---|
+| Draft | Save work for review without integration or deployment |
+| Review | Submit a bounded change for validation and conflict detection |
+| Integration | Merge an accepted change into the release candidate |
+| Preview | Build and publish an isolated environment |
+| Production | Promote an approved, versioned artifact |
+
+The exact labels may evolve, but submission authority and deployment authority must remain separate.
+
+## Required traceability
+
+A release record should be able to answer:
+
+- which source revision was used
+- what changed and why
+- which person or Agent requested and performed the change
+- which submissions were included
+- which checks passed or failed
+- which artifact was produced
+- which environment received it
+- who or what approved and promoted it
+- whether rollback is available
+
+This traceability is the foundation for safe multi-Agent delivery.
+
+From any running deployment, an operator should be able to trace:
+
+`Deployment → artifact → build → source revision → change summary → request → person or Agent → checks and approval`

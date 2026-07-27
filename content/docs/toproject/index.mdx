@@ -2,18 +2,58 @@
 title: "Project Core Structure"
 description: "Project architecture contract synced from the project module source documents."
 ---
-## Purpose
-This document is the index and executive summary for the `project` module architecture.
+<div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+  <LinkedCard href="/docs/toproject/object-model" className="items-start gap-1 p-6 text-sm md:p-6">
+    <div className="font-medium">Core Definition</div>
+    <div className="leading-relaxed text-muted-foreground">
+      Define the root object chain of project: outcome, workstream, task, activity, and assets.
+    </div>
+  </LinkedCard>
+  <LinkedCard href="/docs/toproject/execution-architecture" className="items-start gap-1 p-6 text-sm md:p-6">
+    <div className="font-medium">Execution Architecture</div>
+    <div className="leading-relaxed text-muted-foreground">
+      Explain the main operating loop, five architecture planes, control plane, and execution unit chain.
+    </div>
+  </LinkedCard>
+  <LinkedCard href="/docs/toproject/runtime-model" className="items-start gap-1 p-6 text-sm md:p-6">
+    <div className="font-medium">Operating System</div>
+    <div className="leading-relaxed text-muted-foreground">
+      Define execution mode, runtime, commands, hooks, automation, continuity, and operating posture.
+    </div>
+  </LinkedCard>
+  <LinkedCard href="/docs/toproject/git-model" className="items-start gap-1 p-6 text-sm md:p-6">
+    <div className="font-medium">Version Spine</div>
+    <div className="leading-relaxed text-muted-foreground">
+      Explain how project change becomes versioned, reviewable, and promotable through git domains.
+    </div>
+  </LinkedCard>
+  <LinkedCard href="/docs/toproject/ui-mapping" className="items-start gap-1 p-6 text-sm md:p-6">
+    <div className="font-medium">Surface Mapping</div>
+    <div className="leading-relaxed text-muted-foreground">
+      Map the architecture onto the current board UI, tabs, control plane, and execution projections.
+    </div>
+  </LinkedCard>
+  <LinkedCard href="/docs/toproject/boundary-version-strategy" className="items-start gap-1 p-6 text-sm md:p-6">
+    <div className="font-medium">Boundary &amp; Version Strategy</div>
+    <div className="leading-relaxed text-muted-foreground">
+      Define what GitHub, Notion, Linear, and Cloudflare own, and where project-level version governance must begin.
+    </div>
+  </LinkedCard>
+</div>
 
-It does not try to hold the full architecture in one place.
+## Purpose
+This document is the board home and architecture index for the `project` module.
+
+It does not try to explain the whole project system in one uninterrupted essay.
 
 Its job is to define:
-- what the `project` module is centered around
-- why the architecture had to be formalized
-- which documents define each major part of the system
-- how those documents relate to each other
+- what the `toProject` board is for
+- which blocks organize the board
+- which topics belong to each block
+- which pages define each part of the system
+- how the reader should move through the board
 
-It exists to preserve the main argument of the architecture in one readable place before the details split into focused documents.
+This page is the reader's map before the detailed docs begin.
 
 ## Why This Exists
 The project module reached a point where UI refinement alone was no longer enough.
@@ -56,6 +96,195 @@ under an agent-led operating model.
 
 This is the sentence that all other documents are meant to defend, refine, or implement.
 
+## Board Definition
+`toProject` is a board, not just a folder of project docs.
+
+As a board, it should do three things at once:
+- define the semantic center of project
+- explain how project executes
+- map that architecture onto the current product surface
+
+That means the board needs internal structure.
+
+The board is not one long article.
+
+It is a system of:
+- `board`
+- `block`
+- `topic`
+- `page`
+
+For `toProject`, those layers should be read like this:
+
+- `board`: `toProject`
+- `block`: one major architecture lane inside the board
+- `topic`: one bounded knowledge concern inside a block
+- `page`: the concrete document that explains that topic
+
+## Block Structure
+The `toProject` board should be read through five blocks.
+
+Use the cards above as the fast entry path.
+
+Use the sections below as the detailed block map.
+
+### 1. Core Definition
+This block defines what project is.
+
+It owns topics such as:
+- root object
+- outcome
+- workstream
+- task
+- activity
+- assets / files
+
+Primary page:
+- [PROJECT_OBJECT_MODEL.md](/docs/toproject/object-model)
+
+### 2. Execution Architecture
+This block defines how the whole project system operates as one execution architecture.
+
+It owns topics such as:
+- main execution loop
+- five architecture planes
+- control plane
+- tab architecture
+- execution unit chain
+- failure modes
+
+Primary page:
+- [PROJECT_EXECUTION_ARCHITECTURE.md](/docs/toproject/execution-architecture)
+
+### 3. Operating System
+This block defines runtime-facing execution behavior.
+
+It owns topics such as:
+- execution mode
+- runtime
+- execution sandbox
+- actor model
+- capability model
+- runtime scheduling
+- commands and skills
+- hooks and automation
+- continuity
+- blocking and permission posture
+
+Primary page:
+- [PROJECT_RUNTIME_MODEL.md](/docs/toproject/runtime-model)
+
+### 4. Version Spine
+This block defines how project change becomes versioned, reviewable, and promotable.
+
+It owns topics such as:
+- project-level git role
+- spec domain
+- execution domain
+- knowledge domain
+- review boundary
+- deploy linkage
+
+Primary page:
+- [PROJECT_GIT_MODEL.md](/docs/toproject/git-model)
+
+### 5. Surface Mapping
+This block defines how the architecture is currently expressed in product UI.
+
+It owns topics such as:
+- control plane fields
+- tab mapping
+- view projections
+- missing fields
+- transitional surfaces
+
+Primary page:
+- [PROJECT_UI_MAPPING.md](/docs/toproject/ui-mapping)
+
+### 6. Boundary & Version Strategy
+This block defines why `toProject` exists alongside existing tools, what each external system owns, and how versions are governed across source, execution, and artifacts.
+
+It owns topics such as:
+- why `toProject` exists
+- what GitHub owns
+- what Notion owns
+- what Linear owns
+- what Cloudflare owns
+- source version
+- execution version
+- artifact version
+- run ledger
+- artifact ledger
+- when GitHub is not enough
+
+Primary page:
+- [BOUNDARY_VERSION_STRATEGY.md](/docs/toproject/boundary-version-strategy)
+
+## Topic Map
+The board should be read as a topic map, not just as a doc list.
+
+### Core Definition Topics
+- Project Root
+- Outcome
+- Workstream
+- Task
+- Activity
+- Assets & Files
+
+### Execution Architecture Topics
+- Main Loop
+- Five Planes
+- Control Plane
+- Tab Architecture
+- Execution Unit Chain
+- Execution State Machine
+- Observability & Evaluation
+- Failure Modes
+- Implementation Priorities
+
+### Operating System Topics
+- Execution Mode
+- Runtime
+- Execution Sandbox
+- Actor Model
+- Capability Model
+- Runtime Scheduling
+- Commands
+- Skills
+- Hooks
+- Automation
+- Continuity
+- Activity As Operating Evidence
+
+### Version Spine Topics
+- Why Git Is Core
+- Spec Domain
+- Execution Domain
+- Knowledge Domain
+- Review Boundary
+- Project-Level Git Surface
+
+### Surface Mapping Topics
+- Overview Tab
+- Outcome Tab
+- Workstream Tab
+- Tasks Tab
+- Activity Tab
+- Assets & Files Tab
+- List / Board / Timeline Projections
+- Current Gaps
+
+### Boundary & Version Strategy Topics
+- Why `toProject` Exists
+- What GitHub Owns
+- What Notion Owns
+- What Linear Owns
+- What Cloudflare Owns
+- Version Management Strategy
+- Run Ledger
+- Artifact Ledger
+- When GitHub Is Not Enough
+
 ## Document Structure
 This architecture is intentionally split into focused documents to avoid one oversized, high-context page.
 
@@ -69,7 +298,7 @@ One document cannot do both well without becoming too long and expensive to read
 
 ### 1. Index
 - [PROJECT_CORE_STRUCTURE.md](/docs/toproject)
-- Purpose: executive summary and document map
+- Purpose: board home, block map, and reading order
 
 ### 2. Object Model
 - [PROJECT_OBJECT_MODEL.md](/docs/toproject/object-model)
@@ -86,7 +315,12 @@ One document cannot do both well without becoming too long and expensive to read
 - Focus: `what` the operating layer is, including runtime, execution mode, commands, hooks, automation, and continuity
 - Reason it is separate: runtime logic is essential, but if mixed into the object model it will overpower the project-centered thesis
 
-### 5. UI Mapping
+### 5. Execution Architecture
+- [PROJECT_EXECUTION_ARCHITECTURE.md](/docs/toproject/execution-architecture)
+- Focus: how intent, decomposition, runtime, git, and evidence combine into one operating loop
+- Reason it is separate: this is the synthesis doc that turns the individual definition docs into one readable execution system
+
+### 6. UI Mapping
 - [PROJECT_UI_MAPPING.md](/docs/toproject/ui-mapping)
 - Focus: how the current UI maps to the architecture, what is aligned, and what is still transitional
 - Reason it is separate: current implementation state should not dilute the definition docs
@@ -96,9 +330,35 @@ Recommended reading order:
 
 1. this document
 2. `PROJECT_OBJECT_MODEL.md`
-3. `PROJECT_GIT_MODEL.md`
+3. `PROJECT_EXECUTION_ARCHITECTURE.md`
 4. `PROJECT_RUNTIME_MODEL.md`
-5. `PROJECT_UI_MAPPING.md`
+5. `PROJECT_GIT_MODEL.md`
+6. `PROJECT_UI_MAPPING.md`
+
+That order is intentional:
+- object model first, so the root semantics are stable
+- execution architecture second, so the reader sees how the parts combine
+- runtime and git next, so operating details are interpreted in context
+- UI mapping last, so implementation state does not distort definition
+
+## Suggested Paths
+Use these reading paths depending on the question in front of you.
+
+### If the question is semantic
+Read:
+1. [Project Object Model](/docs/toproject/object-model)
+2. [Project Execution Architecture](/docs/toproject/execution-architecture)
+
+### If the question is operational
+Read:
+1. [Project Execution Architecture](/docs/toproject/execution-architecture)
+2. [Project Runtime Model](/docs/toproject/runtime-model)
+3. [Project Git Model](/docs/toproject/git-model)
+
+### If the question is implementation-facing
+Read:
+1. [Project Execution Architecture](/docs/toproject/execution-architecture)
+2. [Project UI Mapping](/docs/toproject/ui-mapping)
 
 ## Architecture Shape
 The architecture is split into three levels:
@@ -120,10 +380,12 @@ This defines how the project is allowed to execute and how versioned execution i
 Primary sources:
 - `PROJECT_GIT_MODEL.md`
 - `PROJECT_RUNTIME_MODEL.md`
+- `PROJECT_EXECUTION_ARCHITECTURE.md`
 
 This level answers:
 - how the project is versioned
 - how it is allowed to run
+- how those planes combine into one operating loop
 - how engines, commands, hooks, and continuity relate to project semantics
 
 ### 3. UI And Surface Mapping
@@ -174,9 +436,42 @@ In other words:
 - collapsing project into documentation only
 - collapsing project into a single execution engine
 
+## Board Home Use
+This page should remain the board home.
+
+It should always answer:
+- what `toProject` is for
+- which blocks exist
+- which topics belong to them
+- where a reader should go next
+
 ## Next Docs
 The next architecture documents should continue the same split:
 - definition docs answer `what + why`
 - implementation docs answer `how`
 
 This split is required to keep `doc.topoo.ai` readable, composable, and low-context.
+
+## Execution Architecture Summary
+The `toProject` board should be read as one operating system for delivery.
+
+That means the board is not just where tasks are listed.
+
+It is where five planes are made to work together:
+- intent
+- decomposition
+- operation
+- git versioning
+- evidence
+
+The canonical chain is:
+
+`Project -> Outcome -> Workstream -> Task -> Activity / Assets`
+
+The operating loop is:
+
+`Intent -> Workstream -> Task -> Runtime -> Git -> Activity -> Updated Project State`
+
+That loop is what makes the board more than a planning tool.
+
+It turns the board into the execution architecture of the product.

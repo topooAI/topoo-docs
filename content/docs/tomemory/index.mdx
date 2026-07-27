@@ -2,12 +2,68 @@
 title: "toMemory"
 description: "Memory board documentation for retrieval, schema views, and persistence surfaces."
 ---
-## Scope
+`toMemory` is the board for recall, persistence, retrieval surfaces, and schema-facing memory presentation inside Topoo.
 
-- **Recall surfaces:** memory views, retrieval UX, and schema presentation patterns.
-- **Model contracts:** how memory structures appear inside the desktop product surfaces.
-- **Acceptance rules:** consistency boundaries between memory, chat, docs, and project views.
+Its purpose is to define how stored context becomes visible and usable across the product without collapsing memory into chat history, documents, or project data.
 
-## Current status
+## What this board owns
 
-This board is scaffolded and ready for concrete documentation. We can now replace the placeholder scope with real page structure and acceptance criteria.
+This board should document:
+
+- memory-facing UI surfaces
+- retrieval and recall presentation
+- schema visibility
+- persistence expectations at the product surface layer
+- acceptance rules for how memory appears in other boards
+
+The board should answer:
+
+> how does memory become an explicit product surface rather than an invisible implementation detail?
+
+## Core thesis
+
+Memory is not just storage.
+
+Inside Topoo, memory must be:
+
+- retrievable
+- inspectable
+- bounded by schema
+- clearly distinguished from authored documents and project objects
+
+If these boundaries are blurred, the product becomes hard to reason about:
+
+- chat history gets mistaken for memory
+- project structure gets mistaken for persistent knowledge
+- documents get mistaken for system recall
+
+This board exists to prevent that drift.
+
+## Major topics that belong here
+
+This board should grow into pages such as:
+
+- memory surface overview
+- retrieval and recall experience
+- schema display and inspection
+- persistence boundaries across boards
+- memory references inside agent, work, and project surfaces
+- acceptance criteria for memory visibility and correctness
+
+## Relationship to other boards
+
+- `toAgent` uses memory, but does not define memory as a product surface.
+- `toWork` may render memory-backed references, but does not own retrieval behavior.
+- `toProject` may hold execution evidence and assets, but that is not identical to memory.
+- `TopooUI` owns the reusable UI patterns used to display schemas, references, and recall states.
+
+## Current direction
+
+The `toMemory` board should become the place where:
+
+- memory is made explicit
+- retrieval behavior is understandable
+- schema presentation is stable
+- product boundaries around persistence stay readable
+
+That clarity is necessary if memory is going to function as a trustworthy system surface.

@@ -1,0 +1,64 @@
+---
+title: "Actor Model"
+description: "Human, agent, system, and runtime actors across the project execution plane."
+---
+## Purpose
+This document defines who can act inside the `toProject` system and what role each actor plays.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Operating System` block.
+
+## Core Position
+An agentic project cannot treat all events as if they came from one generic user.
+
+The system needs an explicit actor model.
+
+## Canonical Actors
+The first runtime-ready actor split should be:
+
+### 1. Human Actor
+Owns:
+- objective framing
+- approval
+- override
+- review
+- escalation
+
+### 2. Agent Actor
+Owns:
+- delegated execution
+- structured reasoning
+- file modification
+- run activity generation
+- artifact production
+
+### 3. System Actor
+Owns:
+- hooks
+- automation triggers
+- scheduled jobs
+- sync and registry updates
+
+### 4. Runtime Actor
+Owns:
+- the actual execution host
+- runtime policy
+- environment state
+- execution envelope
+
+## Why This Matters
+Without actor separation:
+- approval and execution blur together
+- traces become ambiguous
+- responsibility becomes unreadable
+- agent activity looks like generic system noise
+
+## Boundary
+This page defines who acts.
+
+It does not define:
+- what states those actors move through
+- what permissions their tools have
+- how source version is linked
+
+Those belong to the state, capability, and version documents.

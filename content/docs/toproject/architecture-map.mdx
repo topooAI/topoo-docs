@@ -1,0 +1,161 @@
+---
+title: "Project Architecture Map"
+description: "Single-map overview of board, blocks, object chain, runtime, sandbox, version spine, ledgers, and observability."
+---
+
+This page compresses the whole `toProject` system into one readable map.
+
+Read it in this order:
+
+1. `board` and `block` structure
+2. object chain
+3. execution control plane
+4. runtime and sandbox
+5. version spine and ledgers
+6. observability and evaluation
+
+## Architecture Map
+
+<Tabs defaultValue="system-map">
+  <TabsList>
+    <TabsTrigger value="system-map">System Map</TabsTrigger>
+    <TabsTrigger value="layered-svg">Layered SVG</TabsTrigger>
+  </TabsList>
+  <TabsContent value="system-map">
+
+```mermaid
+flowchart TD
+  B["toProject Board"] --> BD["Core Definition"]
+  B --> BE["Execution Architecture"]
+  B --> BO["Operating System"]
+  B --> BV["Version Spine"]
+  B --> BS["Surface Mapping"]
+  B --> BB["Boundary & Version Strategy"]
+
+  BD --> O["Outcome"]
+  O --> W["Workstream"]
+  W --> T["Task"]
+  T --> R["Run"]
+  R --> A["Activity"]
+  R --> F["Artifact"]
+
+  BE --> CP["Project Control Plane"]
+  CP --> TAB["Board Tabs / Projections"]
+  CP --> LOOP["Execution Loop"]
+  CP --> SM["Execution State Machine"]
+
+  BO --> LR["Local Runtime"]
+  BO --> CR["Cloudflare Managed Runtime"]
+  BO --> SB["Execution Sandbox"]
+  BO --> ACT["Actor Model"]
+  BO --> CAP["Capability Model"]
+  BO --> SCH["Runtime Scheduling"]
+
+  BV --> GH["GitHub Source Version"]
+  BV --> EV["Execution Version"]
+  BV --> AV["Artifact Version"]
+  BV --> RL["Run Ledger"]
+  BV --> AL["Artifact Ledger"]
+
+  BB --> GHB["GitHub Boundary"]
+  BB --> NOB["Notion Boundary"]
+  BB --> LIB["Linear Boundary"]
+  BB --> CFB["Cloudflare Boundary"]
+
+  BS --> UI["Current Project UI"]
+  UI --> OVER["Overview / Board Home"]
+  UI --> OUT["Outcome View"]
+  UI --> TASKS["Tasks View"]
+  UI --> TRACE["Trace / Evidence View"]
+
+  R --> LR
+  R --> CR
+  R --> SB
+  R --> GH
+  R --> EV
+  R --> RL
+  F --> AV
+  F --> AL
+  A --> OBS["Observability & Evaluation"]
+  OBS --> COST["Cost / Token"]
+  OBS --> QUAL["Quality"]
+  OBS --> TRACE2["Trace / Logs / Evidence"]
+```
+
+  </TabsContent>
+  <TabsContent value="layered-svg">
+    <ProjectArchitectureMapFigure />
+  </TabsContent>
+</Tabs>
+
+## How to Read the System
+
+### 1. Board and blocks
+`toProject` is the board.
+
+Its current blocks are:
+- `Core Definition`
+- `Execution Architecture`
+- `Operating System`
+- `Version Spine`
+- `Surface Mapping`
+- `Boundary & Version Strategy`
+
+### 2. Object chain
+The core execution object chain is:
+
+`Outcome -> Workstream -> Task -> Run -> Activity / Artifact`
+
+That means the system is not centered on tickets alone.
+
+It is centered on execution units and their evidence trail.
+
+### 3. Control plane
+The project surface is a control plane, not a passive document.
+
+It must express:
+- current state
+- current runtime posture
+- current execution projection
+- current artifact trail
+
+### 4. Runtime and sandbox
+Current runtime strategy is intentionally narrow:
+- `Local Runtime`
+- `Cloudflare Managed Runtime`
+
+Execution should not happen in an unbounded host environment.
+
+That is why `Execution Sandbox` exists as a separate topic:
+- runtime answers `where`
+- sandbox answers `how safely`
+
+### 5. Version spine
+Versioning is split into three layers:
+- `GitHub Source Version`
+- `Execution Version`
+- `Artifact Version`
+
+GitHub alone is not enough because it cannot fully explain:
+- runtime posture
+- run lineage
+- artifact lineage
+- cross-system execution evidence
+
+### 6. Ledgers
+The system needs two formal ledgers:
+- `Run Ledger`
+- `Artifact Ledger`
+
+Those ledgers make execution auditable and recoverable.
+
+### 7. Observability
+Observability is not optional.
+
+The system needs:
+- cost and token visibility
+- run quality visibility
+- trace and log visibility
+- evidence-level auditability
+
+Without this layer, an agentic project system becomes expensive but unverifiable.

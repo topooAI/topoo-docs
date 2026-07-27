@@ -2,15 +2,86 @@
 title: "Core Ideas"
 description: "Core principles for how Topoo is framed before entering solution-specific boards."
 ---
-Topoo is the core-ideas board for the whole documentation system.
+Topoo is the board that holds the product-level framing above any single work surface.
 
-It should answer the questions that sit above any one work surface:
+It exists so the rest of the documentation does not start in the middle of implementation.
+Before reading `toAgent`, `toWork`, `toProject`, `toMemory`, or `TopooUI`, a reader should be able to answer:
 
-- what Topoo is optimizing for
-- why the system is split into separate boards
-- how the boards relate to each other
-- what belongs to shared system thinking versus board-specific implementation
+- what Topoo is trying to make possible
+- why the product is split into separate boards
+- which decisions belong to shared system framing
+- which decisions belong to board-specific solutions
 
-The job of this page is not to describe a concrete feature.
+## Product thesis
 
-Its job is to hold the stable framing that later solution boards build on top of.
+Topoo is a desktop operating environment for agent-led work.
+
+It is not just a chat product, not just a document tool, and not just a project tracker. It is a coordinated system where:
+
+- `toAgent` handles conversation, orchestration, and execution requests
+- `toWork` handles document surfaces, artifacts, and publishable outputs
+- `toProject` handles durable project structure, execution containers, and operating models
+- `toMemory` handles recall, schema views, persistence, and retrieval
+- `TopooUI` holds the shared interface language and documentation primitives used by all boards
+
+Each board exists because the system is too large and too semantically different to explain from a single surface.
+
+## Why the system is split into boards
+
+The split is intentional.
+
+Without board boundaries, the product drifts into mixed semantics:
+
+- chat starts carrying document meaning
+- documents start behaving like projects
+- project views start absorbing runtime and memory concerns
+- shared UI primitives get confused with feature-specific behavior
+
+Boards keep the system readable.
+
+They allow each lane to answer one class of questions well, without forcing every page to carry the whole product model.
+
+## Shared versus board-specific thinking
+
+Some ideas should remain stable across the whole product:
+
+- the product is agent-led
+- structure matters more than isolated UI polish
+- surfaces must stay explicit about what they own
+- reusable UI language belongs in `TopooUI`, not scattered across product boards
+- documentation must preserve reasoning, not just implementation snapshots
+
+Other ideas only make sense inside a specific board:
+
+- `toAgent` interaction rules
+- `toWork` publishing flows
+- `toProject` object semantics and execution layers
+- `toMemory` retrieval and schema presentation
+
+This distinction is one of the main jobs of the documentation system.
+
+## Reading model
+
+The recommended way to read the system is:
+
+1. Start with `Topoo` for product framing.
+2. Enter one board for the solution lane you care about.
+3. Use `TopooUI` for shared UI rules, docs primitives, and reusable system language.
+
+That order matters.
+
+If readers begin with implementation details before understanding the board split, the documentation becomes mechanically organized but conceptually weak.
+
+## What this board should contain
+
+The `Topoo` board should hold:
+
+- core ideas
+- board positioning
+- system-level principles
+- cross-board reading guidance
+- future product-level contracts that sit above any one board
+
+It should not become a dumping ground for detailed implementation.
+
+Detailed architecture belongs in the board that owns it.

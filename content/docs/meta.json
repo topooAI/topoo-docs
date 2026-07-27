@@ -3,6 +3,9 @@
   "title": "Boards",
   "pages": [
     "index",
+    "conversation-to-execution",
+    "core-ideas",
+    "cloud",
     "toagent",
     "towork",
     "toproject",

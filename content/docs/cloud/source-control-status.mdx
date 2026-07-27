@@ -1,0 +1,90 @@
+---
+title: "Source Control Implementation Status"
+description: "Audited implementation status for GitHub integration, Topoo-hosted Git, Agent submissions, and release control."
+---
+
+This page records the implementation state observed on **July 27, 2026**.
+
+Status is binary:
+
+- **Completed** — the full user outcome has been verified
+- **Not completed** — at least one required part is missing or has not been accepted
+
+Existing components inside a not-completed capability are listed as evidence. They do not change the final status.
+
+## Completed
+
+| Capability | Current evidence |
+|---|---|
+| Project repository binding | Projects persist provider, repository, branch, sync mode, status, and provider metadata. |
+| Repository sync records | Sync attempts and their status are persisted per repository link. |
+| GitHub App integration surface | App configuration, installation callback, installation repository listing, and signed webhook endpoints exist. |
+| GitHub source reads | Topoo can resolve repository branches and commits, read repository trees, and import an immutable commit archive. |
+| Node source browser | The Node editor can display the repository tree, branch, files, text previews, and derived source structure. |
+| Change Request model | GitHub Pull Requests are normalized into Node Change Requests. |
+| Check model | GitHub Check Runs are normalized and attached to Change Requests. |
+| Immutable source snapshot | Deployments can resolve and retain a source snapshot tied to a specific commit or uploaded manifest. |
+| Deployment ledger | Deployment records preserve source identity, status, target, and artifact information. |
+| Exact-revision redeploy path | A recorded GitHub commit or Topoo upload manifest can be selected as the deployment source. |
+
+## Not completed — existing components
+
+| Capability | Existing components | Missing requirements | Status |
+|---|---|---|---|
+| GitHub connection lifecycle | App, installation, repository, callback, and API paths exist. | Reconnect, failure recovery, permissions diagnostics, and full production acceptance. | Not completed |
+| Branch and commit management | Branch and commit data are represented and used by source reads and deployments. | Complete customer workflows for selecting, protecting, switching, and auditing branches. | Not completed |
+| GitHub event synchronization | Pull Request and Check webhook events can trigger Node synchronization. | Push, branch, tag, deletion, retry, replay, complete backfill, and production acceptance. | Not completed |
+| Automatic delivery | GitHub workflow dispatch and Topoo-hosted deployment paths exist. | An accepted push or Pull Request path through Preview, approval, and Production. | Not completed |
+| Topoo source mirror | Topoo can retain immutable archives and manifest-based mirrors for browsing and rebuilding. | A cloneable and pushable Git repository service. | Not completed |
+| Change Request workflow | Node pages can show synced changes, checks, deliveries, and exact revisions. | Topoo-native review, comments, approvals, merge policy, and protected branches. | Not completed |
+| Release traceability | Source revisions, checks, deployments, and delivery records exist. | One release candidate that records every included Agent submission and approval. | Not completed |
+| Node version management | Node delivery revisions and some delivery records exist. | A complete version list, semantic version identity, diff, change summary, immutable Artifact linkage, and restore workflow. | Not completed |
+| Node consumer graph | Project and Node references exist in parts of the control-plane model. | A verified dependency graph showing which Projects consume each Node or Package version and which upgrades are available. | Not completed |
+| Project Release composition | Project deployment history and Node-linked build records exist. | One immutable Project Release that pins the accepted version of every included Node. | Not completed |
+
+## Not completed — capability absent
+
+| Capability | Required outcome | Status |
+|---|---|---|
+| Topoo Git hosting | Git-compatible clone, fetch, pull, push, branches, tags, repository history, and server-side access control. | Not completed |
+| Topoo-native Change Requests | Review, comments, approvals, required checks, merge, and protected branches without GitHub. | Not completed |
+| Agent Submission Channel | A first-class submission object with Agent identity, base revision, scope, authority, and diff. | Not completed |
+| Integration and merge queue | Ordered, deterministic integration with stale-base and overlapping-change detection. | Not completed |
+| Visual Release Controller | A control-plane surface for submissions, checks, candidates, approvals, previews, production promotion, and rollback. | Not completed |
+| Channel policy enforcement | Workspace policies that separate draft, review, integration, preview, and production authority. | Not completed |
+| Multi-provider adapters | Equivalent connected-provider support beyond GitHub and uploaded source. | Not completed |
+| Bidirectional portability | Complete import, export, mirroring, reconciliation, and provider migration workflows. | Not completed |
+| Git operations administration | SSH keys or tokens, quotas, retention, backup, restore, garbage collection, and Git LFS policy. | Not completed |
+
+## Current product boundary
+
+Topoo Cloud currently has a substantial **GitHub-connected source and deployment control-plane foundation**.
+
+It does not yet have a complete **Topoo-native Git collaboration platform** or the final **Agent Release Controller**.
+
+The next implementation milestone should not be another isolated deployment button. It should establish the canonical Agent Submission and Release Candidate objects, then connect them to the existing repository, Change Request, Check, source snapshot, and deployment records.
+
+## Live verification boundary
+
+The authenticated production control plane was also inspected during this audit.
+
+- the Dashboard loaded with the active workspace and real operating data
+- the Projects page showed the live Topoo Cloud project and a completed local-source import
+- the Project Code view displayed the active branch and a browsable repository tree
+
+This verifies the deployed project/source browsing path.
+
+It does **not** verify GitHub App onboarding, webhook delivery, Topoo-native Git operations, multi-Agent integration, or production release-channel enforcement. Those capabilities remain classified from their current executable code and acceptance evidence, not inferred from the visible Code view.
+
+## Acceptance criteria for the next milestone
+
+The next milestone is complete only when:
+
+1. two Agents can submit independent changes against a pinned base revision
+2. the controller detects a stale base or overlapping file ownership
+3. accepted changes produce one release candidate
+4. required checks run against that integrated candidate
+5. preview uses the candidate's immutable artifact
+6. production promotion reuses the accepted artifact
+7. the UI shows submitter, revisions, checks, approvals, artifact, environments, and rollback
+8. one Agent cannot overwrite another Agent's accepted production state

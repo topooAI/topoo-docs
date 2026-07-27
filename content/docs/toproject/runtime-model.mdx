@@ -9,6 +9,21 @@ It covers runtime-facing concerns that are necessary for agentic execution but s
 
 It exists because once a project becomes agentic, static object definitions are no longer enough. Something must explain how those objects are allowed to run.
 
+## Block Position
+Inside the `toProject` board, this page is the primary definition page of the `Operating System` block.
+
+It primarily owns these topics:
+- Execution Mode
+- Runtime
+- Commands
+- Skills
+- Hooks
+- Automation
+- Continuity
+- Activity As Operating Evidence
+
+This page explains the operating posture of project after the object model has already been defined.
+
 ## Core Position
 Project is not runtime.
 
@@ -34,6 +49,127 @@ It must explicitly cover:
 This layer exists to answer a question the object model cannot answer by itself:
 
 "Given this project structure, how is execution actually allowed to happen?"
+
+## Runtime Is Federated, Not Singular
+The runtime should not be modeled as one machine or one service.
+
+It should be modeled as a federation of execution environments.
+
+In practice that means:
+- some execution happens on the local machine
+- some execution happens in managed cloud runtime
+- some execution happens on external or rented infrastructure
+- some execution may be triggered from edge devices or lightweight surfaces
+
+This matters because the system is not designing around one host.
+
+It is designing around one execution contract that can move across many hosts.
+
+## The Four Runtime Classes
+The cleanest runtime split is:
+
+### 1. Local Runtime
+Examples:
+- local terminal
+- local worktree
+- local IDE
+- local dev server
+- local agent process
+
+Best for:
+- code editing
+- repo-aware execution
+- fast iteration
+- high-trust local actions
+
+### 2. Managed Runtime
+Examples:
+- Cloudflare Workers
+- Cloudflare Queues
+- scheduled jobs
+- managed online APIs
+
+Best for:
+- ingress
+- lightweight orchestration
+- public endpoints
+- event handling
+- online always-on services
+
+### 3. External Runtime
+Examples:
+- rented compute
+- remote containers
+- CI runners
+- remote execution nodes
+- third-party APIs
+
+Best for:
+- heavy compute
+- isolated execution
+- scale-out work
+- provider-specific tools
+
+### 4. Edge / Device Runtime
+Examples:
+- phone
+- watch
+- tablet
+- browser extension
+- desktop companion surface
+
+Best for:
+- notification
+- trigger
+- approval
+- status inspection
+- lightweight control
+
+## Trigger Surface And Execution Surface Are Not The Same
+One of the most important runtime rules is:
+
+The place where a run is triggered does not have to be the place where it executes.
+
+Examples:
+- a user triggers from a watch, but execution runs in Cloudflare
+- a local UI triggers a run, but compute executes on a rented node
+- a webhook enters through Cloudflare, but execution continues on a repo-aware local runtime
+
+This separation is necessary because trigger surfaces are about access and control, while execution surfaces are about capability and cost.
+
+## Runtime Federation Is Not Yet A Compute Cluster
+The long-term direction may eventually include true compute scheduling across many nodes.
+
+But the current architecture is not a giant compute cluster by itself.
+
+It is first an execution control plane that can coordinate many runtimes.
+
+That distinction matters.
+
+Google-style large-scale compute systems solve:
+- low-level resource scheduling
+- cluster-wide allocation
+- fleet-scale execution balance
+
+`toProject` solves a different layer first:
+- human + agent execution coordination
+- runtime selection
+- version linkage
+- artifact lineage
+- evidence trail
+
+## But Compute Scheduling Will Eventually Matter
+Later, the runtime layer should grow a scheduling capability.
+
+That scheduler should eventually answer:
+- which runtime class should take this run
+- whether the run needs local context or remote scale
+- whether the run should be routed to Cloudflare, local execution, or rented compute
+- how priority, cost, and urgency affect routing
+
+This means compute scheduling is a later extension of runtime federation, not a replacement for it.
+
+The system should be built so that scheduling can emerge naturally from the existing runtime model.
 
 ## Execution Mode
 Execution mode describes the operating policy under which the agent is allowed to act.
@@ -122,10 +258,25 @@ The execution engine executes inside those constraints.
 
 This separation is what lets us learn from Claude Code-like systems without letting them redefine the whole platform around one engine's affordances.
 
+## Boundary
+This page does not define:
+- the root chain of project objects
+- the git version spine
+- the current UI tab implementation
+
+Those belong to:
+- [PROJECT_OBJECT_MODEL.md](/docs/toproject/object-model)
+- [PROJECT_GIT_MODEL.md](/docs/toproject/git-model)
+- [PROJECT_UI_MAPPING.md](/docs/toproject/ui-mapping)
+
 ## Relationship To The Rest Of The Architecture
 This document defines runtime semantics conceptually.
 
 Related documents:
 - project root object semantics: [PROJECT_OBJECT_MODEL.md](/docs/toproject/object-model)
 - git semantics: [PROJECT_GIT_MODEL.md](/docs/toproject/git-model)
+- full execution architecture: [PROJECT_EXECUTION_ARCHITECTURE.md](/docs/toproject/execution-architecture)
 - current UI alignment: [PROJECT_UI_MAPPING.md](/docs/toproject/ui-mapping)
+
+Return to the board home for the full block map:
+- [PROJECT_CORE_STRUCTURE.md](/docs/toproject)

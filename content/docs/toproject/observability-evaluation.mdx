@@ -1,0 +1,45 @@
+---
+title: "Observability & Evaluation"
+description: "How project execution becomes inspectable, measurable, and auditable."
+---
+## Purpose
+This document defines how the `toProject` system should make execution visible and judgeable.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Execution Architecture` block.
+
+## Core Position
+Activity is necessary but not sufficient.
+
+The system also needs explicit observability and evaluation layers.
+
+## Observability
+The platform should expose:
+- run traces
+- runtime state
+- artifact lineage
+- cost and token usage
+- failure signatures
+- timing and latency
+
+## Evaluation
+The platform should also expose:
+- success criteria checks
+- artifact quality checks
+- runtime degradation signals
+- review outcomes
+- acceptance outcomes
+
+## Why This Matters
+Without observability:
+- runs are opaque
+
+Without evaluation:
+- runs are visible but not judgeable
+
+Both are required for a trustworthy human + agent execution system.
+
+## Boundary
+This page defines inspectability and judgment layers.
+
+It does not define the whole object model or runtime policy itself.

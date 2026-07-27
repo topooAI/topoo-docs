@@ -1,0 +1,48 @@
+---
+title: "Artifact Ledger"
+description: "Structured records for deploys, previews, exports, traces, and generated outputs."
+---
+## Purpose
+This document defines the artifact ledger of the `toProject` system.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Boundary & Version Strategy` block.
+
+## Core Position
+Artifacts are not just files.
+
+They are outputs with lineage.
+
+## Artifact Types
+The first useful artifact categories are:
+- deploy
+- preview
+- report
+- export
+- trace bundle
+- generated asset
+
+## Canonical Artifact Record
+Each artifact should eventually record:
+- `artifactId`
+- `type`
+- `runId`
+- `projectId`
+- `storageLocation`
+- `createdAt`
+- `promotionState`
+- `sourceCommitSha`
+
+## Why This Matters
+The artifact ledger lets the system answer:
+- what did this run produce
+- where does it live
+- which deploy or preview came from which run
+- what should be retained, promoted, or archived
+
+## Boundary
+Large artifact payloads do not need to live in GitHub.
+
+GitHub keeps source truth.
+
+The artifact ledger keeps output truth.

@@ -1,0 +1,92 @@
+---
+title: "When GitHub Is Not Enough"
+description: "Where repository history stops and project-level run/artifact ledgers must begin."
+---
+## Purpose
+This document defines the boundary where GitHub stops being sufficient by itself.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Boundary & Version Strategy` block.
+
+## Core Position
+GitHub is enough for source history.
+
+GitHub is not enough for full agentic execution history.
+
+## GitHub Stops At Source Truth
+GitHub can tell us:
+- what file changed
+- on which branch
+- in which commit
+- under what review state
+
+It cannot fully tell us:
+- which agent run produced the change
+- what runtime policy was active
+- what execution contract was used
+- which deploy or artifact followed from the run
+- what non-git evidence accompanied the run
+
+## What Must Exist Beyond GitHub
+Once project execution becomes agentic, the system needs at least:
+- run ledger
+- artifact ledger
+- runtime evidence
+- activity trace
+
+Those layers do not replace GitHub.
+
+They extend the version spine into execution truth.
+
+## Why This Matters In Practice
+If the system only records GitHub state, then several critical questions stay unanswered:
+
+- which agent run produced this change
+- which execution rule set was active
+- which runtime handled the run
+- what artifact or deploy followed
+- what evidence proves the run succeeded or degraded
+
+That means GitHub by itself is too thin for agentic execution governance.
+
+It is excellent source truth.
+
+It is incomplete execution truth.
+
+## Minimal Additional Ledgers
+The first extra ledgers should be:
+
+### Run Ledger
+Tracks:
+- run id
+- project id
+- repo / branch / commit
+- runtime version
+- status
+- start / finish times
+
+### Artifact Ledger
+Tracks:
+- artifact id
+- type
+- source run id
+- deploy linkage
+- storage location
+- promotion state
+
+These ledgers do not compete with GitHub.
+
+They make GitHub usable inside a larger execution architecture.
+
+## Practical Rule
+Use GitHub as the hard boundary for source review.
+
+Use `toProject` as the hard boundary for execution meaning.
+
+When both are linked, the system can answer:
+- what changed
+- why it changed
+- what run changed it
+- what runtime and artifact state followed
+
+That is where project governance becomes trustworthy.

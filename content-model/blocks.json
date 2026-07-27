@@ -6,6 +6,12 @@
     "description": "Default knowledge block for Topoo."
   },
   {
+    "id": "topoo-cloud-platform",
+    "boardId": "topoo",
+    "label": "Topoo Cloud",
+    "description": "Private cloud control plane, runtime resources, source, and deployment contracts."
+  },
+  {
     "id": "toagent-default",
     "boardId": "toagent",
     "label": "toAgent",
@@ -22,6 +28,42 @@
     "boardId": "toproject",
     "label": "toProject",
     "description": "Default knowledge block for toProject."
+  },
+  {
+    "id": "toproject-core-definition",
+    "boardId": "toproject",
+    "label": "Core Definition",
+    "description": "Root project definition, objects, and execution scope."
+  },
+  {
+    "id": "toproject-execution-architecture",
+    "boardId": "toproject",
+    "label": "Execution Architecture",
+    "description": "Main loop, planes, tabs, and execution chain."
+  },
+  {
+    "id": "toproject-operating-system",
+    "boardId": "toproject",
+    "label": "Operating System",
+    "description": "Runtime, engines, commands, and continuity rules."
+  },
+  {
+    "id": "toproject-version-spine",
+    "boardId": "toproject",
+    "label": "Version Spine",
+    "description": "Git domains and versioned execution contracts."
+  },
+  {
+    "id": "toproject-surface-mapping",
+    "boardId": "toproject",
+    "label": "Surface Mapping",
+    "description": "How project structure appears across the UI surfaces."
+  },
+  {
+    "id": "toproject-boundary-version",
+    "boardId": "toproject",
+    "label": "Boundary & Version Strategy",
+    "description": "External system boundaries, runtime ownership, and version spine strategy."
   },
   {
     "id": "tomemory-default",

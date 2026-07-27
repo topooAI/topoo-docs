@@ -1,0 +1,129 @@
+---
+title: "Source Control Model"
+description: "How Topoo Cloud maps Git providers, Topoo-hosted source, Agent submissions, and releases into one control plane."
+---
+
+Topoo Cloud uses Git as the source-version foundation, but it does not require every customer to operate GitHub directly.
+
+The product model separates three responsibilities:
+
+- a **Git provider** stores repositories, branches, tags, commits, and review history
+- **Topoo Source** binds exact repository scopes and revisions to problem-oriented Nodes
+- the **Release Controller** validates, integrates, builds, and promotes accepted changes
+
+GitHub is the first external provider. It is not the Topoo product model and it is not the only long-term source mode.
+
+## Two source modes
+
+| Mode | Source of truth | Customer experience |
+|---|---|---|
+| Connected repository | GitHub or another connected Git provider | Connect an existing repository and keep using its branches and reviews. |
+| Topoo-hosted source | Topoo Git | Create, edit, review, and release source without requiring an external Git account. |
+
+Both modes must produce the same Topoo-facing objects:
+
+- repository identity
+- branch or reference
+- immutable commit
+- source root
+- change request
+- checks
+- release candidate
+- deployment artifact
+
+This common model lets Projects, Nodes, deployments, audit logs, and Agents work consistently regardless of where Git is hosted.
+
+## Repository and Node boundary
+
+Repository and Node are not aliases.
+
+- one repository may supply one Node
+- one monorepo may supply several Nodes through different root paths
+- one Node may bind multiple source inputs when one responsibility genuinely spans them
+- one Project may organize Nodes backed by several repositories
+
+Node topology follows problem ownership, durable attention, and delivery responsibility. Repository layout is only one source input.
+
+Separating a repository is not enough to create a working product boundary. The consumer must reference a real, immutable version or Artifact from the separated responsibility. Two copied packages with no enforced dependency are not a completed split.
+
+## GitHub-first architecture
+
+For a connected GitHub repository:
+
+1. Topoo records the repository and selected branch.
+2. Topoo reads the exact commit and imports an immutable source snapshot.
+3. Pull Requests become Topoo Change Requests.
+4. GitHub Checks become Topoo Checks.
+5. An accepted commit becomes a release candidate.
+6. The Release Controller builds and promotes a versioned artifact.
+7. The deployment record preserves the source commit, checks, artifact, environment, operator, and time.
+
+GitHub remains the repository source of truth in this mode. Topoo adds the cloud operating model and release ledger around it.
+
+## Topoo-hosted source
+
+Customers who do not use GitHub still need real source-control guarantees.
+
+Topoo-hosted source therefore needs a Git-compatible service, not only a custom table of file versions. The complete capability includes:
+
+- repository creation and deletion
+- clone, fetch, pull, and push
+- branches, tags, commits, and history
+- authentication and access policy
+- change requests and review
+- protected branches and required checks
+- webhooks or event delivery
+- backup, recovery, quotas, and garbage collection
+- import from and export to standard Git providers
+
+Topoo can implement this behind the control plane with a proven Git backend. Customers interact with Topoo Projects, Nodes, Change Requests, and Releases rather than the backend vendor.
+
+## Agent submission channels
+
+An Agent must not deploy merely because it changed files.
+
+An Agent works under Node scope. A Session is a temporary execution context attached to that Node, while the Node persists identity, prompt, permissions, source scope, Submissions, checks, and version history across Sessions.
+
+Every Agent submission enters a channel with explicit authority:
+
+| Channel | Result |
+|---|---|
+| Draft | Store a proposed change without integration or deployment. |
+| Review | Run checks and present the diff for acceptance. |
+| Integration | Add an accepted change to a release candidate. |
+| Preview | Build an isolated, addressable environment. |
+| Production | Promote an approved, immutable release. |
+
+The control plane should show:
+
+- submitting Agent and workspace
+- base and head revisions
+- files and resources affected
+- conflicts with other submissions
+- checks and approval state
+- included release candidate
+- preview and production deployments
+- rollback target
+
+Submission authority and deployment authority remain separate.
+
+## Deterministic integration
+
+Multiple Agents may work in parallel, but one deterministic program owns integration:
+
+1. pin the expected base revision
+2. accept bounded submissions
+3. detect stale bases and overlapping ownership
+4. integrate into a single candidate
+5. run required checks once against that candidate
+6. create one immutable artifact
+7. promote only that artifact
+8. write the complete release and audit record
+
+This is the fixed integration path behind the visual control plane. It prevents one Agent from overwriting another Agent's accepted work.
+
+## Portability rule
+
+Topoo source must never trap the customer.
+
+A Topoo-hosted repository must be exportable as normal Git history. A connected repository must be disconnectable without losing Topoo deployment and audit history. Runtime artifacts remain linked to their exact source revision in either mode.

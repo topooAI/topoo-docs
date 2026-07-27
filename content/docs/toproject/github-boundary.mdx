@@ -1,0 +1,63 @@
+---
+title: "What GitHub Owns"
+description: "GitHub is the source version spine, repository boundary, and review surface of the system."
+---
+## Purpose
+This document defines the role of GitHub inside the `toProject` architecture.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Boundary & Version Strategy` block.
+
+## Core Position
+GitHub is the `source version spine` of the system.
+
+GitHub owns:
+- repositories
+- branches
+- commits
+- pull requests
+- merge state
+- release history
+- source-level review boundary
+
+GitHub does not own:
+- project meaning
+- run status
+- runtime posture
+- execution mode
+- cross-system evidence truth
+
+## Why GitHub Matters
+Without GitHub or an equivalent git provider:
+- source change is weakly versioned
+- review has no hard edge
+- promotion and rollback become ambiguous
+- code and docs lose durable lineage
+
+## What GitHub Should Represent
+At the system level, GitHub should represent:
+- what changed
+- where it changed
+- who reviewed it
+- what merged
+- what source state was accepted
+
+That is enough to make it foundational.
+
+It is not enough to make it the whole project system.
+
+## GitHub Organization / Repo Role
+Organization and repository layout should express:
+- ownership boundary
+- system surface boundary
+- delivery boundary
+- permission boundary
+
+They should not be treated as the project architecture itself.
+
+They are structure for source governance, not the semantic center of execution.
+
+## Boundary
+GitHub must stay the system of truth for versioned source.
+
+But `toProject` must remain the system of truth for project execution meaning.

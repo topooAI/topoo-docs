@@ -1,0 +1,101 @@
+---
+title: "Runtime and Resource Model"
+description: "Vendor-neutral Topoo concepts for execution capacity, persistent resources, and real operating state."
+---
+
+Topoo Cloud presents infrastructure as a concrete runtime and resource model.
+
+The customer should understand what capacity they purchased, what is currently running, which persistent resources are connected, and whether the environment is healthy.
+
+The customer should not need to understand the upstream provider architecture used to implement those capabilities.
+
+This page describes runtime-capable Nodes. It does not redefine every Node as a running process. The canonical Node definition is the persistent problem, responsibility, attention, version, and delivery boundary described in [Project and Node Model](/docs/cloud/project-node-model).
+
+## Customer-facing resource model
+
+| Topoo concept | What the customer needs to know |
+|---|---|
+| Runtime-capable Node | A Node with a real execution target, runtime profile, active executions, queue state, failures, and health |
+| Database | Engine class, allocated capacity, used capacity, connection state, and availability |
+| Object storage | Allocated capacity, used capacity, object count, transfer, and connection state |
+| Temporary storage | Per-execution ephemeral capacity and lifecycle |
+| Queue | Pending work, throughput, retries, and failure state |
+| Domain | Route target, environment, certificate state, and recent traffic |
+| Secret | Scope, binding state, last update, and affected environments |
+| AI capability | Model or service binding, request usage, limits, latency, and failure state |
+
+Provider products may map to one or more of these concepts through internal adapters. Those mappings do not belong in the primary customer language.
+
+## Runtime state
+
+Runtime state should answer four questions:
+
+1. Is the environment healthy?
+2. What is executing now?
+3. Is work waiting or failing?
+4. Which persistent resources are connected?
+
+The core signals are:
+
+- environment status
+- active executions for runtime-capable Nodes
+- queued executions
+- failed executions
+- execution time
+- runtime error rate
+- web requests
+- runtime-capable Node executions
+- persistent storage state
+
+Historical charts and current values must represent the same metric. A chart of runtime-capable Node executions must not be labelled as concurrency, capacity, or another unrelated measure.
+
+## Capacity and usage
+
+Capacity and usage are different:
+
+- **Capacity** describes what the workspace or project can support.
+- **Usage** describes what has been consumed during a defined period.
+- **Current state** describes what is running or connected now.
+
+The dashboard may show current state prominently, while detailed quota consumption belongs in the Usage surface.
+
+Values must not imply a measured limit when no reliable limit exists. Unknown capacity should be shown as unconfigured, unavailable, or not connected rather than estimated.
+
+## Persistent capacity
+
+Persistent capacity is workspace- or project-owned storage that survives an individual execution.
+
+It includes:
+
+- database storage
+- object storage
+- other durable data services exposed by Topoo
+
+Temporary per-execution disk is runtime capacity, not persistent capacity. The two must not be merged in product language or billing.
+
+## Truthful loading and failure states
+
+Operational surfaces must never flash invented data before real data arrives.
+
+Use:
+
+- stable skeletons for pending reads
+- last-known verified values when explicitly marked with freshness
+- `Not connected` when a resource binding does not exist
+- `Unavailable` when a source cannot currently respond
+- a clear retry action for recoverable failures
+
+A timeout or unavailable provider must not silently become zero. Zero is a real measurement.
+
+## Topology
+
+Topology is a projection of real bindings:
+
+- Project organizes Node
+- Node uses Database
+- Workflow invokes Node
+- Domain belongs to Project and routes to an accepted runtime target
+- Deployment references Source revision
+- Site and Workflow depend on project resources
+
+If a relationship does not exist in the control-plane data, it must not appear as a decorative connection in the UI.

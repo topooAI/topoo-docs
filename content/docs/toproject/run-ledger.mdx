@@ -1,0 +1,46 @@
+---
+title: "Run Ledger"
+description: "Canonical execution records linking project runs to source, runtime, and status."
+---
+## Purpose
+This document defines the run ledger of the `toProject` system.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Boundary & Version Strategy` block.
+
+## Core Position
+A `run` is the atomic execution record of the system.
+
+Without a run ledger:
+- execution exists
+- but cannot be governed clearly
+
+## Canonical Run Record
+Every meaningful run should eventually record:
+- `runId`
+- `projectId`
+- `repo`
+- `branch`
+- `commitSha`
+- `specVersion`
+- `promptVersion`
+- `runtimeClass`
+- `runtimeVersion`
+- `status`
+- `startedAt`
+- `finishedAt`
+- `artifactIds`
+
+## Why This Matters
+The run ledger is where:
+- source version
+- execution version
+- runtime state
+- artifact linkage
+
+become one readable record.
+
+## Boundary
+GitHub can track commits.
+
+The run ledger tracks execution events that GitHub does not naturally own.

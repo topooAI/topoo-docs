@@ -1,0 +1,157 @@
+---
+title: "Boundary & Version Strategy"
+description: "Why toProject exists, what external systems own, and how source, execution, and artifact versions are governed."
+---
+## Purpose
+This document defines the boundary layer of the `toProject` board.
+
+It answers three questions:
+- why `toProject` must exist even when strong task and documentation tools already exist
+- what each external system should own
+- how the platform should reason about version across source, execution, runtime, and artifact layers
+
+## Block Position
+Inside the `toProject` board, this page is the spine of the `Boundary & Version Strategy` block.
+
+It primarily owns these topics:
+- Why `toProject` Exists
+- What GitHub Owns
+- What Notion Owns
+- What Linear Owns
+- What Cloudflare Owns
+- Version Management Strategy
+- When GitHub Is Not Enough
+
+## Core Position
+`toProject` is not another backlog tool.
+
+It is the human + agent shared control plane for the system.
+
+The existing tools already do valuable work:
+- GitHub versions source and governs delivery review
+- Notion holds loose knowledge and strategy context
+- Linear drives human task execution hygiene
+- Cloudflare runs the managed online runtime
+
+But none of them alone owns the full execution chain:
+
+`intent -> decomposition -> run -> runtime -> artifact -> evidence`
+
+That is the gap `toProject` must close.
+
+## Why toProject Exists
+`toProject` exists because agentic engineering creates a structural break in normal project tooling.
+
+Traditional tools are strongest at:
+- human ticket flow
+- code review
+- documents and notes
+- deploy pipelines
+
+They are not designed to be the semantic center of:
+- outcome
+- workstream
+- task
+- run
+- activity
+- artifact
+- execution mode
+- runtime posture
+- evidence trail
+
+This means a new control layer is required.
+
+Not because old tools are bad.
+
+Because they each own only part of the execution graph.
+
+## Why Existing Tools Stop Being Enough
+The main issue is not that existing tools are weak.
+
+The issue is that they stop at human-scale execution semantics.
+
+Once the execution subject becomes `human + agent`, the architecture must represent things that normal task tools do not own well:
+- runtime state
+- run state
+- git-linked execution version
+- artifact lineage
+- automation traces
+- memory-backed objective continuity
+
+That is why this cannot be solved by simply adding fields to an existing issue tracker.
+
+The underlying object model changes.
+
+## Why The Interface Must Change Too
+If the object model changes, the control surface must change with it.
+
+Traditional task tools mainly express:
+- task
+- status
+- assignee
+- due date
+- backlog priority
+
+The `toProject` system must express a deeper execution stack:
+- outcome
+- workstream
+- task
+- run
+- activity
+- artifact
+- runtime
+- version
+- evidence
+
+That means this is not only a UI redesign.
+
+It is a control-plane redesign.
+
+The existing issue/tool windows do not have enough structure to express that full stack cleanly.
+
+## Why Purpose And Memory Matter
+Notion is strong as a human reading and thinking surface.
+
+But once the system becomes more complex, loose knowledge alone becomes expensive.
+
+Without explicit purpose management and structured memory:
+- context windows inflate
+- agent reasoning drifts
+- repeated interpretation grows
+- token consumption rises sharply
+
+`toProject` must therefore do more than store tasks.
+
+It must:
+- keep execution anchored to purpose
+- bind memory to project semantics
+- reduce ambiguity in what the agent needs to read
+- reduce wasted token spend caused by loose or duplicated context
+
+This is one of the deepest reasons the project layer must exist.
+
+## The Boundary Principle
+Every external system should keep the thing it is naturally strongest at.
+
+`toProject` should not replace them blindly.
+
+Instead it should unify them through project semantics.
+
+That means the system should be read like this:
+
+- external tools own their native domain
+- `toProject` owns execution meaning across those domains
+
+## Reading Order
+Use this page as the board-level boundary map.
+
+Then read the detail pages:
+- [What GitHub Owns](/docs/toproject/github-boundary)
+- [What Notion Owns](/docs/toproject/notion-boundary)
+- [What Linear Owns](/docs/toproject/linear-boundary)
+- [What Cloudflare Owns](/docs/toproject/cloudflare-boundary)
+- [Version Management Strategy](/docs/toproject/version-strategy)
+- [When GitHub Is Not Enough](/docs/toproject/when-github-is-not-enough)
+
+Return to the board home for the full structure:
+- [PROJECT_CORE_STRUCTURE.md](/docs/toproject)

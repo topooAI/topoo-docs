@@ -1,0 +1,440 @@
+---
+title: "Project Execution Architecture"
+description: "How project intent, decomposition, runtime, git, and evidence combine into one execution system."
+---
+## Purpose
+This document explains how the `project` board should operate as one execution system.
+
+The other project documents define the parts:
+- the root object model
+- the git model
+- the runtime model
+- the current UI mapping
+
+This file explains how those parts fit together into one architecture that can actually run.
+
+## Block Position
+Inside the `toProject` board, this page is the spine of the `Execution Architecture` block.
+
+It primarily owns these topics:
+- main loop
+- five architecture planes
+- control plane
+- tab architecture
+- execution unit chain
+- projection rule
+- activity as trust
+- failure modes
+- implementation priorities
+
+Use this page to understand how the system works as a whole.
+
+Use the other pages to inspect one plane in detail.
+
+## Core Position
+`Project` is not just where information is stored.
+
+It is the execution architecture of the product.
+
+That means `Project` is the place where:
+- intent is defined
+- execution is decomposed
+- runtime is governed
+- git becomes the version spine
+- activity becomes operating evidence
+
+If any one of those parts is removed, the module becomes weaker:
+- intent without execution is abstract
+- execution without runtime is static planning
+- runtime without git is weakly governed
+- git without activity is opaque
+- activity without intent is meaningless history
+
+## The Main Loop
+The project system should be understood as one operating loop:
+
+1. project defines intent
+2. intent becomes outcomes and workstreams
+3. workstreams become tasks and dependencies
+4. runtime acts on those tasks under an execution mode
+5. git gives change a hard reviewable boundary
+6. activity, review, and artifacts record what happened
+7. the recorded evidence updates project state
+
+That loop is the execution architecture.
+
+This loop is what makes `project` different from a static document surface or a generic task board.
+
+## The Five Architecture Planes
+The current model is easiest to read as five planes.
+
+### 1. Intent Plane
+This is the meaning layer.
+
+It includes:
+- summary
+- objective
+- scope
+- acceptance
+- outcome definitions
+- success criteria
+
+This plane answers:
+- what are we trying to achieve
+- what counts as success
+- what stays outside the boundary
+
+### 2. Decomposition Plane
+This is the structure layer.
+
+It includes:
+- outcome
+- workstream
+- task
+- dependency
+- timeline projection
+- board projection
+
+This plane answers:
+- how success is broken into execution lines
+- how each line becomes concrete work
+- how shared execution data is projected into different views
+
+The canonical chain remains:
+
+`Project -> Outcome -> Workstream -> Task -> Activity / Assets`
+
+### 3. Operating Plane
+This is the permission and behavior layer.
+
+It includes:
+- execution mode
+- execution runtime
+- commands
+- skills
+- hooks
+- automation
+- continuity
+- blocking state
+
+This plane answers:
+- how work is allowed to run
+- under what supervision model
+- with what capabilities
+
+### 4. Version Spine Plane
+This is the hard boundary layer.
+
+It includes:
+- repo bindings
+- git domains
+- branches
+- commits
+- review state
+- merge / promotion state
+- deployment bindings
+
+This plane answers:
+- how project change is versioned
+- where execution becomes reviewable
+- how execution moves toward deployable runtime states
+
+### 5. Evidence Plane
+This is the trust layer.
+
+It includes:
+- activity
+- decisions
+- reviews
+- approvals
+- automation traces
+- deployment events
+- linked artifacts
+
+This plane answers:
+- what happened
+- who or what did it
+- when it happened
+- what evidence proves it
+
+## How The Planes Fit Together
+The five planes should not be read as separate subsystems.
+
+They work as one stack:
+- the intent plane defines what must happen
+- the decomposition plane breaks that into execution units
+- the operating plane determines how execution is allowed to run
+- the version spine plane gives change a hard reviewable boundary
+- the evidence plane records what actually happened
+
+If one plane is removed, the others become less trustworthy.
+
+## Control Plane
+The top property area of the board should be read as the project control plane.
+
+It should eventually expose the live operating condition of the project:
+- status
+- priority
+- acceptance
+- execution runtime
+- execution mode
+- execution agent
+- lead / owner
+- progress
+- dates
+- blocking
+- members
+- labels
+- git summary
+
+This surface is not decorative metadata.
+
+It is the operator-facing summary of project state.
+
+It is the place where a reader should be able to answer, at a glance:
+- what condition the project is in
+- who or what is executing it
+- what mode of execution is currently allowed
+- what is blocked
+- how close the project is to acceptance
+
+## Tab Architecture
+The lower tabs are not random sections.
+
+They are different execution surfaces over the same project.
+
+### Overview
+The summary surface.
+
+It should answer:
+- what this project is
+- what condition it is in now
+- what the main next move is
+
+### Outcome
+The result-definition surface.
+
+It should answer:
+- what results must exist if the project succeeds
+- how success is evaluated
+
+### Workstream
+The strategic decomposition surface.
+
+It should answer:
+- what major lines of effort exist
+- why each line exists
+- what risk or uncertainty justifies that line
+
+### Tasks
+The concrete execution surface.
+
+It should answer:
+- what specific work must be done
+- in what state it is
+- what depends on what
+
+### Activity
+The operating evidence surface.
+
+It should answer:
+- what happened
+- which actor or system produced it
+- what state changed because of it
+
+### Assets & Files
+The artifact surface.
+
+It should answer:
+- what docs, files, references, and artifacts support the work
+
+Together, these tabs should act as coordinated views over one project architecture, not as unrelated product sections.
+
+## Projection Rule
+List, board, and timeline are not separate models.
+
+They are separate projections over the same execution structure.
+
+That means:
+- list is not the canonical truth by itself
+- board is not the canonical truth by itself
+- timeline is not the canonical truth by itself
+
+The project model underneath them must remain stable.
+
+That means no projection is allowed to redefine the semantics of:
+- outcome
+- workstream
+- task
+- activity
+- asset
+
+## Execution Mode
+`Execution Mode` is one of the most important missing fields in the current board.
+
+It should be explicit because it answers:
+- is this project planning
+- supervised
+- autonomous
+- paused
+- waiting for review
+
+This is different from status.
+
+Status describes work state.
+Execution Mode describes operating permission.
+
+## Git Inside Project Execution
+Git should not appear only as scattered repo or branch fragments attached to tasks.
+
+Inside the execution architecture, git should support three domains:
+
+### Spec Domain
+Versioned project definition.
+
+### Execution Domain
+Versioned implementation work.
+
+### Knowledge Domain
+Versioned docs and artifacts.
+
+This is important because the project system governs:
+- intent change
+- execution change
+- knowledge change
+
+not just code change.
+
+## Activity As Trust
+Activity is where the execution architecture becomes trustworthy.
+
+Without activity, the board only claims that work happened.
+
+With activity, the board can show:
+- who initiated a change
+- which runtime or agent executed it
+- what git boundary it crossed
+- what evidence was produced
+- whether review or approval happened
+
+It should eventually absorb typed events such as:
+- execution started
+- task updated
+- review requested
+- review approved
+- branch created
+- commit pushed
+- deployment triggered
+- deployment promoted
+
+That is why activity is not an optional notes feed.
+
+It is the trust surface of the project system and the place where runtime, git, and project semantics become inspectable.
+
+## The Execution Unit Chain
+The project board needs one clear execution chain so the reader never loses the scale of the work.
+
+### Project
+The root execution container.
+
+It defines:
+- objective
+- boundary
+- operating policy
+- ownership
+- global state
+
+### Outcome
+The result contract.
+
+It defines:
+- what must become true
+- what counts as success
+- what acceptance means
+
+### Workstream
+The major execution lane.
+
+It defines:
+- why this lane exists
+- which uncertainty, capability, or risk it addresses
+- how the work is grouped strategically
+
+### Task
+The concrete work unit.
+
+It defines:
+- the next executable unit of work
+- dependencies
+- assigned runtime or human owner
+- task-level state
+
+### Activity
+The evidence of motion.
+
+It defines:
+- what happened inside execution
+- what changed state
+- what reviewable history now exists
+
+### Assets And Files
+The supporting artifacts.
+
+They define:
+- which docs and files support the work
+- where the durable knowledge lives
+- what artifacts should remain inspectable after execution moves on
+
+## The Execution Architecture In Practice
+When this system is operating correctly, the board should let a reader answer all of these questions quickly:
+
+- what is the project trying to achieve
+- what results define success
+- what workstreams organize the effort
+- what tasks are active now
+- what runtime is executing them
+- which git surfaces hold the change
+- what evidence proves progress
+- what artifacts explain or preserve the work
+
+If the board cannot answer those questions, then it is not yet functioning as a true execution architecture.
+
+## What This Architecture Prevents
+This execution architecture exists to stop repeated conceptual collapse.
+
+It protects against:
+- project collapsing into a task list
+- project collapsing into a runtime panel
+- outcome collapsing into a checklist
+- workstream collapsing into grouped tasks
+- git collapsing into deploy-only integration
+- activity collapsing into plain notes
+
+## Immediate Priorities
+Given the current system shape, the next priorities are:
+
+1. add `Execution Mode` to the control plane
+2. define a project-level git surface
+3. strengthen outcome with success criteria
+4. separate workstream semantics from task-derived grouping
+5. type activity into operating evidence
+6. clarify files and assets as the knowledge plane
+
+## Reading Relationship
+Use this page as the execution map for the whole `toProject` board.
+
+Then move outward into the bounded definition pages:
+
+1. [Project Object Model](/docs/toproject/object-model)
+2. [Project Runtime Model](/docs/toproject/runtime-model)
+3. [Project Git Model](/docs/toproject/git-model)
+4. [Project UI Mapping](/docs/toproject/ui-mapping)
+
+Related documents:
+- root semantics: [PROJECT_OBJECT_MODEL.md](/docs/toproject/object-model)
+- git semantics: [PROJECT_GIT_MODEL.md](/docs/toproject/git-model)
+- runtime semantics: [PROJECT_RUNTIME_MODEL.md](/docs/toproject/runtime-model)
+- UI alignment: [PROJECT_UI_MAPPING.md](/docs/toproject/ui-mapping)
+
+Return to the board home for the full block/topic map:
+- [PROJECT_CORE_STRUCTURE.md](/docs/toproject)

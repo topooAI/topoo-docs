@@ -1,0 +1,123 @@
+---
+title: "Version Management Strategy"
+description: "How source version, execution version, and artifact version form one system."
+---
+## Purpose
+This document defines how version should be understood across the `toProject` architecture.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Boundary & Version Strategy` block.
+
+## Core Position
+Version is not one thing.
+
+The system needs at least three aligned version layers:
+- source version
+- execution version
+- artifact version
+
+## 1. Source Version
+This is the git-tracked version of code, docs, and config.
+
+It is primarily owned by GitHub.
+
+Key identifiers:
+- repository
+- branch
+- commit SHA
+- pull request
+- merge state
+
+## 2. Execution Version
+This is the version of the execution contract used by a specific run.
+
+It should include:
+- source commit
+- spec version
+- prompt or contract version
+- runtime version
+- workflow/skill version
+
+This layer is not fully represented by GitHub alone.
+
+## 3. Artifact Version
+This is the version of output produced by execution.
+
+Examples:
+- deployment id
+- preview id
+- generated report id
+- exported package id
+
+## Canonical Record Per Run
+Every meaningful run should eventually write one canonical record.
+
+Conceptually it should look like:
+
+```json
+{
+  "runId": "run_2026_04_09_001",
+  "projectId": "pjt_topoo_docs",
+  "repo": "topoodoc",
+  "branch": "main",
+  "commitSha": "abc123",
+  "specVersion": "execution-architecture@v2",
+  "promptVersion": "project-runtime-contract@v1",
+  "runtimeVersion": "cloudflare-worker@2026-04-09",
+  "artifactIds": ["artifact_preview_001", "artifact_report_014"],
+  "status": "running"
+}
+```
+
+This is the point where source version, execution version, and artifact version become one linked chain instead of three floating concepts.
+
+## Recommended Storage Split
+The system should not put every versioned thing into GitHub.
+
+The cleaner split is:
+
+### GitHub
+Owns:
+- source version
+- repository history
+- branch and PR review
+- merge and release boundaries
+
+### toProject Execution Layer
+Owns:
+- run ledger
+- execution version registry
+- mapping between source, runtime, and artifacts
+
+### Runtime / Artifact Layer
+Owns:
+- deploy ids
+- large run outputs
+- logs and traces
+- generated asset payloads
+
+This is how the system avoids turning GitHub into a storage dump while still keeping GitHub as the source spine.
+
+## Canonical Rule
+Every meaningful run should be traceable across all three layers.
+
+That means:
+- a run must know what source it used
+- a run must know what execution contract it used
+- a run must know what artifact it produced
+
+## Implementation Direction
+Practically, the first implementation should aim for:
+
+1. GitHub remains the source truth for code and docs
+2. `toProject` records run metadata and semantic execution state
+3. Cloudflare stores runtime-level metadata and artifacts
+4. all three layers link through:
+   - `commitSha`
+   - `runId`
+   - `artifactId`
+
+## Boundary
+GitHub is necessary for source version.
+
+`toProject` is necessary to connect source, execution, and artifact into one readable version spine.

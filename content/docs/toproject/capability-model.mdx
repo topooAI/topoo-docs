@@ -1,0 +1,49 @@
+---
+title: "Capability Model"
+description: "How commands, skills, tools, and permissions are surfaced to human and agent execution."
+---
+## Purpose
+This document defines the capability layer of the `toProject` system.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Operating System` block.
+
+## Core Position
+Sandbox answers what is isolated.
+
+Capability answers what is allowed.
+
+These are related but distinct.
+
+## Capability Categories
+The system should distinguish at least:
+- commands
+- skills
+- tools
+- workflows
+- hooks
+- privileged actions
+
+## Capability Questions
+Each capability should be answerable through:
+- who can invoke it
+- in which runtime it is valid
+- whether network is required
+- whether write permission is required
+- whether approval is required
+
+## Why This Matters
+Without a capability model:
+- sandbox policy becomes too vague
+- execution mode becomes hard to enforce
+- agents appear more autonomous than they actually are
+
+## Boundary
+This page defines executable capability classes.
+
+It does not define:
+- project object semantics
+- run state transitions
+- artifact storage
+
+Those belong elsewhere in the architecture.

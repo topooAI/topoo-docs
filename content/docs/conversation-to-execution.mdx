@@ -1,0 +1,153 @@
+---
+title: "Conversation to Execution"
+description: "How conversation updates TopooDoc, how project turns knowledge into execution structure, and how Topoo executes."
+---
+This page defines the core system relationship between conversation, documentation, project structure, and execution inside Topoo.
+
+It is not a local rule for one board.
+It is a product-level definition that explains how the whole system moves from a chat input to an executed result.
+
+## Core statement
+
+Every conversation is treated as a potential mutation of system knowledge.
+
+That mutation should not remain trapped inside chat history.
+It should update the documentation layer, be translated into execution structure, and then be carried by the execution layer.
+
+In short:
+
+- conversation produces knowledge updates
+- `topooDoc` absorbs and stabilizes those updates
+- `project` turns stable knowledge into execution objects
+- `Topoo` executes through runtime, agents, and orchestration
+
+## Four layers
+
+### 1. Conversation
+
+Conversation is the intake surface.
+
+It is where:
+
+- new intent appears
+- ambiguity is resolved
+- decisions are made
+- prompts are refined
+- operating rules are clarified
+- structures are proposed or corrected
+
+Conversation is not the final storage layer.
+Its job is to surface changes to system understanding.
+
+### 2. TopooDoc
+
+`topooDoc` is the documentation and prompt management layer.
+
+It owns:
+
+- prompt definitions
+- protocol definitions
+- structural rules
+- system decisions
+- release notes
+- schema explanations
+- board, block, topic, and page organization
+
+Its role is to turn conversation output into durable operational truth.
+
+This means `topooDoc` is not a passive knowledge base.
+It is the managed source of system-readable and human-readable truth.
+
+## 3. Project
+
+`project` is the execution planning and state layer.
+
+It does not own the whole truth model.
+It reads from the current documentation state and turns that state into executable structure.
+
+It owns:
+
+- execution objects
+- task structure
+- run structure
+- workstream grouping
+- artifact lineage
+- version and ledger coordination
+- execution state visibility
+
+If `topooDoc` defines what the system should do, `project` defines how a specific execution should be organized.
+
+## 4. Topoo
+
+`Topoo` is the execution layer.
+
+It owns:
+
+- agent orchestration
+- runtime selection
+- sandbox boundaries
+- execution dispatch
+- artifact production
+- execution posture
+
+Topoo does not replace the documentation layer or the project layer.
+It executes within the boundaries defined above it.
+
+## System relationship
+
+The system should be read in this order:
+
+1. conversation introduces or updates intent
+2. `topooDoc` absorbs the change into structured truth
+3. `project` maps that truth into execution objects and current state
+4. `Topoo` runs the execution
+
+This means the system is not:
+
+- chat first and docs later
+- docs first and execution unrelated
+- project as a separate task manager detached from prompt truth
+
+It is one continuous chain.
+
+## Why this split matters
+
+Without this split, the system collapses into mixed semantics:
+
+- chat history starts pretending to be durable truth
+- prompt management gets buried inside raw conversation
+- project becomes a generic task board with no protocol grounding
+- execution loses a stable source of truth
+
+The split keeps each layer explicit:
+
+- conversation handles emergence and clarification
+- `topooDoc` handles truth and governance
+- `project` handles planning and execution state
+- `Topoo` handles runtime execution
+
+## Product definition
+
+This is the simplest valid product definition:
+
+- `topooDoc` is the prompt, protocol, and release management layer
+- `project` is the execution planning and state layer
+- `Topoo` is the execution runtime layer
+
+Or even shorter:
+
+**Topoo executes. Docs govern. Project organizes execution.**
+
+## What belongs in Topoo-level documentation
+
+Because this relationship defines the whole system, it belongs in the `Topoo` board.
+
+This board should explain:
+
+- what a conversation means inside the system
+- why documentation is operational, not decorative
+- why project is not just task management
+- why execution must remain downstream of governed truth
+
+Detailed runtime implementation belongs elsewhere.
+This page only defines the system model.

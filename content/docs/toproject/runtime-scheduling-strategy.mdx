@@ -1,0 +1,56 @@
+---
+title: "Runtime Scheduling Strategy"
+description: "How project runs are routed between local and managed runtime based on capability, urgency, and cost."
+---
+## Purpose
+This document defines how the system should choose a runtime for each run.
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Operating System` block.
+
+## Core Position
+Runtime federation only becomes operational once the system can choose where a run should execute.
+
+This is the role of scheduling.
+
+## Current Scheduling Scope
+The first practical scheduler only needs to choose between:
+- local runtime
+- Cloudflare managed runtime
+
+This is enough to start.
+
+## Scheduling Inputs
+The scheduler should eventually consider:
+- whether repo-local context is required
+- whether network ingress is required
+- whether the run must stay online
+- whether the run is lightweight or long-running
+- urgency
+- cost sensitivity
+- capability requirements
+
+## Simple Rule Of Thumb
+Use `Local Runtime` when:
+- repo-aware editing is primary
+- local files and worktrees are required
+- tight developer feedback is needed
+
+Use `Cloudflare Managed Runtime` when:
+- the run begins from web ingress
+- the system needs online availability
+- the task is event-driven
+- the run should not depend on one developer machine staying alive
+
+## Future Expansion
+Later the scheduler may also route toward:
+- rented compute
+- external execution nodes
+- specialized GPU/CPU workers
+
+But those are extensions, not current requirements.
+
+## Boundary
+This page defines runtime selection logic.
+
+It does not define sandbox policy or version ledgers.

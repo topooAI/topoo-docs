@@ -20,6 +20,56 @@
     ]
   },
   {
+    "id": "topoo-cloud-overview",
+    "blockId": "topoo-cloud-platform",
+    "label": "Topoo Cloud",
+    "href": "/docs/cloud",
+    "description": "Vendor-neutral private cloud product model and core terms.",
+    "pageIds": [
+      "topoo-cloud-index"
+    ]
+  },
+  {
+    "id": "topoo-cloud-project-control-plane",
+    "blockId": "topoo-cloud-platform",
+    "label": "Project Control Plane",
+    "href": "/docs/cloud/project-control-plane",
+    "description": "Cloud Project as the integration boundary for modules, source, runtime resources, and operating state.",
+    "pageIds": [
+      "topoo-cloud-project-control-plane"
+    ]
+  },
+  {
+    "id": "topoo-cloud-project-node-model",
+    "blockId": "topoo-cloud-platform",
+    "label": "Project & Node Model",
+    "href": "/docs/cloud/project-node-model",
+    "description": "Canonical problem, responsibility, attention, version, and release boundaries for Projects and Nodes.",
+    "pageIds": [
+      "topoo-cloud-project-node-model"
+    ]
+  },
+  {
+    "id": "topoo-cloud-runtime-resource-model",
+    "blockId": "topoo-cloud-platform",
+    "label": "Runtime & Resources",
+    "href": "/docs/cloud/runtime-resource-model",
+    "description": "Topoo-facing execution capacity, persistent resources, and truthful operating state.",
+    "pageIds": [
+      "topoo-cloud-runtime-resource-model"
+    ]
+  },
+  {
+    "id": "topoo-cloud-source-deployment-boundary",
+    "blockId": "topoo-cloud-platform",
+    "label": "Source & Deployment",
+    "href": "/docs/cloud/source-deployment-boundary",
+    "description": "Code provenance, release control, deployment artifacts, and multi-Agent submission channels.",
+    "pageIds": [
+      "topoo-cloud-source-deployment-boundary"
+    ]
+  },
+  {
     "id": "toagent-core",
     "blockId": "toagent-default",
     "label": "toAgent",
@@ -42,8 +92,8 @@
   },
   {
     "id": "toproject-core",
-    "blockId": "toproject-default",
-    "label": "Core Structure",
+    "blockId": "toproject-core-definition",
+    "label": "Project Core Structure",
     "href": "/docs/toproject",
     "description": "Project-centered architecture index and executive summary.",
     "pageIds": [
@@ -52,8 +102,8 @@
   },
   {
     "id": "toproject-object-model",
-    "blockId": "toproject-default",
-    "label": "Object Model",
+    "blockId": "toproject-core-definition",
+    "label": "Project Object Model",
     "href": "/docs/toproject/object-model",
     "description": "Root object semantics and project-centered entity model.",
     "pageIds": [
@@ -61,9 +111,29 @@
     ]
   },
   {
+    "id": "toproject-execution-spine",
+    "blockId": "toproject-execution-architecture",
+    "label": "Project Execution Architecture",
+    "href": "/docs/toproject/execution-architecture",
+    "description": "Main loop, planes, tab architecture, and execution unit chain.",
+    "pageIds": [
+      "toproject-execution-architecture"
+    ]
+  },
+  {
+    "id": "toproject-architecture-map",
+    "blockId": "toproject-execution-architecture",
+    "label": "Project Architecture Map",
+    "href": "/docs/toproject/architecture-map",
+    "description": "Single-map overview of board, blocks, object chain, runtime, sandbox, version spine, ledgers, and observability.",
+    "pageIds": [
+      "toproject-architecture-map"
+    ]
+  },
+  {
     "id": "toproject-git-model",
-    "blockId": "toproject-default",
-    "label": "Git Model",
+    "blockId": "toproject-version-spine",
+    "label": "Project Git Model",
     "href": "/docs/toproject/git-model",
     "description": "Git domains and project-level versioned execution semantics.",
     "pageIds": [
@@ -72,8 +142,8 @@
   },
   {
     "id": "toproject-runtime-model",
-    "blockId": "toproject-default",
-    "label": "Runtime Model",
+    "blockId": "toproject-operating-system",
+    "label": "Project Runtime Model",
     "href": "/docs/toproject/runtime-model",
     "description": "Runtime, engine, command, and operating-layer definitions.",
     "pageIds": [
@@ -81,13 +151,163 @@
     ]
   },
   {
+    "id": "toproject-execution-sandbox-model",
+    "blockId": "toproject-operating-system",
+    "label": "Execution Sandbox Model",
+    "href": "/docs/toproject/execution-sandbox-model",
+    "description": "Isolation, permission, filesystem, network, and recoverability rules for agent execution.",
+    "pageIds": [
+      "toproject-execution-sandbox-model"
+    ]
+  },
+  {
+    "id": "toproject-actor-model",
+    "blockId": "toproject-operating-system",
+    "label": "Actor Model",
+    "href": "/docs/toproject/actor-model",
+    "description": "Human, agent, system, and runtime actors and how they participate in execution.",
+    "pageIds": [
+      "toproject-actor-model"
+    ]
+  },
+  {
+    "id": "toproject-capability-model",
+    "blockId": "toproject-operating-system",
+    "label": "Capability Model",
+    "href": "/docs/toproject/capability-model",
+    "description": "Commands, skills, tools, and permissioned execution capabilities across runtimes.",
+    "pageIds": [
+      "toproject-capability-model"
+    ]
+  },
+  {
+    "id": "toproject-execution-state-machine",
+    "blockId": "toproject-execution-architecture",
+    "label": "Execution State Machine",
+    "href": "/docs/toproject/execution-state-machine",
+    "description": "Canonical run and task states from planning through execution, review, and deployment.",
+    "pageIds": [
+      "toproject-execution-state-machine"
+    ]
+  },
+  {
+    "id": "toproject-observability-evaluation",
+    "blockId": "toproject-execution-architecture",
+    "label": "Observability & Evaluation",
+    "href": "/docs/toproject/observability-evaluation",
+    "description": "How runs become inspectable, measurable, and auditable across cost, quality, and evidence.",
+    "pageIds": [
+      "toproject-observability-evaluation"
+    ]
+  },
+  {
+    "id": "toproject-runtime-scheduling-strategy",
+    "blockId": "toproject-operating-system",
+    "label": "Runtime Scheduling Strategy",
+    "href": "/docs/toproject/runtime-scheduling-strategy",
+    "description": "How runs are routed between local and managed runtime based on context, cost, urgency, and capability.",
+    "pageIds": [
+      "toproject-runtime-scheduling-strategy"
+    ]
+  },
+  {
     "id": "toproject-ui-mapping",
-    "blockId": "toproject-default",
-    "label": "UI Mapping",
+    "blockId": "toproject-surface-mapping",
+    "label": "Project UI Mapping",
     "href": "/docs/toproject/ui-mapping",
     "description": "Current UI-to-architecture mapping and transitional surfaces.",
     "pageIds": [
       "toproject-ui-mapping"
+    ]
+  },
+  {
+    "id": "toproject-boundary-version",
+    "blockId": "toproject-boundary-version",
+    "label": "Boundary & Version Strategy",
+    "href": "/docs/toproject/boundary-version-strategy",
+    "description": "Why toProject exists, what external systems own, and how versions are governed.",
+    "pageIds": [
+      "toproject-boundary-version"
+    ]
+  },
+  {
+    "id": "toproject-github-boundary",
+    "blockId": "toproject-boundary-version",
+    "label": "What GitHub Owns",
+    "href": "/docs/toproject/github-boundary",
+    "description": "Source version spine, repo boundaries, pull requests, and release edges.",
+    "pageIds": [
+      "toproject-github-boundary"
+    ]
+  },
+  {
+    "id": "toproject-notion-boundary",
+    "blockId": "toproject-boundary-version",
+    "label": "What Notion Owns",
+    "href": "/docs/toproject/notion-boundary",
+    "description": "Thinking surface, notes, strategy context, and loose knowledge capture.",
+    "pageIds": [
+      "toproject-notion-boundary"
+    ]
+  },
+  {
+    "id": "toproject-linear-boundary",
+    "blockId": "toproject-boundary-version",
+    "label": "What Linear Owns",
+    "href": "/docs/toproject/linear-boundary",
+    "description": "Human execution queue, issue hygiene, and planning flow boundaries.",
+    "pageIds": [
+      "toproject-linear-boundary"
+    ]
+  },
+  {
+    "id": "toproject-cloudflare-boundary",
+    "blockId": "toproject-boundary-version",
+    "label": "What Cloudflare Owns",
+    "href": "/docs/toproject/cloudflare-boundary",
+    "description": "Managed runtime, ingress, deploy binding, and online execution edge.",
+    "pageIds": [
+      "toproject-cloudflare-boundary"
+    ]
+  },
+  {
+    "id": "toproject-version-strategy",
+    "blockId": "toproject-boundary-version",
+    "label": "Version Management Strategy",
+    "href": "/docs/toproject/version-strategy",
+    "description": "How source, execution, and artifact versions relate across the system.",
+    "pageIds": [
+      "toproject-version-strategy"
+    ]
+  },
+  {
+    "id": "toproject-run-ledger",
+    "blockId": "toproject-boundary-version",
+    "label": "Run Ledger",
+    "href": "/docs/toproject/run-ledger",
+    "description": "Canonical records for execution runs, linking source version, runtime, and status.",
+    "pageIds": [
+      "toproject-run-ledger"
+    ]
+  },
+  {
+    "id": "toproject-artifact-ledger",
+    "blockId": "toproject-boundary-version",
+    "label": "Artifact Ledger",
+    "href": "/docs/toproject/artifact-ledger",
+    "description": "Artifact records for deploys, previews, exports, traces, and generated outputs.",
+    "pageIds": [
+      "toproject-artifact-ledger"
+    ]
+  },
+  {
+    "id": "toproject-when-github-not-enough",
+    "blockId": "toproject-boundary-version",
+    "label": "When GitHub Is Not Enough",
+    "href": "/docs/toproject/when-github-is-not-enough",
+    "description": "Where repository history stops and project execution ledgers must begin.",
+    "pageIds": [
+      "toproject-when-github-not-enough"
     ]
   },
   {
@@ -98,6 +318,36 @@
     "description": "Memory-facing documentation lane.",
     "pageIds": [
       "tomemory-index"
+    ]
+  },
+  {
+    "id": "topoo-cloud-source-control",
+    "blockId": "topoo-cloud-platform",
+    "label": "Source Control Model",
+    "href": "/docs/cloud/source-control-model",
+    "description": "GitHub-first source mapping, Topoo-hosted Git, Agent submission channels, and deterministic release control.",
+    "pageIds": [
+      "topoo-cloud-source-control"
+    ]
+  },
+  {
+    "id": "topoo-cloud-source-control-status",
+    "blockId": "topoo-cloud-platform",
+    "label": "Source Control Implementation Status",
+    "href": "/docs/cloud/source-control-status",
+    "description": "Evidence-based implementation audit for source control and Agent release capabilities.",
+    "pageIds": [
+      "topoo-cloud-source-control-status"
+    ]
+  },
+  {
+    "id": "topoo-cloud-deployment-control-plan",
+    "blockId": "topoo-cloud-platform",
+    "label": "Deployment Control Plan",
+    "href": "/docs/cloud/deployment-control-plan",
+    "description": "Problem framing, product direction, and ownership boundaries for controlled Agent releases.",
+    "pageIds": [
+      "topoo-cloud-deployment-control-plan"
     ]
   }
 ]

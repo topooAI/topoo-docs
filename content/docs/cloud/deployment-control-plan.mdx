@@ -1,0 +1,144 @@
+---
+title: "Deployment Control Plan"
+description: "The problem, direction, and product boundaries for Agent submissions and controlled releases in Topoo Cloud."
+---
+
+Topoo Cloud needs one controlled path from source change to production.
+
+The plan is not to let every Agent become an independent deployment system. Agents contribute changes. A deterministic release program integrates, validates, builds, and promotes them.
+
+This plan uses the canonical [Project and Node Model](/docs/cloud/project-node-model):
+
+- Project is the externally unified product and Production authority.
+- Node is the persistent problem, responsibility, attention, version, and delivery boundary.
+- Agent is an actor operating under Node scope.
+- Session is a temporary execution context attached to a Node.
+- Submission is proposed work, not release authority.
+
+## The problem
+
+Several Agents may work on different parts of the same product at the same time.
+
+If every Agent builds from its own local state and deploys directly, a later deployment can silently replace work that another Agent already released. Git history alone does not prevent this because source contribution and production authority are different responsibilities.
+
+The current platform already contains useful source, snapshot, check, and deployment components, but they do not yet form one accepted release-control system.
+
+Large Projects use Nodes to prevent every problem domain from sharing one undifferentiated context. A UI Agent, Deployment Agent, Billing Agent, and Domain Agent may operate through different Nodes, while several Sessions may divide smaller tasks inside the same Node.
+
+## What this plan must solve
+
+- prevent one Agent from overwriting another Agent's accepted work
+- distinguish a proposed change from permission to deploy
+- combine multiple accepted changes into one known release state
+- ensure Preview and Production refer to the same immutable artifact
+- preserve source, checks, approvals, deployments, and rollback as one traceable record
+- support customers who use GitHub and customers who eventually use Topoo-hosted source
+
+## Product direction
+
+Git remains the source-version foundation.
+
+GitHub is the first connected provider. Topoo does not expose GitHub as the customer product model. It maps provider repositories, branches, commits, Pull Requests, and Checks into Topoo Projects, Nodes, Change Requests, and Releases.
+
+An Agent Session creates a bounded Submission under a Node against a known base revision. It does not deploy merely because it changed files.
+
+One Project release controller:
+
+1. receives bounded Node submissions
+2. detects stale bases and overlapping changes
+3. produces accepted Node revisions or delivery versions
+4. integrates accepted Node versions into one Project Release Candidate
+5. runs checks against the integrated candidate
+6. creates one immutable artifact or pinned Artifact set
+7. publishes that exact candidate to Preview
+8. promotes the same candidate to Production after approval
+9. records a rollback target
+
+## Control-plane model
+
+`Git provider → Topoo source revision → Agent Session → Node Submission → Node version → Project Release Candidate → Artifact → Preview → Approval → Production → Rollback`
+
+### Target release controller flow
+
+```text
+Receive Node Submission
+→ Verify identity and permissions
+→ Lock Base Revision
+→ Detect stale revisions
+→ Detect file and resource conflicts
+→ Integrate in dependency order
+→ Publish an immutable Node version
+→ Create the single Project Release Candidate
+→ Run full Checks
+→ Build an immutable Artifact
+→ Deploy to Preview
+→ Await approval
+→ Promote the same Artifact to Production
+→ Preserve the audit trail and rollback target
+```
+
+This is the target control path, not a statement that every stage is already implemented. Agent intelligence can explain changes and identify risk, while the fixed release controller owns integration order, required checks, approval gates, artifact promotion, and rollback.
+
+Each object answers a different question:
+
+| Object | Question |
+|---|---|
+| Source revision | Which exact code state is being considered? |
+| Node | Which problem, responsibility, attention, and delivery boundary owns the work? |
+| Session | Which temporary execution context performed the task? |
+| Agent submission | Who proposed what bounded change against which Node and base? |
+| Node version | What immutable deliverable did the Node publish? |
+| Project Release Candidate | Which accepted Node versions are being evaluated together? |
+| Artifact | What immutable build was produced? |
+| Deployment | Where is that artifact running? |
+| Approval | Who authorized promotion? |
+| Rollback | Which accepted artifact can replace the current release? |
+
+## Delivery direction
+
+### Establish the connected-source path
+
+Complete the GitHub connection and synchronization lifecycle so repository, branch, commit, Pull Request, and Check state are reliable inputs.
+
+### Establish immutable releases
+
+Every build and deployment must point to an exact source revision and an immutable artifact. A mutable branch name is not a release identity.
+
+### Establish Agent submissions
+
+Represent Agent work as a proposed change with identity, base revision, affected scope, checks, and authority. Submitting work and deploying work remain separate actions.
+
+### Establish deterministic integration
+
+Integrate accepted submissions through one queue and one candidate state. Detect stale bases and overlapping ownership before building.
+
+### Establish release channels
+
+Draft, Review, Integration, Preview, and Production express different authority. Production only accepts an approved artifact already evaluated in Preview.
+
+### Add Topoo-hosted Git
+
+After the provider-independent release model is stable, Topoo can add a Git-compatible hosted source mode for customers without GitHub. It should reuse the same submission and release system rather than create a second deployment path.
+
+## Ownership boundary
+
+The Deployment system owns source connection, synchronization, submissions, candidates, artifacts, promotion, and rollback.
+
+The Dashboard owns the presentation of those real states. It must consume stable read-only contracts and must not infer success from placeholders.
+
+The documentation records the product model and acceptance boundary. It does not substitute planning text for implemented capability.
+
+## What not to do
+
+- do not let Agents deploy directly from uncommitted local files
+- do not rebuild when promoting an accepted Preview artifact to Production
+- do not treat a Branch as an immutable release
+- do not create a separate release path for every source provider
+- do not represent Topoo Git as complete until standard Git operations actually work
+- do not label a feature complete because some endpoints or database tables exist
+
+## Completion principle
+
+A capability is complete only when its full user outcome has been verified.
+
+Existing components inside an unfinished capability should be recorded as implementation evidence, but the capability itself remains **not completed** until all required behavior is accepted.

@@ -5,6 +5,7 @@
     "object-model",
     "git-model",
     "runtime-model",
+    "execution-architecture",
     "ui-mapping"
   ]
 }

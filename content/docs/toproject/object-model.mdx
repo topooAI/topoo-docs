@@ -9,6 +9,21 @@ It does not define detailed implementation flows.
 
 It exists because the hardest project question is not "what fields do we show" but "what is the root object we are actually building around."
 
+## Block Position
+Inside the `toProject` board, this page is the primary definition page of the `Core Definition` block.
+
+It primarily owns these topics:
+- Project Root
+- Outcome
+- Workstream
+- Task
+- Activity
+- Assets & Files
+
+It should be read before runtime, git, or UI mapping.
+
+Those pages depend on these semantics. They do not replace them.
+
 ## Core Position
 This architecture is project-centered first.
 
@@ -225,3 +240,15 @@ Project owns runtime, but is larger than runtime.
 Project may dispatch into an execution engine, but should not collapse into one.
 
 This is the most important protection against runtime-first architecture taking over the product model.
+
+## Reading Relationship
+Use this page to define the semantic chain first.
+
+Then continue into:
+- execution synthesis: [PROJECT_EXECUTION_ARCHITECTURE.md](/docs/toproject/execution-architecture)
+- runtime semantics: [PROJECT_RUNTIME_MODEL.md](/docs/toproject/runtime-model)
+- git semantics: [PROJECT_GIT_MODEL.md](/docs/toproject/git-model)
+- UI alignment: [PROJECT_UI_MAPPING.md](/docs/toproject/ui-mapping)
+
+Return to the board home when you need the full block map:
+- [PROJECT_CORE_STRUCTURE.md](/docs/toproject)

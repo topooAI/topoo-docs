@@ -2,7 +2,22 @@
 title: "Topoo"
 description: "Desktop documentation home for the Topoo work surfaces and the shared TopooUI system."
 ---
-Topoo desktop docs are organized by work surface. Use the top navigation to jump between the product surfaces, and use **TopooUI** for the shared UI foundation and reference pages.
+Topoo is the board that defines the core product framing of the system.
+
+Two root definitions matter before entering any solution board:
+
+- `Core Ideas` explains why the product is split into distinct boards
+- `Conversation to Execution` explains how conversation, TopooDoc, project, and Topoo relate as one system
+
+The boards that follow are the concrete solution lanes and implementation lanes:
+
+- `toAgent` for agent interaction and orchestration
+- `toWork` for document and artifact flows
+- `toProject` for project architecture and execution structure
+- `toMemory` for recall, persistence, and schema-facing memory surfaces
+- `TopooUI` for the shared UI foundation and docs primitives used across the product
+
+Topoo desktop docs are organized by work surface. Use the top navigation to jump between product boards, and use **TopooUI** for the shared interface and documentation system rules.
 
 <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
   <LinkedCard href="/docs/toagent" className="items-start gap-1 p-6 text-sm md:p-6">
@@ -35,13 +50,40 @@ Topoo desktop docs are organized by work surface. Use the top navigation to jump
       Shared UI foundation, component reference pages, docs primitives, and styling patterns.
     </div>
   </LinkedCard>
+  <LinkedCard href="/docs/cloud" className="items-start gap-1 p-6 text-sm md:p-6">
+    <div className="font-medium">Topoo Cloud</div>
+    <div className="leading-relaxed text-muted-foreground">
+      Private cloud control-plane concepts for projects, Nodes, resources, deployments, and operating state.
+    </div>
+  </LinkedCard>
 </div>
 
 ## Current structure
 
 - **Topoo:** desktop-level documentation home.
+- **Core Ideas / Conversation to Execution:** system-level framing above any one board.
 - **toAgent / toWork / toProject / toMemory:** board-specific documentation lanes.
+- **Topoo Cloud:** the private cloud control-plane model and infrastructure product language.
 - **TopooUI:** the shared UI and document system reference library.
+
+## How to read this system
+
+Use `Topoo` first when the question is product-level:
+
+- why the product is split the way it is
+- how conversation becomes durable system truth
+- how documentation, project, and execution relate
+- how the boards relate to one another
+- which ideas are core framing versus local implementation
+
+Enter a solution board when the question becomes surface-specific:
+
+- `toAgent` for conversation and operator interaction
+- `toWork` for document creation and publishing
+- `toProject` for project-centered architecture and execution
+- `toMemory` for memory-facing product surfaces
+
+Use `TopooUI` when the question is about shared interface language, docs primitives, and reusable rendering patterns.
 
 ## Next build lane
 

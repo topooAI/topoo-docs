@@ -2,12 +2,70 @@
 title: "toAgent"
 description: "Chat board documentation for the Topoo desktop agent surface."
 ---
-## Scope
+`toAgent` is the board for the chat and orchestration surface of Topoo.
 
-- **Conversation flows:** topic lifecycle, tool outputs, and agent state transitions.
-- **Surface behaviors:** composer, thread views, message rendering, and operator actions.
-- **Contracts:** acceptance criteria, interaction rules, and reusable chat UI decisions.
+Its job is to define how users interact with agents, how execution requests are framed, and how the system exposes outputs, status, and intervention points inside the conversation lane.
 
-## Current status
+## What this board owns
 
-This board is scaffolded and ready for concrete documentation. We can now replace the placeholder scope with real page structure and acceptance criteria.
+This board should document:
+
+- conversation structure
+- thread and topic lifecycle
+- composer behavior
+- tool and action output rendering
+- operator controls and escalation states
+- acceptance rules for agent-led interaction
+
+It should answer the question:
+
+> what does a correct agent interaction surface look like inside Topoo?
+
+## Core surface model
+
+The agent surface is not only a message list.
+
+It is the place where:
+
+- user intent is declared
+- system plans and actions become visible
+- tools and workflows expose intermediate state
+- operators intervene when confidence or control requires it
+
+That means the surface must support both:
+
+- natural conversation
+- explicit execution state
+
+If the board only optimizes for “chat-like feel”, it loses the operating value of the product.
+
+## Major topics that belong here
+
+This board should grow into topic pages such as:
+
+- conversation model
+- composer and prompt framing
+- run states and execution visibility
+- tool outputs and structured result rendering
+- operator actions and controls
+- conversation memory handoff points
+- acceptance criteria for message-level interaction
+
+## Relationship to other boards
+
+- `toWork` owns document and artifact surfaces produced from or alongside conversations.
+- `toProject` owns project structure and execution containers that agent work may operate against.
+- `toMemory` owns recall and persistence contracts used by the agent surface.
+- `TopooUI` owns shared chat UI primitives, typography rules, spacing, and reusable docs patterns.
+
+## Current direction
+
+The board should move toward a system where agent interaction is:
+
+- explicit about state
+- readable under long-running work
+- compatible with tools and structured output
+- safe for operator intervention
+- consistent with the rest of the product system
+
+This board is the place to define those rules before they are scattered across implementation details.

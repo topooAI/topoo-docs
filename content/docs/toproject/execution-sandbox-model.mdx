@@ -1,0 +1,159 @@
+---
+title: "Execution Sandbox Model"
+description: "How agent runs are isolated, permissioned, recoverable, and audited across local and managed runtime."
+---
+## Purpose
+This document defines the sandbox layer of the `toProject` execution system.
+
+It answers:
+- how a run is isolated from the host
+- what permissions a run is allowed to use
+- how filesystem and network boundaries are controlled
+- how sandbox state becomes inspectable and recoverable
+
+## Block Position
+Inside the `toProject` board, this page belongs to the `Operating System` block.
+
+It primarily owns these topics:
+- sandbox role
+- isolation boundary
+- permission model
+- filesystem boundary
+- network boundary
+- recovery and replay
+- audit trail
+
+## Core Position
+Runtime answers:
+- where a run happens
+
+Sandbox answers:
+- how that run is isolated while it happens
+
+These are not the same thing.
+
+A run may execute in:
+- local runtime
+- Cloudflare managed runtime
+- external runtime
+
+But each of those still needs a sandbox policy.
+
+## Why Sandbox Must Exist
+Without sandboxing:
+- execution can leak into the wrong environment
+- permission boundaries stay ambiguous
+- replay and debugging become unreliable
+- auditability weakens
+- local and cloud execution become harder to compare
+
+In an agentic system, sandboxing is not only a security feature.
+
+It is part of the execution contract.
+
+## Sandbox Responsibilities
+The sandbox layer should provide:
+- isolated execution context
+- explicit permission model
+- bounded filesystem access
+- bounded network access
+- tool availability control
+- recoverability and replay hints
+- evidence of what the run was allowed to do
+
+## Isolation Boundary
+Each run should execute inside a bounded environment.
+
+That environment does not have to be identical across all runtimes, but it must always answer:
+- what process space does this run control
+- what files can it read or write
+- what network can it access
+- what tools can it invoke
+- what persists after the run ends
+
+## Permission Model
+The permission model should at minimum distinguish:
+- read-only inspection
+- bounded write
+- privileged write
+- network disabled
+- network limited
+- tool-restricted
+
+This is the layer where `plan`, `supervised execution`, and `autonomous execution` become operationally meaningful.
+
+## Filesystem Boundary
+The sandbox should know:
+- allowed roots
+- ephemeral work area
+- persistent work area
+- protected system paths
+
+The goal is not only safety.
+
+The goal is making it obvious what a run was allowed to touch.
+
+## Network Boundary
+The sandbox should know:
+- no network
+- allowlisted network
+- runtime-ingress-only network
+- full network
+
+This matters because cloud execution and local execution should not silently inherit the same network freedom.
+
+## Recovery And Replay
+The sandbox layer should support:
+- resumable sessions where possible
+- reproducible run context
+- failure inspection
+- replay against the same source and permission envelope
+
+Perfect determinism is not required at the start.
+
+Traceable bounded replay is.
+
+## Audit Trail
+Every run should eventually be able to answer:
+- which sandbox class it used
+- what permission level was active
+- what filesystem roots were mounted
+- what network policy was active
+- whether the run escalated beyond its default boundary
+
+This is how sandboxing becomes part of project evidence instead of hidden implementation detail.
+
+## Current Direction
+For the current system, the practical sandbox direction is:
+
+### Local Runtime
+- bounded local workspace access
+- explicit write roots
+- controlled tool execution
+- optional network limits
+
+### Cloudflare Managed Runtime
+- worker-level bounded runtime
+- explicit storage bindings
+- queue / event scoped execution
+- no implicit host filesystem access
+
+### Future Expansion
+- rented compute sandboxes
+- external isolated nodes
+- stronger replayable environment snapshots
+
+## Boundary
+This page does not decide which runtime should take a run.
+
+That belongs to the runtime and scheduling layer.
+
+This page defines the isolation envelope once a runtime has been chosen.
+
+## Reading Relationship
+Read this after:
+- [PROJECT_RUNTIME_MODEL.md](/docs/toproject/runtime-model)
+- [VERSION_MANAGEMENT_STRATEGY.md](/docs/toproject/version-strategy)
+
+Return to the board home:
+- [PROJECT_CORE_STRUCTURE.md](/docs/toproject)
