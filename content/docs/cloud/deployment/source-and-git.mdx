@@ -50,6 +50,17 @@ Repository and Node are not aliases.
 
 Node topology follows problem ownership, durable attention, and delivery responsibility. Repository layout is only one source input.
 
+Each Node Source Binding must identify the repository, reference policy, primary root path, additional affected paths, required Checks, build contract, Artifact contract, and versioned dependencies. Two Nodes may bind the same repository, but they must not rely on an ambiguous repository-wide identity.
+
+```text
+Repository: product-monorepo
+├── apps/console   → Console Node
+├── apps/api       → API Node
+└── packages/ui    → UI System Node
+```
+
+If two proposed Nodes own the same source scope, produce the same output, and follow the same version and delivery lifecycle, they are one Node with multiple Agents or Sessions rather than two independent Nodes.
+
 Separating a repository is not enough to create a working product boundary. The consumer must reference a real, immutable version or Artifact from the separated responsibility. Two copied packages with no enforced dependency are not a completed split.
 
 ## GitHub-first architecture
