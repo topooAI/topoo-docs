@@ -120,6 +120,134 @@ The primary editor changes by capability:
 
 These are capabilities and adapters, not separate release systems.
 
+## External Agent Session connection
+
+Topoo does not need to own the conversation interface used by every Agent. Codex, Claude, VS Code, and other execution clients may create Sessions outside Topoo while Topoo remains the authority for Project identity, Node scope, Source, Submissions, and releases.
+
+The target user outcome is:
+
+> **After Topoo and the execution client are connected once, the user starts a new Session by stating the task. The user does not repeat the Project, Node, repository, Agent prompt, Checks, or deployment policy in every conversation.**
+
+For example:
+
+```text
+Implement stale-base detection for Agent Submissions.
+Do not change the existing Dashboard layout.
+Create a Preview when the required Checks pass.
+```
+
+The client resolves the rest from Topoo:
+
+```text
+Task
+→ identify the connected repository and working directory
+→ resolve the Topoo Project
+→ resolve or confirm the responsible Node
+→ load the Agent identity and Node Context Pack
+→ issue a scoped Session Grant
+→ lock the Base Revision
+→ create isolated working state
+→ produce Checkpoints, a Submission, Checks, and Preview
+```
+
+If one task unambiguously maps to one Node, this resolution is automatic. If the task crosses Nodes or the current repository maps to several valid responsibility scopes, Topoo asks the user to choose the affected Node or authorize a multi-Node task. This is scope confirmation, not a request to restate project context.
+
+### Persistent context and automatic resolution
+
+Topoo persists long-lived context under Project, Node, and Agent objects:
+
+- Project identity, environments, resources, current release, and Production policy
+- Node responsibility, Source Bindings, root paths, dependency scope, and current version
+- Agent identity, prompt, permissions, tools, and operating procedure
+- build contracts, required Checks, Artifact contracts, and Preview policy
+- Submission, audit, retention, and rollback policy
+
+A repository may also carry a non-secret `topoo.app.json` manifest that identifies its Project binding, Node roots, build contracts, Artifact contracts, and context-discovery address. Git remote identity, current working directory, and this manifest allow an installed Topoo client to resolve the active context without storing credentials in the repository.
+
+The Node Context Pack returned to an authorized Session contains the minimum structured context required for the task:
+
+```text
+Node Context Pack
+├── Project and Node identity
+├── responsibility and acceptance framing
+├── Agent identity, prompt, permissions, and SOP
+├── Source Bindings and Base Revision
+├── allowed files, resources, and dependency versions
+├── build commands and required Checks
+├── Submission and Preview policy
+└── current Project Release references
+```
+
+The complete conversation history is not the context contract. A new Session can start with a clean conversational context while reusing the durable Node and Agent identity.
+
+### Two entry paths
+
+Topoo should support both directions:
+
+```text
+Topoo Project
+→ Node
+→ Open in Codex or another client
+→ start an externally hosted Session already bound to Project, Node, and Agent
+```
+
+```text
+Codex or another client
+→ open a connected repository
+→ Topoo plugin resolves Git remote, working directory, and topoo.app.json
+→ start a Session under the matching Project and Node
+```
+
+The `Open in` action launches or hands off to the external client. It does not move the chat interface into Topoo and does not make Topoo the owner of the external conversation.
+
+### Topoo Cloud plugin
+
+The distributable Codex integration should be a `Topoo Cloud` plugin rather than only a prompt template. Its target package may contain:
+
+- a Topoo Cloud App backed by a remote Topoo MCP server
+- OAuth connection and workspace authorization
+- Project, Node, Source, Submission, Preview, Release, and rollback tools
+- reusable Skills that teach the Topoo operating procedure
+- an App Template for enterprise or private Topoo endpoints
+
+Installation and account connection happen once. A workspace may make the plugin available or preinstall it for eligible roles. New Sessions then use the existing account connection and request a new scoped Session Grant.
+
+The plugin is an external entry to the same Topoo control plane:
+
+```text
+Codex ──┐
+Claude ─┼→ Topoo MCP and API → Project → Node → Session → Submission
+VS Code ┘
+```
+
+### Authorization layers
+
+Account connection, Session authority, and Production authority are different grants:
+
+| Layer | Purpose | Expected lifetime |
+|---|---|---|
+| Account connection | Connect an execution client to the user's Topoo account through browser authorization. | Persistent until revoked. |
+| Session Grant | Bind one client Session to a Workspace, Project, Node, Agent identity, Base Revision, and allowed actions. | Short-lived and revocable. |
+| Production Approval | Authorize promotion of one exact accepted Release Artifact Set. | Single action. |
+
+The primary remote connection should use browser-based OAuth authorization. A one-time device or claim code is a fallback for clients that cannot complete a normal browser redirect, not the default prompt interface. Long-lived API keys must not be pasted into conversations, URLs, manifests, or Change Summaries.
+
+A normal Agent Session may read its Context Pack, create Checkpoints and Submissions, run Checks, and request Preview under policy. It does not inherit Production authority merely because the account connection is valid.
+
+### Provider execution skills
+
+A provider-specific capability such as Cloudflare deployment is an upstream execution tool, not the Topoo product model.
+
+```text
+Topoo Cloud plugin
+→ resolves Project, Node, Submission, Release Candidate, approval, and audit
+→ Topoo Release Controller
+→ invokes Cloudflare or another provider adapter
+→ records the resulting Artifact, Deployment, and operating evidence
+```
+
+Topoo Cloud may use a Cloudflare deployment Skill internally while operating its own first Project. Customers should not need to install or understand that provider Skill when Topoo owns the upstream account, policy, and runtime relationship.
+
 ## Common lifecycle
 
 All editor modes feed the same lifecycle:
@@ -194,10 +322,12 @@ For a single-Node Project, Topoo may automatically create a Project Release Cand
 7. A Project Release Candidate pins exact Node Versions, including unchanged versions.
 8. Preview and Production promotion use the same accepted Release Artifact Set.
 9. A Node version becoming available does not silently update a Project.
-10. Current UI or database evidence must not be described as a completed lifecycle until the full behavior is verified.
+10. An installed execution-client plugin does not grant implicit Production authority.
+11. Long-lived credentials are never transmitted through a task prompt or repository manifest.
+12. Current UI or database evidence must not be described as a completed lifecycle until the full behavior is verified.
 
 ## Current implementation boundary
 
 The current Topoo Cloud Node surfaces primarily provide Node browsing, creation, classification, source metadata, repository content, and specialized editor entry points.
 
-The complete Node Version ledger, common Workbench lifecycle panels, Submission channel, immutable Artifact relationship, Project Release Candidate integration, promotion policy, and rollback chain remain target capabilities until independently implemented and accepted.
+The complete external Agent connection, Topoo Cloud plugin, automatic Project and Node resolution, OAuth-backed MCP access, Session Grant, Node Version ledger, common Workbench lifecycle panels, Submission channel, immutable Artifact relationship, Project Release Candidate integration, promotion policy, and rollback chain remain target capabilities until independently implemented and accepted.

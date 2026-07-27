@@ -142,6 +142,12 @@ Every build and deployment must point to exact Source Revisions, immutable Node 
 
 Represent Agent work as a proposed change with identity, base revision, affected scope, checks, and authority. Submitting work and deploying work remain separate actions.
 
+### Establish external Agent connections
+
+Publish a Topoo Cloud execution-client plugin backed by a remote Topoo MCP server and browser-based OAuth. Persist Project, Node, and Agent context in Topoo so a new Codex, Claude, or VS Code Session can begin from the user's task rather than a repeated context prompt.
+
+Resolve repository, working directory, `topoo.app.json`, Project, Node, Agent identity, and Base Revision into a scoped Session Grant. Treat one-time claim codes as a compatibility path for clients without a browser redirect, not as long-lived credentials or the primary task interface.
+
 ### Establish deterministic integration
 
 Integrate accepted submissions through one queue and one candidate state. Detect stale bases and overlapping ownership before building.
@@ -168,6 +174,10 @@ The documentation records the product model and acceptance boundary. It does not
 - do not rebuild when promoting an accepted Preview Release Artifact Set to Production
 - do not treat a Branch as an immutable release
 - do not create a separate release path for every source provider
+- do not require users to restate durable Project, Node, Agent, and deployment context in every external Session
+- do not paste long-lived API keys or deployment credentials into Agent prompts
+- do not treat installing or authenticating a Topoo plugin as Production approval
+- do not let a provider-specific deployment Skill bypass Topoo Submission and Release Control
 - do not represent Topoo Git as complete until standard Git operations actually work
 - do not label a feature complete because some endpoints or database tables exist
 
