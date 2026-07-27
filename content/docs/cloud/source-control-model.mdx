@@ -11,6 +11,8 @@ The product model separates three responsibilities:
 - **Topoo Source** binds exact repository scopes and revisions to problem-oriented Nodes
 - the **Release Controller** validates, integrates, builds, and promotes accepted changes
 
+The canonical objects and editor relationship are defined in [Node Workbench and Lifecycle Model](/docs/cloud/node-lifecycle-model).
+
 GitHub is the first external provider. It is not the Topoo product model and it is not the only long-term source mode.
 
 ## Two source modes
@@ -26,10 +28,14 @@ Both modes must produce the same Topoo-facing objects:
 - branch or reference
 - immutable commit
 - source root
-- change request
-- checks
-- release candidate
-- deployment artifact
+- canonical Source Revision
+- Submission and Change Summary
+- Checks
+- immutable Node Version
+- optional immutable Node Artifact
+- Project Release Candidate
+- Release Artifact Set
+- Deployment
 
 This common model lets Projects, Nodes, deployments, audit logs, and Agents work consistently regardless of where Git is hosted.
 
@@ -52,11 +58,13 @@ For a connected GitHub repository:
 
 1. Topoo records the repository and selected branch.
 2. Topoo reads the exact commit and imports an immutable source snapshot.
-3. Pull Requests become Topoo Change Requests.
+3. Pull Requests become provider evidence attached to Topoo Submissions or Change Requests.
 4. GitHub Checks become Topoo Checks.
-5. An accepted commit becomes a release candidate.
-6. The Release Controller builds and promotes a versioned artifact.
-7. The deployment record preserves the source commit, checks, artifact, environment, operator, and time.
+5. Accepted Submissions produce an immutable Node Version.
+6. The Release Controller integrates accepted Node Versions into a Project Release Candidate.
+7. Required Node Artifacts are built or resolved and sealed into a Release Artifact Set.
+8. Preview and Production promotion reuse that accepted Release Artifact Set.
+9. The deployment record preserves Source Revisions, Submissions, Checks, Node Versions, Artifacts, Environment, operator, approval, and time.
 
 GitHub remains the repository source of truth in this mode. Topoo adds the cloud operating model and release ledger around it.
 

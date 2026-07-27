@@ -50,6 +50,16 @@
     ]
   },
   {
+    "id": "topoo-cloud-node-lifecycle-model",
+    "blockId": "topoo-cloud-platform",
+    "label": "Node Workbench & Lifecycle",
+    "href": "/docs/cloud/node-lifecycle-model",
+    "description": "Canonical Source, editor, Submission, Node Version, Artifact, Project Release, and Deployment objects.",
+    "pageIds": [
+      "topoo-cloud-node-lifecycle-model"
+    ]
+  },
+  {
     "id": "topoo-cloud-runtime-resource-model",
     "blockId": "topoo-cloud-platform",
     "label": "Runtime & Resources",

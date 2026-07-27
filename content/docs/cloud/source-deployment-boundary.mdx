@@ -11,6 +11,8 @@ Source explains where a change came from.
 
 Deployment explains which artifact is running, where it is running, and how it reached that environment.
 
+[Node Workbench and Lifecycle Model](/docs/cloud/node-lifecycle-model) defines the canonical objects used on both sides of this boundary.
+
 ## Source owns
 
 - provider and repository identity
@@ -24,7 +26,7 @@ Deployment explains which artifact is running, where it is running, and how it r
 
 - the accepted Project Release identity
 - the exact Node versions included in that release
-- immutable artifact identity or pinned Artifact set
+- immutable Node Artifact identities and the sealed Release Artifact Set
 - build and release status
 - target environment
 - promotion and rollback history
@@ -37,21 +39,39 @@ Every deployment must reference the source revision that produced it, but deploy
 
 ## Node delivery and Project deployment
 
-A Node owns one problem-oriented delivery history. It can accept Submissions, produce immutable revisions, and publish a new version or Artifact.
+A Node owns one problem-oriented delivery history. It can accept Submissions, publish immutable Node Versions, and produce Artifacts when it has a build capability.
 
 A Project decides which Node versions form the product:
 
 ```text
 Session
 → Submission
-→ Node delivery version
+→ Node Version
+→ optional Node Artifact
 → Project Release Candidate
+→ Release Artifact Set
 → Preview
 → Approval
 → Production
 ```
 
-Publishing a Node version does not silently update a Project. A Project must explicitly accept that version into a Release Candidate. This preserves local change: one Node can advance while every unchanged Node remains pinned to its previously accepted version.
+Publishing a Node Version does not silently update a Project. A Project must explicitly accept that version into a Release Candidate. This preserves local change: one Node can advance while every unchanged Node remains pinned to its previously accepted version.
+
+## Editor and deployment boundary
+
+Node Workbench is the primary interaction surface for Source editing and Node lifecycle state.
+
+It may show:
+
+- Code, visual, workflow, schema, document, or Agent editor adapters
+- working Diff and Base Revision
+- Submissions and Change Summaries
+- Checks, Node Versions, Artifacts, and Node Preview
+- which Project Releases consume the Node Version
+
+These editor adapters operate on the same canonical Source. A visual or no-code editor must not create an unversioned state that bypasses Source, Diff, Submission, or audit.
+
+Project Deployment remains the authority for integrated Preview, Production promotion, Environment binding, and rollback. Putting lifecycle controls inside Node Workbench does not transfer Production authority to the editor, Node, Agent, or Session.
 
 ## Deployment entry modes
 
@@ -59,8 +79,8 @@ Topoo supports three ways to bring work into the deployment system. They share t
 
 | Entry mode | User intent | Topoo responsibility |
 |---|---|---|
-| Manual upload | Drag a local code package into Topoo and run it | Preserve the uploaded snapshot, detect the project and build contract, validate required configuration, build an immutable artifact, and create a deployment |
-| GitHub sync | Keep a Topoo Project connected to a repository and branch | Sync each accepted commit, explain the change, run the configured checks, and create a Preview or Production candidate according to project policy |
+| Manual upload | Drag a local code package into Topoo and run it | Preserve the uploaded Source Revision, detect Node scopes and build contracts, validate configuration, produce immutable Node Versions and Artifacts, and create a Release Candidate |
+| GitHub sync | Keep a Topoo Project connected to a repository and branch | Sync exact Source Revisions, explain accepted changes, run configured Checks, and create Node Versions and a Preview or Production candidate according to Project policy |
 | Topoo-native delivery | Create or change the Project directly in Topoo with people or Agents | Keep the request, working state, review, integration, artifact, and deployment in one continuous project record |
 
 GitHub synchronization does not have to mean that every commit immediately overwrites Production. A Project can choose to:
@@ -103,7 +123,8 @@ The release controller is responsible for:
 - detecting overlapping file or resource ownership
 - building and testing one integrated source state
 - creating a versioned release artifact
-- promoting only the accepted artifact
+- sealing one accepted Release Artifact Set
+- promoting only that accepted Release Artifact Set
 - recording who or what submitted, integrated, approved, and deployed the change
 
 An Agent submission is a proposed change, not an instruction to overwrite the current production state.
@@ -163,4 +184,4 @@ This traceability is the foundation for safe multi-Agent delivery.
 
 From any running deployment, an operator should be able to trace:
 
-`Deployment → artifact → build → source revision → change summary → request → person or Agent → checks and approval`
+`Deployment → Release Artifact Set → Node Artifact → Node Version → Source Revision → Change Summary → Submission → person or Agent → Checks and Approval`

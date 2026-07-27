@@ -3,6 +3,7 @@
   "pages": [
     "index",
     "project-node-model",
+    "node-lifecycle-model",
     "project-control-plane",
     "runtime-resource-model",
     "source-deployment-boundary",

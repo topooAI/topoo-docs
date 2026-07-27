@@ -41,6 +41,7 @@ Existing components inside a not-completed capability are listed as evidence. Th
 | Node version management | Node delivery revisions and some delivery records exist. | A complete version list, semantic version identity, diff, change summary, immutable Artifact linkage, and restore workflow. | Not completed |
 | Node consumer graph | Project and Node references exist in parts of the control-plane model. | A verified dependency graph showing which Projects consume each Node or Package version and which upgrades are available. | Not completed |
 | Project Release composition | Project deployment history and Node-linked build records exist. | One immutable Project Release that pins the accepted version of every included Node. | Not completed |
+| Common Node Workbench lifecycle | Node browsing, repository content, specialized editor entry points, and parts of delivery history exist. | One common surface for Diff, Submissions, Change Summaries, Node Versions, Checks, Artifacts, Preview, consuming Releases, and rollback evidence. | Not completed |
 
 ## Not completed — capability absent
 
@@ -62,7 +63,7 @@ Topoo Cloud currently has a substantial **GitHub-connected source and deployment
 
 It does not yet have a complete **Topoo-native Git collaboration platform** or the final **Agent Release Controller**.
 
-The next implementation milestone should not be another isolated deployment button. It should establish the canonical Agent Submission and Release Candidate objects, then connect them to the existing repository, Change Request, Check, source snapshot, and deployment records.
+The next implementation milestone should not be another isolated deployment button. It should establish the canonical Submission, Node Version, Artifact, Project Release Candidate, and Release Artifact Set objects, then connect them to the existing repository, Change Request, Check, source snapshot, Node Workbench, and deployment records.
 
 ## Live verification boundary
 
@@ -82,9 +83,11 @@ The next milestone is complete only when:
 
 1. two Agents can submit independent changes against a pinned base revision
 2. the controller detects a stale base or overlapping file ownership
-3. accepted changes produce one release candidate
-4. required checks run against that integrated candidate
-5. preview uses the candidate's immutable artifact
-6. production promotion reuses the accepted artifact
-7. the UI shows submitter, revisions, checks, approvals, artifact, environments, and rollback
-8. one Agent cannot overwrite another Agent's accepted production state
+3. accepted changes produce immutable Node Versions
+4. exact Node Versions form one Project Release Candidate
+5. required Checks run against that integrated candidate
+6. Preview uses the candidate's immutable Release Artifact Set
+7. Production promotion reuses the accepted Release Artifact Set
+8. Node Workbench shows submitter, Base Revision, Diff, Change Summary, Checks, Node Version, Artifact, and consuming Release
+9. Project Deployment shows included Node Versions, approval, Environment, Release Artifact Set, and rollback
+10. one Agent cannot overwrite another Agent's accepted Production state

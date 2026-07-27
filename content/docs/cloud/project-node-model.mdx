@@ -7,6 +7,8 @@ This page is the canonical definition of `Project` and `Node` in Topoo Cloud.
 
 The model starts from the problem Topoo needs to solve: a small product may be understandable as one body of work, while a large product contains many distinct problem domains that people, Agents, and programs must advance in parallel without losing context or overwriting one another.
 
+Read [Node Workbench and Lifecycle Model](/docs/cloud/node-lifecycle-model) for the canonical Source, editor, Submission, Node Version, Artifact, Release, and Deployment objects attached to these boundaries.
+
 ## Canonical definitions
 
 > **Project is the unified product and release subject exposed to the outside world.**
@@ -88,6 +90,25 @@ Node owns the durable working and delivery boundary for one problem domain:
 
 A Node may be code-producing, package-producing, runtime-capable, workflow-oriented, component-oriented, or coordination-oriented. Runtime is a Node capability or type, not the definition of every Node.
 
+## Node Workbench and editor relationship
+
+Node is the responsibility object. Node Workbench is the operating surface for that object.
+
+The Workbench may present a Code editor, visual website editor, component editor, workflow canvas, schema editor, document editor, or Agent editor. These are editor adapters over the same canonical, versionable Source model rather than separate product lifecycles.
+
+```text
+Node
+├── Canonical Source
+├── Code or specialized editor adapters
+├── Submissions and Node Versions
+├── Checks and optional Artifacts
+└── Preview and delivery history
+```
+
+A no-code editor must change canonical structured Source and produce a reviewable Diff. Direct Source changes must also be reflected when that specialized editor reads the new revision. Visual state must not become a hidden, unversioned database copy.
+
+The current Code editor direction should therefore evolve into a general Node Workbench shell. Deep code-editing or visual-editing engines can progress independently while every editor uses the same lifecycle objects.
+
 ## Agent and Session relationship
 
 Node carries long-lived responsibility. Session carries short-lived attention.
@@ -115,9 +136,10 @@ Agent work must move through explicit authority boundaries:
 ```text
 Session
 → Submission
-→ Node revision or delivery version
+→ immutable Node Version
+→ optional Node Artifact
 → Project Release Candidate
-→ immutable Project Artifact or pinned Artifact set
+→ immutable Release Artifact Set
 → Preview
 → Approval
 → Production
@@ -125,8 +147,8 @@ Session
 
 Node publication and Project deployment are different:
 
-- **Node publication** creates a new immutable version or deliverable for one responsibility domain.
-- **Project deployment** promotes an accepted combination of Node versions as one product release.
+- **Node publication** creates a new immutable Node Version and, when buildable, one or more immutable Artifacts for one responsibility domain.
+- **Project deployment** promotes an accepted combination of Node Versions through one immutable Release Artifact Set.
 
 A Node version becoming available must not silently change a Project. The Project explicitly accepts that version into a Release Candidate.
 
@@ -195,8 +217,8 @@ The following rules must remain true:
 3. Agent is an actor working under Node scope; it is not the Node itself.
 4. Session is an ephemeral execution context attached to a Node.
 5. Submission is proposed work, not deployment authority.
-6. A Node version is immutable after publication.
-7. A Project Release pins the accepted versions of its Nodes.
+6. A Node Version is immutable after publication and pins its Source Revision, accepted Submissions, Checks, and dependencies.
+7. A Project Release pins the accepted Node Versions and their immutable Artifact relationships.
 8. A Node version does not silently update consuming Projects.
 9. Repository layout does not define Node topology by itself.
 10. Runtime state is shown only for Nodes that actually have a runtime capability.

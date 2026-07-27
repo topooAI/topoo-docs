@@ -7,13 +7,17 @@ Topoo Cloud needs one controlled path from source change to production.
 
 The plan is not to let every Agent become an independent deployment system. Agents contribute changes. A deterministic release program integrates, validates, builds, and promotes them.
 
-This plan uses the canonical [Project and Node Model](/docs/cloud/project-node-model):
+This plan uses the canonical [Project and Node Model](/docs/cloud/project-node-model) and [Node Workbench and Lifecycle Model](/docs/cloud/node-lifecycle-model):
 
 - Project is the externally unified product and Production authority.
 - Node is the persistent problem, responsibility, attention, version, and delivery boundary.
 - Agent is an actor operating under Node scope.
 - Session is a temporary execution context attached to a Node.
 - Submission is proposed work, not release authority.
+- Node Version is an immutable accepted Node state.
+- Artifact is an immutable output produced from an exact Node Version and build contract.
+- Project Release Candidate is the exact set of accepted Node Versions evaluated together.
+- Deployment binds the accepted Release Artifact Set to an Environment.
 
 ## The problem
 
@@ -49,14 +53,14 @@ One Project release controller:
 3. produces accepted Node revisions or delivery versions
 4. integrates accepted Node versions into one Project Release Candidate
 5. runs checks against the integrated candidate
-6. creates one immutable artifact or pinned Artifact set
+6. creates one immutable Release Artifact Set that pins all required Node Artifacts and configuration fingerprints
 7. publishes that exact candidate to Preview
 8. promotes the same candidate to Production after approval
 9. records a rollback target
 
 ## Control-plane model
 
-`Git provider → Topoo source revision → Agent Session → Node Submission → Node version → Project Release Candidate → Artifact → Preview → Approval → Production → Rollback`
+`Git provider → Topoo Source Revision → Agent Session → Node Submission → Node Version → optional Node Artifact → Project Release Candidate → Release Artifact Set → Preview → Approval → Production → Rollback`
 
 ### Target release controller flow
 
@@ -70,10 +74,11 @@ Receive Node Submission
 → Publish an immutable Node version
 → Create the single Project Release Candidate
 → Run full Checks
-→ Build an immutable Artifact
+→ Build or resolve immutable Node Artifacts
+→ Seal the immutable Release Artifact Set
 → Deploy to Preview
 → Await approval
-→ Promote the same Artifact to Production
+→ Promote the same Release Artifact Set to Production
 → Preserve the audit trail and rollback target
 ```
 
@@ -85,14 +90,43 @@ Each object answers a different question:
 |---|---|
 | Source revision | Which exact code state is being considered? |
 | Node | Which problem, responsibility, attention, and delivery boundary owns the work? |
+| Node Workbench | Where are Source editing and the Node lifecycle presented together? |
 | Session | Which temporary execution context performed the task? |
-| Agent submission | Who proposed what bounded change against which Node and base? |
-| Node version | What immutable deliverable did the Node publish? |
-| Project Release Candidate | Which accepted Node versions are being evaluated together? |
-| Artifact | What immutable build was produced? |
-| Deployment | Where is that artifact running? |
+| Submission | Who proposed what bounded change against which Node and Base Revision? |
+| Change Summary | What changed, why did it change, and what may be affected? |
+| Check | Which deterministic validation ran against which exact state? |
+| Node Version | Which immutable accepted Source, Submissions, Checks, and dependencies did the Node publish? |
+| Artifact | What immutable output was built from an exact Node Version and build contract? |
+| Project Release Candidate | Which accepted Node Versions are being evaluated together? |
+| Release Artifact Set | Which exact Node Artifacts, configuration fingerprints, routes, and evidence form the releasable product? |
+| Deployment | Which Release Artifact Set is bound to which Environment? |
 | Approval | Who authorized promotion? |
-| Rollback | Which accepted artifact can replace the current release? |
+| Rollback Target | Which accepted Release Artifact Set can replace the current deployment? |
+
+## Node Workbench and Deployment surfaces
+
+The lifecycle is one system presented at two levels.
+
+Node Workbench may expose:
+
+- Source and editor modes
+- Diff and working state
+- Agent and Session connection
+- Submissions and Change Summaries
+- Node Versions and dependency versions
+- Node-level Checks
+- Artifacts and isolated Node Preview
+- the Project Releases that consume each Node Version
+
+Project Deployments expose:
+
+- the accepted Node Versions in one Release Candidate
+- integrated Checks and conflicts
+- the immutable Release Artifact Set
+- Environments, Preview, approval, Production, and rollback
+- the complete Project audit chain
+
+Node Workbench must not become an alternate Production path. Project Deployment remains the final release authority even when a single-Node Project presents a simplified editor-centered Publish interaction.
 
 ## Delivery direction
 
@@ -102,7 +136,7 @@ Complete the GitHub connection and synchronization lifecycle so repository, bran
 
 ### Establish immutable releases
 
-Every build and deployment must point to an exact source revision and an immutable artifact. A mutable branch name is not a release identity.
+Every build and deployment must point to exact Source Revisions, immutable Node Versions, and an immutable Release Artifact Set. A mutable branch name is not a release identity.
 
 ### Establish Agent submissions
 
@@ -114,7 +148,7 @@ Integrate accepted submissions through one queue and one candidate state. Detect
 
 ### Establish release channels
 
-Draft, Review, Integration, Preview, and Production express different authority. Production only accepts an approved artifact already evaluated in Preview.
+Draft, Review, Integration, Preview, and Production express different authority. Production only accepts an approved Release Artifact Set already evaluated in Preview.
 
 ### Add Topoo-hosted Git
 
@@ -122,7 +156,7 @@ After the provider-independent release model is stable, Topoo can add a Git-comp
 
 ## Ownership boundary
 
-The Deployment system owns source connection, synchronization, submissions, candidates, artifacts, promotion, and rollback.
+The Deployment system owns source connection, synchronization, Submissions, Node Version integration, candidates, Artifacts, Release Artifact Sets, promotion, and rollback.
 
 The Dashboard owns the presentation of those real states. It must consume stable read-only contracts and must not infer success from placeholders.
 
@@ -131,7 +165,7 @@ The documentation records the product model and acceptance boundary. It does not
 ## What not to do
 
 - do not let Agents deploy directly from uncommitted local files
-- do not rebuild when promoting an accepted Preview artifact to Production
+- do not rebuild when promoting an accepted Preview Release Artifact Set to Production
 - do not treat a Branch as an immutable release
 - do not create a separate release path for every source provider
 - do not represent Topoo Git as complete until standard Git operations actually work

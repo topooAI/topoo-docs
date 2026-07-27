@@ -7,7 +7,7 @@ A Cloud Project is the integration boundary of Topoo Cloud.
 
 It is also the externally unified product and release subject. Customers, domains, environments, permissions, Production promotion, observability, and audit resolve to the Project even when many independent responsibility domains contribute to it.
 
-Read [Project and Node Model](/docs/cloud/project-node-model) as the canonical definition of the two objects.
+Read [Project and Node Model](/docs/cloud/project-node-model) as the canonical definition of the two objects, and [Node Workbench and Lifecycle Model](/docs/cloud/node-lifecycle-model) for the shared Source, editor, version, Artifact, and release objects.
 
 It is not only:
 
@@ -31,7 +31,7 @@ A Cloud Project owns or binds:
 - runtime and execution policy for runtime-capable Nodes
 - databases, object storage, queues, domains, secrets, and AI capabilities
 - Project Release Candidates and accepted Node versions
-- production and preview deployments of the integrated Project Release
+- immutable Release Artifact Sets and Production or Preview deployments of the integrated Project Release
 - logs, metrics, traces, alerts, and audit events
 - workspace-scoped access and environment configuration
 
@@ -52,6 +52,7 @@ Node submissions
 → immutable Node versions
 → Project Release Candidate
 → integrated Checks
+→ immutable Release Artifact Set
 → Preview
 → Approval
 → Production
@@ -59,7 +60,11 @@ Node submissions
 
 Node publication does not grant Production authority. Project remains the final integration, environment, domain, and deployment boundary.
 
-## Module boundaries
+## Workbench and module boundaries
+
+Node Workbench is the common editing and lifecycle surface. It can host Code, visual website, workflow, component, schema, document, or Agent editor adapters while preserving one canonical Source and release model.
+
+A website is not a separate object class outside software delivery. It is a Node capability whose specialized editor produces versioned Source and a web Artifact. The same principle applies to workflows, components, schemas, documents, and Agent definitions.
 
 Sites, workflows, components, databases, and storage remain distinct product modules.
 
@@ -78,6 +83,7 @@ The Cloud Project integrates them without erasing their identity:
 The product UI may evolve, but the following responsibilities must remain visible:
 
 - **Overview:** identity, live condition, current environment, key activity, and primary actions
+- **Node Workbench:** canonical Source, editor adapters, Diff, Submissions, Node Versions, Checks, Artifacts, Node Preview, and delivery history
 - **Source:** repository, branch, path, revision, sync, and import state
 - **Topology:** real relationships between modules, Nodes, resources, domains, and deployments
 - **Resources:** runtime, storage, data, network, secrets, and access configuration
@@ -90,7 +96,7 @@ These are responsibility boundaries, not a requirement that every item must alwa
 
 Every controlled operation must resolve to:
 
-`Workspace -> Cloud Project -> Node -> Agent or Session -> Submission or delivery record`
+`Workspace -> Cloud Project -> Node -> Agent or Session -> Submission -> Node Version or delivery record`
 
 Every runtime operation additionally resolves through:
 

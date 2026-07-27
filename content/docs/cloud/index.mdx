@@ -14,6 +14,12 @@ Customers buy and operate Topoo capacity. They should not need to understand whi
       Define Project as the unified product and release subject, and Node as the persistent problem, responsibility, attention, and delivery boundary.
     </div>
   </LinkedCard>
+  <LinkedCard href="/docs/cloud/node-lifecycle-model" className="items-start gap-1 p-6 text-sm md:p-6">
+    <div className="font-medium">Node Workbench &amp; Lifecycle</div>
+    <div className="leading-relaxed text-muted-foreground">
+      Unify Source, editors, Agent Submissions, Node Versions, Artifacts, Project Releases, and Deployments into one lifecycle.
+    </div>
+  </LinkedCard>
   <LinkedCard href="/docs/cloud/project-control-plane" className="items-start gap-1 p-6 text-sm md:p-6">
     <div className="font-medium">Project Control Plane</div>
     <div className="leading-relaxed text-muted-foreground">
@@ -59,12 +65,16 @@ Customers buy and operate Topoo capacity. They should not need to understand whi
 | Workspace | The tenant and policy boundary that owns projects, members, plans, and shared capacity. |
 | Cloud Project | The externally unified product and release subject that organizes Nodes, environments, resources, domains, deployments, and observability. |
 | Node | A persistent, problem-oriented responsibility, attention, version, and delivery boundary inside a Project. |
+| Node Workbench | The common editing and lifecycle surface for a Node; specialized visual and no-code editors operate on the same canonical Source. |
 | Agent | An actor that works under a Node's scope, identity, permissions, and operating procedure. |
 | Session | A temporary execution context attached to a Node; it does not define a new responsibility boundary. |
 | Submission | A bounded proposed change from a person, Agent, or Session; it does not carry Production authority. |
+| Source Revision | One immutable canonical Source state, represented by a Git commit, imported snapshot, or Topoo-hosted commit. |
+| Node Version | An immutable accepted Node state that pins Source, Submissions, Checks, dependencies, and delivery metadata. |
+| Artifact | An immutable build output produced from an exact Node Version and build contract. |
 | Resource | A project-bound capability such as a database, object store, queue, domain, secret, or AI service. |
 | Project Release | The accepted, immutable set of Node versions that represents the product. |
-| Deployment | Promotion of an accepted Project Release into an environment, linked back to its Node versions, source revisions, checks, and approvals. |
+| Deployment | Binding and promotion of an accepted Project Release Artifact Set into an Environment, linked back to Node Versions, Source Revisions, Checks, and approvals. |
 
 ## Product rule
 

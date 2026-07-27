@@ -1,0 +1,203 @@
+---
+title: "Node Workbench and Lifecycle Model"
+description: "The canonical objects shared by every Node editor, Agent submission, version, artifact, release, and deployment in Topoo Cloud."
+---
+
+This page defines the canonical lifecycle objects shared by all Topoo Nodes.
+
+It is a **target product model**. It does not mean that the current Node editors, version ledger, release controller, or deployment system already implement every object described here.
+
+Read this model together with [Project and Node Model](/docs/cloud/project-node-model) and [Deployment Control Plan](/docs/cloud/deployment-control-plan).
+
+## Canonical statement
+
+> **Node is the persistent problem, responsibility, attention, version, and delivery boundary.**
+
+> **Node Workbench is the editing and lifecycle surface for that Node; it is not a separate authority or a separate source of truth.**
+
+> **Project Release is the accepted combination of Node versions that represents the externally unified product.**
+
+A Website, service, workflow, component, schema, document, or Agent definition is not a separate lifecycle model. Each is a Node capability expressed through a different editor, validator, builder, preview adapter, or runtime adapter.
+
+## Unified objects
+
+| Object | Canonical responsibility |
+|---|---|
+| Project | Organizes Nodes and owns environments, domains, Production authority, integrated releases, observability, audit, and rollback. |
+| Node | Owns one durable problem and responsibility boundary, including scope, Source, Sessions, Submissions, versions, dependencies, and delivery history. |
+| Node Workbench | Presents the Node's editor, changes, Submissions, versions, Checks, Artifacts, Previews, deployments, and logs in one operating surface. |
+| Source Binding | Connects a Node to one or more repository roots, packages, uploaded snapshots, or Topoo-hosted source scopes. |
+| Source Revision | Identifies one immutable canonical source state. It may map to a Git commit, imported snapshot, or Topoo-hosted commit. |
+| Agent | Acts under a Node's identity, permissions, prompt, scope, and operating procedure. |
+| Session | Provides temporary execution attention for one bounded task. A Session does not create a new Node or carry Production authority. |
+| Submission | Proposes a bounded change against a pinned Base Revision, with actor, intent, affected scope, Diff, summary, and evidence. |
+| Change Summary | Explains what changed, why it changed, who requested and performed it, what may be affected, and which validation was performed. |
+| Check | Records a deterministic validation result against a Submission, Node Version, or integrated Project Release Candidate. |
+| Node Version | Publishes an immutable accepted state for one Node. It pins the accepted Source Revision, Submissions, Checks, dependency versions, and delivery metadata. |
+| Artifact | Stores an immutable build output produced from an exact Node Version and build contract. Nodes without a build capability do not fabricate an Artifact. |
+| Node Preview | Exposes a Node Version or Artifact for isolated evaluation without granting Project Production authority. |
+| Project Release Candidate | Pins the accepted Node Versions being evaluated together, including unchanged versions retained from the current release. |
+| Release Artifact Set | Immutably maps the Release Candidate to its Node Artifacts, configuration fingerprints, routes, and integration evidence. |
+| Deployment | Binds one immutable Release Artifact Set to an Environment. Preview and Production promotion reuse the same accepted outputs. |
+| Approval | Records who or what authorized a specific promotion under Project policy. |
+| Rollback Target | Identifies a previously accepted Release Artifact Set that can replace the current deployment without reconstructing history. |
+
+## Canonical relationship
+
+```text
+Project
+└── Node
+    ├── Source Binding
+    ├── Source Revisions
+    ├── Agents and Sessions
+    ├── Submissions and Change Summaries
+    ├── Checks
+    ├── Node Versions
+    ├── Artifacts
+    └── Node Previews
+
+Accepted Node Versions
+→ Project Release Candidate
+→ integrated Checks
+→ immutable Release Artifact Set
+→ Preview Deployment
+→ Approval
+→ Production promotion of the same accepted outputs
+→ Rollback Target
+```
+
+## Canonical Source and editor adapters
+
+Every Node has one canonical, versionable Source model. That Source may contain text files, code, structured graphs, schemas, layout metadata, prompts, assets, or configuration.
+
+The Code editor and specialized no-code editors are different projections of the same canonical Source:
+
+```text
+Code edit ───────────────┐
+Visual edit ─────────────┤
+Workflow canvas edit ────┼→ Canonical Source → Diff → Submission
+Schema edit ─────────────┤
+Prompt and tool edit ────┘
+```
+
+A specialized editor must not maintain a hidden, database-only copy that cannot be reproduced, diffed, versioned, or audited through the Node's Source Revision.
+
+The round trip must remain true:
+
+```text
+Visual operation
+→ changes canonical structured Source
+→ produces a reviewable Diff
+
+Direct Source change
+→ specialized editor parses the new revision
+→ presents the same accepted state
+```
+
+## Node Workbench
+
+The current `Code Editor` direction should evolve into a general `Node Workbench`.
+
+The common shell belongs to every Node:
+
+- Node identity, capability, current version, status, and dependencies
+- Source, files, Diff, repository, branch, and revision
+- Agent and Session connection channels
+- Submissions, change summaries, conflicts, and approvals
+- Checks, Artifacts, Preview, deployments, logs, and audit history
+
+The primary editor changes by capability:
+
+| Capability | Primary editor or view | Typical output |
+|---|---|---|
+| Code or service | Code editor | Worker, service image, function, binary, or package |
+| Website or page | Visual editor with Code view | Web bundle or site Artifact |
+| Component or UI library | Component editor with Code view | Versioned package and optional catalog |
+| Workflow | Workflow canvas with Code view | Executable workflow definition |
+| Data or schema | Schema editor with Source view | Versioned schema or migration set |
+| Document | Document editor with Source view | Document, content package, or site |
+| Agent | Prompt, tool, and policy editor | Versioned Agent definition |
+
+These are capabilities and adapters, not separate release systems.
+
+## Common lifecycle
+
+All editor modes feed the same lifecycle:
+
+```text
+Edit
+→ Diff
+→ Submission
+→ Review and conflict detection
+→ accepted Node Version
+→ Checks
+→ optional immutable Artifact
+→ Node Preview
+→ Project Release Candidate
+→ integrated Preview
+→ Approval
+→ Production
+```
+
+Suggested lifecycle states are:
+
+| State | Meaning |
+|---|---|
+| Editing | A Session is changing isolated working state. |
+| Submitted | A bounded change is proposed against a pinned Base Revision. |
+| Reviewing | Checks, Diff review, conflict detection, and approval are in progress. |
+| Accepted | The Submission is permitted to contribute to a Node Version. |
+| Versioned | An immutable Node Version has been published. |
+| Built | Required immutable Artifacts have been produced and bound to the Node Version. |
+| Preview | The accepted version or Artifact is available for isolated evaluation. |
+| Included | The Node Version is pinned by a Project Release Candidate. |
+| Released | The Project Release containing that Node Version has reached an Environment. |
+| Superseded | A later accepted Node Version or Project Release replaced it. |
+| Rolled back | Deployment returned to a previously accepted Project Release. |
+
+Rejected and cancelled Submissions remain in the audit history but do not produce an accepted Node Version.
+
+## Node authority and Project authority
+
+Node Workbench may let a user:
+
+- edit Source
+- inspect Diff
+- create or review a Submission
+- run Node-level Checks
+- publish an immutable Node Version
+- build an Artifact
+- open a Node Preview
+
+It must not let a Node, Agent, or Session silently replace Project Production.
+
+Project Deployment owns:
+
+- selecting accepted Node Versions
+- dependency and compatibility resolution
+- integrated Checks
+- the Release Artifact Set
+- Environment policy
+- approval and Production promotion
+- Project rollback
+
+For a single-Node Project, Topoo may automatically create a Project Release Candidate containing that one Node Version. The interaction can feel like direct publishing while the underlying authority model remains unchanged.
+
+## Product invariants
+
+1. Every editor changes the same canonical, versionable Source model.
+2. Specialized no-code editors are Source adapters, not separate data silos.
+3. A Session creates isolated working state; it does not define long-lived responsibility.
+4. A Submission is proposed work and never carries implicit Production authority.
+5. A Node Version is immutable and pins its accepted evidence.
+6. An Artifact is derived from an exact Node Version and build contract.
+7. A Project Release Candidate pins exact Node Versions, including unchanged versions.
+8. Preview and Production promotion use the same accepted Release Artifact Set.
+9. A Node version becoming available does not silently update a Project.
+10. Current UI or database evidence must not be described as a completed lifecycle until the full behavior is verified.
+
+## Current implementation boundary
+
+The current Topoo Cloud Node surfaces primarily provide Node browsing, creation, classification, source metadata, repository content, and specialized editor entry points.
+
+The complete Node Version ledger, common Workbench lifecycle panels, Submission channel, immutable Artifact relationship, Project Release Candidate integration, promotion policy, and rollback chain remain target capabilities until independently implemented and accepted.

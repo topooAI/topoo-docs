@@ -40,6 +40,14 @@
     "kind": "doc-page"
   },
   {
+    "id": "topoo-cloud-node-lifecycle-model",
+    "topicId": "topoo-cloud-node-lifecycle-model",
+    "title": "Node Workbench and Lifecycle Model",
+    "href": "/docs/cloud/node-lifecycle-model",
+    "file": "content/docs/cloud/node-lifecycle-model.mdx",
+    "kind": "doc-page"
+  },
+  {
     "id": "topoo-cloud-runtime-resource-model",
     "topicId": "topoo-cloud-runtime-resource-model",
     "title": "Runtime and Resource Model",
