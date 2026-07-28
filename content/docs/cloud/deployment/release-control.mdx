@@ -7,6 +7,60 @@ Topoo Cloud needs one controlled path from source change to production.
 
 The plan is not to let every Agent become an independent deployment system. Agents contribute changes. A deterministic release program integrates, validates, builds, and promotes them.
 
+## Product purpose
+
+Topoo should make version management automatic rather than turn Git operations into repeated user decisions.
+
+After the Workspace, Project, Node, Agent, source connection, Checks, and release policy are configured once, a user should be able to open a new Codex, Claude, VS Code, or other execution-client Session and state only the task.
+
+Topoo resolves the durable context and records each meaningful stage:
+
+```text
+Edit
+→ automatic Draft
+→ automatic Checkpoint
+→ automatic source Commit and Change Summary
+→ Submission
+→ immutable Node Version
+→ Project Release
+→ Deployment record
+```
+
+This does not mean creating a Git Commit for every keystroke.
+
+| Layer | Purpose |
+|---|---|
+| Draft | Preserve the current working state. |
+| Checkpoint | Preserve a recoverable task milestone without requiring a release decision. |
+| Commit | Record an exact source change in Git-compatible history. |
+| Submission | Record who changed what, why, under which Agent and Session, against which Base Revision. |
+| Node Version | Record the immutable accepted state of one Node. |
+| Project Release | Record the exact accepted combination of Node Versions that represents the product. |
+| Deployment | Record which Project Release reached which Environment and runtime target. |
+
+GitHub remains the connected source-history provider. It stores repositories, branches, commits, and compatible collaboration history. Topoo owns the higher-level Agent, Session, intent, integration, Preview, Production, audit, and rollback model.
+
+Users should not need to manually create branches, write Commit messages, open Pull Requests, or approve every clean integration. Topoo may perform those provider operations in the background.
+
+The normal path is automatic. User attention is reserved for exceptions such as:
+
+- a conflict that cannot be resolved deterministically
+- an Agent requesting authority outside its configured Node or Resource scope
+- a failed required Check that policy does not allow Topoo to repair automatically
+- a destructive schema, secret, security, or critical-resource change
+- a Production promotion whose configured policy requires explicit approval
+
+Version recording and safe integration are complementary:
+
+```text
+automatic version records
++ isolated Session working state
++ stale-base detection
++ file and Resource conflict detection
++ deterministic integration
+= multi-Agent work that is traceable without silently overwriting accepted results
+```
+
 This plan uses the canonical [Project and Node Model](/docs/cloud/deployment/node), [Node Workbench and Lifecycle Model](/docs/cloud/deployment/node-workbench), and [Deployment Configuration and Interaction Model](/docs/cloud/deployment/interaction-model):
 
 - Project is the externally unified product and Production authority.
@@ -43,6 +97,8 @@ Large Projects use Nodes to prevent every problem domain from sharing one undiff
 Git remains the source-version foundation.
 
 GitHub is the first connected provider. Topoo does not expose GitHub as the customer product model. It maps provider repositories, branches, commits, Pull Requests, and Checks into Topoo Projects, Nodes, Change Requests, and Releases.
+
+Provider-specific branches, worktrees, Pull Requests, rebases, and merge operations are implementation details when Topoo can operate them safely. They remain available for interoperability and expert inspection, but they are not the normal customer workflow.
 
 An Agent Session creates a bounded Submission under a Node against a known base revision. It does not deploy merely because it changed files.
 

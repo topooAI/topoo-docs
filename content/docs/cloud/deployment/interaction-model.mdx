@@ -36,6 +36,30 @@ Submission
 
 Topoo does not create the conversation Session used by Codex, Claude, VS Code, or another external execution client. It authorizes and records the connection between that Session and a Project, Node, Agent identity, and Base Revision.
 
+## Interaction principle
+
+Deployment Control is configured once and then used ambiently.
+
+The user should not operate a Git collaboration checklist for every Agent task. Topoo persists the durable configuration and performs routine version operations in the background:
+
+```text
+One-time configuration
+→ connect GitHub and external execution clients
+→ define Project, Nodes, Agent identities, Checks, and release policy
+
+Daily use
+→ open a new external Session
+→ state the task
+→ Topoo resolves context and isolates working state
+→ Topoo records Checkpoints, Commits, Change Summary, and Submission
+→ clean integration and Preview proceed automatically
+→ only exceptions require attention
+```
+
+The default policy should not ask the user to confirm routine Branch creation, Checkpoints, Commits, Commit summaries, Submissions, required Checks, clean integration, or Preview creation.
+
+The platform interrupts the user only when configured authority, deterministic integration, required validation, destructive changes, or Production policy requires a real decision.
+
 ## Configuration placement
 
 | Configuration | Target surface | Authority |
@@ -353,25 +377,25 @@ Open Codex
 → create a new external Session
 → state the task
 → Topoo resolves Project, Node, Agent, and Base Revision
-→ isolated work and Checkpoints
-→ Submission
-→ Release Controller integration
-→ Preview
-→ Project approval
-→ Production promotion of the same accepted Artifact Set
+→ Topoo creates isolated working state
+→ automatic Drafts and Checkpoints
+→ automatic source Commit and Change Summary
+→ automatic Submission
+→ clean Release Controller integration
+→ automatic Preview
+→ Production follows the configured approval policy
 ```
 
 Topoo preserves the Session identity, Agent identity, Base Revision, Checkpoints, Submission, Change Summary, Checks, approval, Deployment, and rollback evidence. It does not need to persist the full external conversation as the release contract.
 
-## Prototype and acceptance boundary
+GitHub remains visible as the source-history and portability provider. A normal Topoo user does not need to manually operate Branch, Commit, Pull Request, rebase, or merge steps unless they explicitly choose the provider-native workflow.
 
-The first interaction prototype should:
+## Implementation and acceptance boundary
 
-- use the existing Project navigation
-- clearly label illustrative records as prototype data
-- show unavailable integrations as `Not connected` or `Not configured`
-- let reviewers move between Project Settings, Code, Node Workbench, Environment, Resources, and Deployments
-- simulate connection and approval interactions without creating external Sessions or production side effects
+The current production Project surface preserves the existing navigation and now presents real `Submissions`, `Releases`, and `Deployments` views. A ready Node Project Preview can create and deep-link to a persistent Project Submission.
 
-After interaction acceptance, the prototype objects become API contracts and are connected incrementally to real control-plane state.
+This validates the information architecture and the first Preview-to-Submission segment. It does not validate the complete interaction model.
 
+Unavailable integrations must remain labelled `Not connected`, `Not configured`, or planned. The UI must not simulate external Sessions, automatic integration, or Production authority as if those capabilities were already connected.
+
+The remaining target controls become API contracts and are connected incrementally to real control-plane state.

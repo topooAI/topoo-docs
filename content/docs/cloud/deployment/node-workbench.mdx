@@ -328,6 +328,10 @@ For a single-Node Project, Topoo may automatically create a Project Release Cand
 
 ## Current implementation boundary
 
-The current Topoo Cloud Node surfaces primarily provide Node browsing, creation, classification, source metadata, repository content, and specialized editor entry points.
+The current Topoo Cloud Node surfaces provide Node browsing, creation, classification, source metadata, repository content, specialized editor entry points, embedded Node Settings, Preview history, and an immutable Node Project Preview.
 
-The complete external Agent connection, Topoo Cloud plugin, automatic Project and Node resolution, OAuth-backed MCP access, Session Grant, Node Version ledger, common Workbench lifecycle panels, Submission channel, immutable Artifact relationship, Project Release Candidate integration, promotion policy, and rollback chain remain target capabilities until independently implemented and accepted.
+A ready Preview persists its Base Release and Artifact identity. Approving it creates a persistent Project-scoped Submission, and the Node Workbench can hand the user to the exact Submission in Project Deployments.
+
+This is the first real lifecycle segment. It does not yet provide managed external Session isolation, automatic Drafts and Checkpoints, enforced Agent identity, Base Revision validation, Diff and affected-scope evidence, stale-base and conflict detection, or automatic integration.
+
+The complete Topoo Cloud plugin, automatic Project and Node resolution, OAuth-backed MCP access, Session Grant, immutable Node Version ledger, common Workbench lifecycle panels, Project Release Candidate composition, Release Artifact Set, policy-driven promotion, and unified rollback chain remain target capabilities until independently implemented and accepted.

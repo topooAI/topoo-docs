@@ -3,7 +3,7 @@ title: "Source Implementation Status"
 description: "Audited implementation status for GitHub integration, Topoo-hosted Git, Agent submissions, and release control."
 ---
 
-This page records the implementation state observed on **July 27, 2026**.
+This page records the implementation state re-audited on **July 28, 2026**.
 
 Status is binary:
 
@@ -26,6 +26,9 @@ Existing components inside a not-completed capability are listed as evidence. Th
 | Immutable source snapshot | Deployments can resolve and retain a source snapshot tied to a specific commit or uploaded manifest. |
 | Deployment ledger | Deployment records preserve source identity, status, target, and artifact information. |
 | Exact-revision redeploy path | A recorded GitHub commit or Topoo upload manifest can be selected as the deployment source. |
+| Node Project Preview bridge | A recorded immutable Node Revision can build a full-Project Preview, persist the Base Release and Artifact, expose stable and immutable Preview URLs, and record approve or reject decisions. |
+| Preview-to-Submission bridge | Approving a ready Node Project Preview creates a persistent Project-scoped delivery Submission linked to the Node Revision, Base Release, Artifact, actor, and decision. |
+| Project Deployment object views | The production Project Deployment surface reads real `Submissions`, `Releases`, and `Deployments` records and supports a Node-to-Project Submission deep link. |
 
 ## Not completed — existing components
 
@@ -37,11 +40,13 @@ Existing components inside a not-completed capability are listed as evidence. Th
 | Automatic delivery | GitHub workflow dispatch and Topoo-hosted deployment paths exist. | An accepted push or Pull Request path through Preview, approval, and Production. | Not completed |
 | Topoo source mirror | Topoo can retain immutable archives and manifest-based mirrors for browsing and rebuilding. | A cloneable and pushable Git repository service. | Not completed |
 | Change Request workflow | Node pages can show synced changes, checks, deliveries, and exact revisions. | Topoo-native review, comments, approvals, merge policy, and protected branches. | Not completed |
-| Release traceability | Source revisions, checks, deployments, and delivery records exist. | One release candidate that records every included Agent submission and approval. | Not completed |
-| Node version management | Node delivery revisions and some delivery records exist. | A complete version list, semantic version identity, diff, change summary, immutable Artifact linkage, and restore workflow. | Not completed |
+| Agent Submission Channel | Persistent Project-scoped delivery Submissions now record a Node Revision, actor, Base Release, Artifact, summary, reason, optional Agent and Session metadata, and accept or reject decision. | Enforced Agent identity and Session Grant, affected scope and Diff, Checkpoint history, authority evidence, Base Revision validation, stale-base detection, and conflict result. | Not completed |
+| Release traceability | Source revisions, Node Previews, Artifacts, Submission decisions, Project Releases, and Deployments exist and are visible through the production control plane. | One Project Release Candidate that records every included Submission, unchanged retained Node Version, integrated Check, approval, Release Artifact Set, and rollback target. | Not completed |
+| Node version management | Accepting a Submission marks its Node Revision accepted and pins the Project-to-Node reference; Preview and delivery histories are persisted. | A distinct immutable Node Version ledger with exact accepted Submissions, dependency versions, Diff, Change Summary, Checks, Artifact linkage, semantic identity, and restore workflow. | Not completed |
 | Node consumer graph | Project and Node references exist in parts of the control-plane model. | A verified dependency graph showing which Projects consume each Node or Package version and which upgrades are available. | Not completed |
-| Project Release composition | Project deployment history and Node-linked build records exist. | One immutable Project Release that pins the accepted version of every included Node. | Not completed |
-| Common Node Workbench lifecycle | Node browsing, repository content, specialized editor entry points, and parts of delivery history exist. | One common surface for Diff, Submissions, Change Summaries, Node Versions, Checks, Artifacts, Preview, consuming Releases, and rollback evidence. | Not completed |
+| Project Release composition | Release promotion, health Check, rolling release, Deployment, and rollback primitives exist for an immutable Deployment Artifact. | One immutable Project Release Candidate and Release Artifact Set that pin the accepted version and Artifact contract of every included Node. | Not completed |
+| Visual Release Controller | Project Deployments now presents real Submission, Release, and Deployment views; Submission review and existing Release promotion controls are connected to production state. | Accept-to-integration state machine, stale and conflict results, included Node Versions, integrated Checks, Release Artifact Set, automatic Preview, policy-driven same-Artifact promotion, and complete rollback evidence. | Not completed |
+| Common Node Workbench lifecycle | Node browsing, repository content, editor modes, Node Settings, Preview history, immutable Artifact Preview, decision controls, and Submission handoff exist. | One common surface for Diff, Checkpoints, Agent Session activity, Submissions, Change Summaries, Node Versions, Checks, consuming Releases, and rollback evidence. | Not completed |
 
 ## Not completed — capability absent
 
@@ -49,9 +54,9 @@ Existing components inside a not-completed capability are listed as evidence. Th
 |---|---|---|
 | Topoo Git hosting | Git-compatible clone, fetch, pull, push, branches, tags, repository history, and server-side access control. | Not completed |
 | Topoo-native Change Requests | Review, comments, approvals, required checks, merge, and protected branches without GitHub. | Not completed |
-| Agent Submission Channel | A first-class submission object with Agent identity, base revision, scope, authority, and diff. | Not completed |
 | Integration and merge queue | Ordered, deterministic integration with stale-base and overlapping-change detection. | Not completed |
-| Visual Release Controller | A control-plane surface for submissions, checks, candidates, approvals, previews, production promotion, and rollback. | Not completed |
+| Automatic Session isolation and version recording | Managed isolated working state, automatic Drafts, Checkpoints, source Commits, Change Summaries, recovery, and cleanup for each external Agent Session. | Not completed |
+| External Agent connection | Topoo Cloud plugin, OAuth-backed remote MCP or API, Project and Node resolution, Agent registry, Context Pack, and short-lived Session Grant. | Not completed |
 | Channel policy enforcement | Workspace policies that separate draft, review, integration, preview, and production authority. | Not completed |
 | Multi-provider adapters | Equivalent connected-provider support beyond GitHub and uploaded source. | Not completed |
 | Bidirectional portability | Complete import, export, mirroring, reconciliation, and provider migration workflows. | Not completed |
@@ -59,11 +64,24 @@ Existing components inside a not-completed capability are listed as evidence. Th
 
 ## Current product boundary
 
-Topoo Cloud currently has a substantial **GitHub-connected source and deployment control-plane foundation**.
+Topoo Cloud currently has a substantial **GitHub-connected source and deployment control-plane foundation**, plus a first production-backed path from immutable Node Preview to persistent Project Submission.
 
-It does not yet have a complete **Topoo-native Git collaboration platform** or the final **Agent Release Controller**.
+The following real segment is now available:
 
-The next implementation milestone should not be another isolated deployment button. It should establish the canonical Submission, Node Version, Artifact, Project Release Candidate, and Release Artifact Set objects, then connect them to the existing repository, Change Request, Check, source snapshot, Node Workbench, and deployment records.
+```text
+immutable Node Revision
+→ full-Project Node Preview
+→ immutable Artifact
+→ approve or reject
+→ persistent Project Submission
+→ accept or reject record
+```
+
+The critical control gap begins after Submission acceptance. Acceptance currently pins the Project's Node reference. It does not yet detect a stale Base Revision, combine concurrent accepted changes, publish a distinct Node Version, create a multi-Node Project Release Candidate, run integrated Checks, or seal a Release Artifact Set.
+
+Topoo Cloud does not yet have a complete **Topoo-native Git collaboration platform**, automatic external **Agent Session orchestration**, or the final **Agent Release Controller**.
+
+The next implementation milestone should close that exact gap rather than add another isolated deployment button or confirmation surface.
 
 ## Live verification boundary
 
@@ -73,21 +91,51 @@ The authenticated production control plane was also inspected during this audit.
 - the Projects page showed the live Topoo Cloud project and a completed local-source import
 - the Project Code view displayed the active branch and a browsable repository tree
 
-This verifies the deployed project/source browsing path.
+The July 28 production verification additionally confirmed:
+
+- a ready immutable Node Project Preview with Base Release and Artifact identity
+- approve or reject decision persistence
+- automatic creation of a Project-scoped Submission after Preview approval
+- Node `View Submission` handoff into the exact Project Submission
+- real `Submissions`, `Releases`, and `Deployments` views in the existing Project navigation
+- Release and Deployment records remaining available without replacing the existing Project layout
+
+This verifies the deployed project/source browsing path and the first Preview-to-Submission control-plane segment.
 
 It does **not** verify GitHub App onboarding, webhook delivery, Topoo-native Git operations, multi-Agent integration, or production release-channel enforcement. Those capabilities remain classified from their current executable code and acceptance evidence, not inferred from the visible Code view.
+
+## Next milestone
+
+The next milestone is an **ambient automatic-version and integration-controller MVP**.
+
+The intended experience is:
+
+```text
+configure GitHub, Project, Node, Agent, Checks, and release policy once
+→ open multiple external Sessions
+→ state only the tasks
+→ Topoo isolates working state and records meaningful versions automatically
+→ clean work integrates and reaches Preview without routine confirmations
+→ only conflicts, authority expansion, destructive changes, failed policy gates, or configured Production approval interrupt the user
+```
+
+GitHub provides source history and portability in the background. Topoo owns Agent and Session identity, automatic Checkpoints and Change Summaries, integration safety, Release composition, Preview, Production, audit, and rollback.
 
 ## Acceptance criteria for the next milestone
 
 The next milestone is complete only when:
 
-1. two Agents can submit independent changes against a pinned base revision
-2. the controller detects a stale base or overlapping file ownership
-3. accepted changes produce immutable Node Versions
-4. exact Node Versions form one Project Release Candidate
-5. required Checks run against that integrated candidate
-6. Preview uses the candidate's immutable Release Artifact Set
-7. Production promotion reuses the accepted Release Artifact Set
-8. Node Workbench shows submitter, Base Revision, Diff, Change Summary, Checks, Node Version, Artifact, and consuming Release
-9. Project Deployment shows included Node Versions, approval, Environment, Release Artifact Set, and rollback
-10. one Agent cannot overwrite another Agent's accepted Production state
+1. Workspace and Project configuration persist the source connection, Node scope, Agent identity, Checks, and release policy once.
+2. two external Sessions can work concurrently under the same Node without sharing mutable working state
+3. Topoo automatically records Drafts, recoverable Checkpoints, source Commits, and Change Summaries without requiring routine Git confirmation
+4. each Submission is bound to an Agent, Session, Node, and pinned Base Revision
+5. the controller detects a stale base or overlapping file and Resource ownership
+6. clean independent changes integrate automatically while an unresolved semantic conflict becomes one clear exception
+7. accepted changes produce immutable Node Versions that retain both concurrent Sessions' accepted work
+8. exact Node Versions, including unchanged retained versions, form one Project Release Candidate
+9. required Checks run against that integrated candidate
+10. Preview uses the candidate's immutable Release Artifact Set
+11. Production promotion reuses the accepted Release Artifact Set under the configured approval policy
+12. Node Workbench shows Session, submitter, Base Revision, Diff, Change Summary, Checks, Node Version, Artifact, and consuming Release
+13. Project Deployment shows included Node Versions, approval, Environment, Release Artifact Set, audit chain, and rollback target
+14. one Agent cannot overwrite another Agent's accepted Project or Production state
