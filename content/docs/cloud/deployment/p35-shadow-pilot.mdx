@@ -1,0 +1,125 @@
+---
+title: "P35 Shadow Migration Pilot"
+description: "The acceptance plan and audited implementation state for deploying an isolated P35 copy through Topoo Cloud."
+---
+
+The P35 Restaurant ERP shadow migration is the first acceptance project for the Topoo-native deployment path.
+
+Its purpose is not to replace the existing P35 environment during development. It proves that Topoo can take ownership of an application copy, provision its required capabilities, build one immutable application artifact, publish an independent Preview, and retain the evidence needed for later promotion or rollback.
+
+## Fixed boundary
+
+The pilot follows four non-negotiable constraints:
+
+1. The existing P35 source, data, resources, domain, and deployment remain unchanged.
+2. The shadow Project has its own source snapshot, Database, Storage, Cache, AI binding, Runtime, and Preview identity.
+3. Customers configure and operate Topoo capabilities. Topoo invokes infrastructure providers through private adapters; customers do not call those providers directly.
+4. Preview acceptance does not grant Production authority and does not modify the existing P35 environment.
+
+The shadow Project slug is:
+
+```text
+p35-restaurant-erp-shadow
+```
+
+## Target flow
+
+```text
+P35 source copy
+→ upload to the P35 shadow Project
+→ validate topoo.app.json against that Project
+→ register the Runtime Node as a Project release input
+→ provision isolated Topoo resources
+→ pin an immutable Source Revision
+→ install and build in the Topoo sandbox
+→ apply ordered Database migrations through the Topoo Database adapter
+→ package Runtime and Static Assets into one immutable Artifact
+→ publish an independent topoo.cloud Preview
+→ verify application, assets, data isolation, logs, and audit evidence
+→ retain the Artifact and migration ledger for promotion or rollback
+```
+
+## `topoo.app.json` contract
+
+The application manifest is the portable declaration that lets the Project be configured from source without repeating provider-specific setup in the UI.
+
+For this pilot it declares:
+
+- the Project identity
+- the runtime-capable Node and its source boundary
+- install and build commands
+- a combined Runtime plus Static Assets Artifact
+- Topoo Database, Storage, Cache, and AI bindings
+- ordered Database migration directories
+- scheduled work
+- Preview and Production environment intent
+
+The manifest does not contain upstream provider credentials. Topoo resolves every declared capability through its own resource and runtime adapters.
+
+## Immutable application Artifact
+
+P35 is not treated as a loose static folder plus an unrelated runtime upload.
+
+One build records:
+
+- the immutable Source Revision
+- the exact build configuration
+- the packaged Runtime entry and modules
+- the static asset inventory
+- the Database migration set and checksums
+- the resource binding contract
+- the resulting Artifact identity
+
+The Runtime receives Static Assets through an internal Topoo service binding. Provider credentials and the physical asset backend are not exposed to application source.
+
+## Database migration rule
+
+Database migrations are part of the release evidence.
+
+Topoo:
+
+1. reads migration files in deterministic order
+2. records each filename and checksum
+3. skips a migration only when the same checksum is already accepted
+4. rejects an already-applied filename whose content has changed
+5. binds every applied migration to the resulting Artifact
+
+This prevents a source build from silently drifting away from the Database state that it expects.
+
+## Acceptance criteria
+
+The pilot is accepted only when all of the following are verified online:
+
+1. the original P35 environment remains available and unchanged
+2. the P35 shadow Project is visible in Topoo Cloud
+3. the uploaded source is retained as an immutable Topoo Source Revision
+4. the Runtime Node and its Topoo Database, Storage, Cache, and AI bindings are visible in the Project
+5. the build runs in the Topoo sandbox using the manifest configuration
+6. all required Database migrations are recorded in the shadow Database migration ledger
+7. the combined Runtime and Static Assets Artifact is immutable and traceable
+8. an independent `topoo.cloud` Preview URL loads the P35 application
+9. application routes and static assets work through that Preview
+10. no Production promotion is performed during the pilot
+11. the Project audit trail records source import, manifest reconciliation, build, migrations, Artifact, and Preview
+
+## Audited status
+
+Status is binary. A capability is **Completed** only after its complete user outcome is verified; otherwise it is **Not completed**.
+
+| Capability | Evidence | Status |
+|---|---|---|
+| Portable P35 source copy | A generated copy vendors its UI dependency and removes direct customer deployment commands without editing the original P35 checkout. | Completed |
+| Topoo application manifest v1 | Project, Runtime, combined Artifact, resources, migrations, schedules, and environments are validated by the shared application contract. | Completed |
+| Manifest-first manual deployment | An uploaded `topoo.app.json` is checked against the selected Project and reconciled before the build run is created. | Completed |
+| Isolated resource provisioning | The shadow Project has separate Topoo Database, Storage, Cache, and AI resource records. | Completed |
+| Combined Runtime plus Static Assets build | Source implementation and build configuration exist; the P35 shadow build is executing through this mode. | Not completed |
+| Ordered Database migration ledger | Source implementation exists; complete P35 shadow migration acceptance is still pending. | Not completed |
+| Runtime Node shown as Project release input | Source implementation exists; the production Project view still requires verification after reconciliation. | Not completed |
+| Independent P35 Preview | A Preview must be online and usable before this outcome is complete. | Not completed |
+| Production promotion | Deliberately outside this pilot acceptance step. | Not completed |
+
+## Next action
+
+The next action is to finish the active P35 shadow build, verify its Artifact and migration ledger, reconcile the Runtime Node into the Project view, and hand off the independent Preview URL for acceptance.
+
+Do not start Production promotion, source replacement, or data migration from the existing P35 environment until that Preview has been accepted.

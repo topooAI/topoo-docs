@@ -131,6 +131,17 @@
     ]
   },
   {
+    "id": "topoo-cloud-p35-shadow-pilot",
+    "blockId": "cloud-deployment",
+    "order": 75,
+    "label": "P35 Shadow Migration Pilot",
+    "href": "/docs/cloud/deployment/p35-shadow-pilot",
+    "description": "Acceptance plan and audited state for the first isolated application migration through Topoo.",
+    "pageIds": [
+      "topoo-cloud-p35-shadow-pilot"
+    ]
+  },
+  {
     "id": "topoo-cloud-source-deployment-boundary",
     "blockId": "cloud-deployment",
     "order": 60,

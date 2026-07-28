@@ -26,6 +26,14 @@ This page describes runtime-capable Nodes. It does not redefine every Node as a 
 
 Provider products may map to one or more of these concepts through internal adapters. Those mappings do not belong in the primary customer language.
 
+The operating rule is:
+
+```text
+customer → Topoo capability → Topoo policy and audit → private provider adapter
+```
+
+The customer does not supply application code with a direct provider deployment token, call the provider deployment API, or bind an application directly to a provider-owned resource. Topoo owns those upstream calls and returns a Topoo resource identity, status, quota, log stream, and audit record.
+
 ## Runtime state
 
 Runtime state should answer four questions:

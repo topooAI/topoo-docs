@@ -16,6 +16,7 @@ It owns the path from a Project's source and structure to an accepted release ru
 | [Node Workbench and Editors](/docs/cloud/deployment/node-workbench) | The common editing surface plus code and specialized editor modes for a Node. |
 | [Source and Git](/docs/cloud/deployment/source-and-git) | Connected Git providers, Topoo-managed revisions, source provenance, and synchronization. |
 | [Runtime and Resources](/docs/cloud/deployment/runtime) | Execution capacity, persistent resources, bindings, and truthful operating state. |
+| [P35 Shadow Migration Pilot](/docs/cloud/deployment/p35-shadow-pilot) | First online acceptance project for a Topoo-managed application copy, resources, migrations, combined Artifact, and independent Preview. |
 | [Release Control](/docs/cloud/deployment/release-control) | Integration, validation, artifacts, Preview, Production promotion, and rollback. |
 
 ## Canonical relationship
@@ -47,6 +48,8 @@ Cloudflare / infrastructure provider
 ```
 
 Topoo may depend heavily on GitHub without turning Repository, Branch, Pull Request, or Commit into the Topoo product model. Topoo may also maintain an internal Git-backed revision layer for Node Workspaces, uploaded source, and customers who do not operate GitHub directly.
+
+The same boundary applies to runtime infrastructure: customers configure Topoo Runtime, Database, Storage, Cache, AI, Domain, and Deployment. Topoo privately invokes upstream provider adapters and keeps their credentials, product identifiers, and execution APIs outside the customer workflow.
 
 ## Documentation status
 

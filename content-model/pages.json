@@ -96,6 +96,14 @@
     "kind": "doc-page"
   },
   {
+    "id": "topoo-cloud-p35-shadow-pilot",
+    "topicId": "topoo-cloud-p35-shadow-pilot",
+    "title": "P35 Shadow Migration Pilot",
+    "href": "/docs/cloud/deployment/p35-shadow-pilot",
+    "file": "content/docs/cloud/deployment/p35-shadow-pilot.mdx",
+    "kind": "doc-page"
+  },
+  {
     "id": "topoo-cloud-source-deployment-boundary",
     "topicId": "topoo-cloud-source-deployment-boundary",
     "title": "Source-to-Deployment Boundary",

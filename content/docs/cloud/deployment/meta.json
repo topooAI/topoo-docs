@@ -9,6 +9,7 @@
     "source-and-git",
     "source-status",
     "runtime",
+    "p35-shadow-pilot",
     "source-to-deployment",
     "release-control"
   ]
