@@ -111,15 +111,54 @@ Status is binary. A capability is **Completed** only after its complete user out
 | Portable P35 source copy | A generated copy vendors its UI dependency and removes direct customer deployment commands without editing the original P35 checkout. | Completed |
 | Topoo application manifest v1 | Project, Runtime, combined Artifact, resources, migrations, schedules, and environments are validated by the shared application contract. | Completed |
 | Manifest-first manual deployment | An uploaded `topoo.app.json` is checked against the selected Project and reconciled before the build run is created. | Completed |
-| Isolated resource provisioning | The shadow Project has separate Topoo Database, Storage, Cache, and AI resource records. | Completed |
-| Combined Runtime plus Static Assets build | Source implementation and build configuration exist; the P35 shadow build is executing through this mode. | Not completed |
-| Ordered Database migration ledger | Source implementation exists; complete P35 shadow migration acceptance is still pending. | Not completed |
-| Runtime Node shown as Project release input | Source implementation exists; the production Project view still requires verification after reconciliation. | Not completed |
-| Independent P35 Preview | A Preview must be online and usable before this outcome is complete. | Not completed |
+| Isolated resource provisioning | The active Runtime Node exposes Topoo bindings `DB`, `UPLOADS`, `KV`, and `AI`, backed by four resources created only for the shadow Project. | Completed |
+| Combined Runtime plus Static Assets build | Build `build_run_9af1d394-a484-4973-a45c-c9fd43418d48` produced one immutable 295-file Runtime plus Assets Artifact after compiling all 28 application routes. | Completed |
+| Ordered Database migration ledger | Seven ordered P35 migrations are present with checksums, and every ledger row is linked to the accepted Artifact. | Completed |
+| Runtime Node shown as Project release input | `restaurant-runtime` is active, reconciled from `topoo.app.json`, and is the Node recorded by the successful build and Preview deployment. | Completed |
+| Independent P35 Preview | The immutable `topoo.cloud` URL loads the P35 login application with its styles, scripts, and protected deep-route behavior. | Completed |
+| Audit and rollback evidence | The Source snapshot, build run, full logs, checks, deployment, runtime version, resource snapshot, migration ledger, and immutable Artifact identity are retained as separate linked records. | Completed |
+| Existing P35 isolation | `test01.topoo.ai` remained online with its original authenticated application and data after the shadow Preview became Ready. | Completed |
 | Production promotion | Deliberately outside this pilot acceptance step. | Not completed |
+
+## Verified acceptance evidence
+
+The accepted Preview was generated on July 28, 2026.
+
+```text
+Source Revision
+5b21ba9a-bb4a-48bd-b5ce-96e9416f6243
+
+Build Run
+build_run_9af1d394-a484-4973-a45c-c9fd43418d48
+
+Artifact
+artifact_d995b5ac-f4e1-4331-8f8f-812394e71d68
+
+Deployment
+deployment_562eb224-0f74-40c8-b3ec-e2b8fcf79528
+
+Preview
+https://preview-artifact-d995b5ac-f4e1-4331-8f8f-812394e71d68.topoo.cloud/
+```
+
+Open the [accepted immutable P35 Preview](https://preview-artifact-d995b5ac-f4e1-4331-8f8f-812394e71d68.topoo.cloud/).
+
+The migration ledger contains:
+
+```text
+0000_schema.sql
+0001_finance_core.sql
+0002_provider_credentials.sql
+0003_active_provider_environment.sql
+0004_settlement_lifecycle.sql
+0005_open_items.sql
+0006_partner_evidence_packages.sql
+```
+
+All seven entries reference `artifact_d995b5ac-f4e1-4331-8f8f-812394e71d68`.
 
 ## Next action
 
-The next action is to finish the active P35 shadow build, verify its Artifact and migration ledger, reconcile the Runtime Node into the Project view, and hand off the independent Preview URL for acceptance.
+The pilot is now at the user acceptance boundary. Review the immutable Preview and its Deployment evidence in the P35 shadow Project.
 
-Do not start Production promotion, source replacement, or data migration from the existing P35 environment until that Preview has been accepted.
+After explicit acceptance, the next release-control step is to create a Project Release Candidate from this exact Artifact. Production promotion, source replacement, and data migration from the existing P35 environment remain outside this pilot and must not happen implicitly.
