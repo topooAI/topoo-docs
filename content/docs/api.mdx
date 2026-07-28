@@ -1,0 +1,55 @@
+---
+title: "API"
+description: "Topoo API object families, authentication boundaries, versioning rules, and current availability."
+---
+
+The Topoo API is the planned automation boundary for clients that need direct, structured access to the Topoo control plane.
+
+The API must expose Topoo objects rather than provider-specific deployment commands.
+
+## Object families
+
+The target API is organized around:
+
+- Accounts and Workspaces
+- Projects and Nodes
+- Agent identities and Session Grants
+- Source Bindings and Base Revisions
+- Checkpoints and Submissions
+- Checks, Node Versions, and Artifacts
+- Project Releases
+- Environments, Resources, and Deployments
+- approvals, rollback, and audit events
+
+## Authentication and authority
+
+Authentication proves which account or integration is calling. Authorization determines which Workspace, Project, Node, Resource, Environment, and action the caller may access.
+
+An API credential must not imply all of the following at once:
+
+- account access
+- Project configuration access
+- Agent Session execution
+- Production approval
+
+Production promotion should require an explicit policy decision for one exact accepted Release Artifact Set.
+
+## API contract requirements
+
+Before an API is treated as public, Topoo needs:
+
+- a verified base URL and versioning policy
+- an OpenAPI or equivalent machine-readable contract
+- OAuth scopes or narrowly scoped service credentials
+- stable identifiers and pagination conventions
+- idempotency rules for mutations
+- error and rate-limit contracts
+- webhook signing and replay protection
+- audit coverage for every authority-changing action
+
+## Current availability
+
+This page defines the API boundary; it is not a claim that a public Topoo API is available today. The documentation must not invent endpoint URLs, tokens, request examples, or completion status before a deployed API contract is verified.
+
+When the public contract exists, this page should become the API entry point and link to authentication, endpoint reference, SDKs, webhooks, errors, and changelog pages.
+

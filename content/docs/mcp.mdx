@@ -1,0 +1,51 @@
+---
+title: "MCP"
+description: "How external execution clients connect to Topoo context and permissioned capabilities."
+---
+
+Model Context Protocol (MCP) is the planned capability boundary between Topoo and external execution clients such as Codex, Claude, and compatible editors.
+
+MCP does not replace the Topoo product model. It exposes permissioned operations over the same Workspace, Project, Node, Agent, Submission, Release, and Deployment objects.
+
+## Target connection flow
+
+```text
+Install or enable the Topoo connection
+→ authorize the Topoo account in a browser
+→ select or resolve the Workspace
+→ resolve Project and Node from the repository and working directory
+→ issue a scoped Session Grant
+→ load the minimum Node Context Pack
+→ expose only the allowed tools
+```
+
+The user should configure the account connection once. A new external Session may then begin from the task instead of asking the user to repeat the repository, Project, Node, Agent prompt, Checks, and deployment policy.
+
+## MCP capability groups
+
+The planned server groups capabilities by authority:
+
+- read Project and Node context
+- inspect Source Bindings and the pinned Base Revision
+- save Checkpoints and create Submissions
+- run configured Checks
+- request or inspect Preview
+- inspect Release and Deployment evidence
+- request promotion or rollback when a separate approval policy allows it
+
+Installing or authenticating the connection does not grant Production authority.
+
+## Security boundary
+
+- Use browser-based OAuth for the primary remote connection.
+- Use short-lived, revocable Session Grants for task execution.
+- Keep Production approval scoped to one exact accepted Release Artifact Set.
+- Never paste long-lived API keys into prompts or repository manifests.
+- Record the external Session, Agent identity, Node, Base Revision, allowed actions, and resulting evidence.
+
+## Current availability
+
+The Remote MCP endpoint, OAuth client, installable Topoo integration, and automatic Project and Node resolution are target capabilities. No public server URL, copy-paste client configuration, or completed production flow should be published until those values are verified against the running control plane.
+
+See [Deployment Configuration and Interaction](/docs/cloud/deployment/interaction-model) for the corresponding Topoo Cloud placement.
+

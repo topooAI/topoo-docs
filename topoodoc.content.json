@@ -17,6 +17,9 @@
     "showSearch": true
   },
   "navigation": {
+    "sidebarBoardIncludesByRoot": {
+      "topoo": ["topoo", "cloud"]
+    },
     "primary": [
       { "href": "/docs", "label": "Topoo" },
       { "href": "/docs/toagent", "label": "toAgent" },

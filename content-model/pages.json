@@ -10,9 +10,33 @@
   {
     "id": "topoo-core-ideas",
     "topicId": "topoo-core-ideas",
-    "title": "Core Ideas",
+    "title": "About",
     "href": "/docs/core-ideas",
     "file": "content/docs/core-ideas.mdx",
+    "kind": "doc-page"
+  },
+  {
+    "id": "topoo-configuration",
+    "topicId": "topoo-configuration",
+    "title": "Configuration",
+    "href": "/docs/configuration",
+    "file": "content/docs/configuration.mdx",
+    "kind": "doc-page"
+  },
+  {
+    "id": "topoo-mcp",
+    "topicId": "topoo-mcp",
+    "title": "MCP",
+    "href": "/docs/mcp",
+    "file": "content/docs/mcp.mdx",
+    "kind": "doc-page"
+  },
+  {
+    "id": "topoo-api",
+    "topicId": "topoo-api",
+    "title": "API",
+    "href": "/docs/api",
+    "file": "content/docs/api.mdx",
     "kind": "doc-page"
   },
   {
@@ -53,6 +77,14 @@
     "title": "Node Workbench and Editors",
     "href": "/docs/cloud/deployment/node-workbench",
     "file": "content/docs/cloud/deployment/node-workbench.mdx",
+    "kind": "doc-page"
+  },
+  {
+    "id": "topoo-cloud-deployment-interaction-model",
+    "topicId": "topoo-cloud-deployment-interaction-model",
+    "title": "Deployment Configuration and Interaction",
+    "href": "/docs/cloud/deployment/interaction-model",
+    "file": "content/docs/cloud/deployment/interaction-model.mdx",
     "kind": "doc-page"
   },
   {

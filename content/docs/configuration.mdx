@@ -1,0 +1,53 @@
+---
+title: "Configuration"
+description: "System-level configuration map across Topoo workspaces, Projects, Nodes, connections, and execution clients."
+---
+
+Topoo configuration is organized by authority. A setting should live at the narrowest level that can own it without forcing users to repeat durable context in every task.
+
+## Configuration hierarchy
+
+| Level | Owns |
+|---|---|
+| Account | Personal identity, profile, security, and user-level preferences. |
+| Workspace | Members, roles, external connections, source providers, developer connections, and organization policy. |
+| Project | Nodes, Agent identities, Environments, Resources, release policy, Production authority, and audit. |
+| Node | Source and build contracts, Context, Checks, Resource Bindings, versions, and delivery history. |
+| Session | One temporary grant binding an external execution session to an Agent identity, Project, Node, Base Revision, and allowed actions. |
+
+Account connection, Project access, Session authority, and Production approval are separate grants.
+
+## System configuration surfaces
+
+Topoo should expose these shared configuration areas:
+
+- **Identity and access:** accounts, Workspace membership, roles, and revocation
+- **Connections:** Git providers, external execution clients, MCP, and later provider integrations
+- **Project structure:** Nodes, dependencies, Environments, Resources, and release policy
+- **Agent configuration:** durable responsibilities, prompts, operating procedures, tools, and allowed scope
+- **Developer configuration:** API access, webhooks, audit access, and integration credentials
+
+Product-specific settings remain inside the product that owns them. Deployment configuration, for example, is detailed under [Topoo Cloud Deployment](/docs/cloud/deployment).
+
+## Connection model
+
+External systems should be configured once at the Workspace level and then granted to Projects and Sessions with narrower permissions.
+
+```text
+Workspace connection
+→ Project permission
+→ Node scope
+→ short-lived Session Grant
+→ audited action
+```
+
+Long-lived credentials must not be placed in prompts, repository manifests, URLs, or change summaries.
+
+## Current implementation boundary
+
+This page defines the system configuration model. It does not claim that every listed settings surface is already available.
+
+- Deployment configuration and interaction placement are documented as a target model.
+- Remote MCP, OAuth-backed Session Grants, and public API configuration remain planned until their endpoints and user flows are independently verified.
+- Documentation must show `Not connected`, `Not configured`, or `Unavailable` when live configuration state cannot be read.
+

@@ -2,6 +2,7 @@
   {
     "id": "topoo-core",
     "blockId": "topoo-default",
+    "order": 10,
     "label": "Topoo",
     "href": "/docs",
     "description": "Topoo core framing and board-level positioning.",
@@ -12,11 +13,45 @@
   {
     "id": "topoo-core-ideas",
     "blockId": "topoo-default",
-    "label": "Core Ideas",
+    "order": 20,
+    "label": "About",
     "href": "/docs/core-ideas",
-    "description": "Core thinking principles for how Topoo is structured.",
+    "description": "What Topoo is, why it exists, and how its product surfaces fit together.",
     "pageIds": [
       "topoo-core-ideas"
+    ]
+  },
+  {
+    "id": "topoo-configuration",
+    "blockId": "topoo-default",
+    "order": 30,
+    "label": "Configuration",
+    "href": "/docs/configuration",
+    "description": "System-level configuration map across Workspace, Project, Node, connections, and execution clients.",
+    "pageIds": [
+      "topoo-configuration"
+    ]
+  },
+  {
+    "id": "topoo-mcp",
+    "blockId": "topoo-default",
+    "order": 40,
+    "label": "MCP",
+    "href": "/docs/mcp",
+    "description": "MCP connection, authorization, context, and capability boundaries for external execution clients.",
+    "pageIds": [
+      "topoo-mcp"
+    ]
+  },
+  {
+    "id": "topoo-api",
+    "blockId": "topoo-default",
+    "order": 50,
+    "label": "API",
+    "href": "/docs/api",
+    "description": "Topoo API object families, authentication boundaries, versioning, and current availability.",
+    "pageIds": [
+      "topoo-api"
     ]
   },
   {
@@ -71,6 +106,17 @@
     "description": "Canonical Source, editor, Submission, Node Version, Artifact, Project Release, and Deployment objects.",
     "pageIds": [
       "topoo-cloud-node-lifecycle-model"
+    ]
+  },
+  {
+    "id": "topoo-cloud-deployment-interaction-model",
+    "blockId": "cloud-deployment",
+    "order": 45,
+    "label": "Configuration & Interaction",
+    "href": "/docs/cloud/deployment/interaction-model",
+    "description": "Target placement and interaction model for Project, Node, Agent, Session, Submission, Release, Environment, and Resource controls.",
+    "pageIds": [
+      "topoo-cloud-deployment-interaction-model"
     ]
   },
   {

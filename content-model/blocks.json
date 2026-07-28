@@ -9,7 +9,8 @@
     "id": "topoo-cloud-platform",
     "boardId": "topoo",
     "label": "Topoo Cloud",
-    "description": "Entry point to the Topoo Cloud platform."
+    "description": "Entry point to the Topoo Cloud platform.",
+    "navigation": false
   },
   {
     "id": "cloud-deployment",
