@@ -5,6 +5,7 @@
     "project",
     "node",
     "node-workbench",
+    "interaction-model",
     "source-and-git",
     "source-status",
     "runtime",

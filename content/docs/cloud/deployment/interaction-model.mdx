@@ -1,0 +1,377 @@
+---
+title: "Deployment Configuration and Interaction"
+description: "Where Project, Node, Agent, external Session, Submission, Release, Environment, and Resource controls belong in Topoo Cloud."
+---
+
+This page defines the target configuration placement and interaction model for Deployment Control.
+
+It makes the release-control model operable in the current Topoo Cloud information architecture. It is a **target product model and interaction specification**, not a claim that every control described here is already connected to a production backend.
+
+Read it with [Node Workbench and Editors](/docs/cloud/deployment/node-workbench) and [Release Control](/docs/cloud/deployment/release-control).
+
+## Configuration hierarchy
+
+Configuration belongs to three authority levels:
+
+```text
+Workspace
+→ authorizes external accounts and developer tools
+
+Project
+→ organizes Nodes and owns Agents, Environments, release policy, Production authority, and audit
+
+Node
+→ owns Source, build contracts, Context, Checks, Resource Bindings, versions, and delivery history
+```
+
+Project Deployments presents the operational flow produced by those configurations:
+
+```text
+Submission
+→ Release Candidate
+→ immutable Release Artifact Set
+→ Preview
+→ Production
+```
+
+Topoo does not create the conversation Session used by Codex, Claude, VS Code, or another external execution client. It authorizes and records the connection between that Session and a Project, Node, Agent identity, and Base Revision.
+
+## Configuration placement
+
+| Configuration | Target surface | Authority |
+|---|---|---|
+| Install the Topoo Cloud plugin and authorize an external execution client | Workspace Settings → Developer Connections | Workspace |
+| Authorize a Git provider account or organization | Workspace Settings → Source Connections | Workspace |
+| Define which Nodes belong to the Project | Project Settings → Structure | Project |
+| Define Agent identity, responsibility, prompt, SOP, and default permissions | Project Settings → Agents | Project |
+| Define integration, conflict, Check, Preview, approval, promotion, and rollback policy | Project Settings → Release Control | Project |
+| Bind repository, branch, root directory, framework, build command, and output contract | Node Settings → Source and Build | Node |
+| Assign Project Agents and Context Packs to the Node | Node Settings → Agents and Context | Node |
+| Define deterministic validation required for the Node | Node Settings → Checks | Node |
+| Bind Project Resources to the Node | Node Settings → Resources | Node |
+| Configure Preview, Production, domains, variables, secrets, and traffic policy | Project → Environment | Project |
+| Inspect Submissions, Releases, provider Deployments, approval, and rollback | Project → Deployments | Project |
+| Inspect external Session activity, Checkpoints, Diff, Checks, and versions | Node Workbench → Inspector | Node |
+
+Account connection, Project permission, Session authority, and Production approval remain separate grants.
+
+## Existing Project navigation
+
+The current Project navigation is sufficient:
+
+```text
+Overview
+Code
+Environment
+Resources
+Deployments
+Observability
+Settings
+```
+
+Deployment Control should not add `Files`, `Sessions`, `Agents`, or `Submissions` as new Project-level navigation tabs.
+
+- Files are the content of the Code surface.
+- Sessions are created in external execution clients and appear as Node activity and audit evidence.
+- Agents are durable Project configuration assigned to Nodes.
+- Submissions are operational release inputs presented inside Project Deployments.
+
+## Code surface
+
+Code presents Node-to-Source mapping and Source browsing.
+
+The first selector is a **Node selector**, not a repository selector:
+
+```text
+Node: Cloud Console
+Source: topooai/topoo-cloud / main / apps/cloud-web
+GitHub: Connected
+```
+
+Changing the Node changes the repository, branch, root directory, and visible Source scope. This supports several Nodes that share one repository while preserving distinct responsibility and delivery boundaries.
+
+The Code surface does not own Sessions, Submissions, approval, or Production.
+
+## Project Settings
+
+Project Settings uses internal navigation instead of one long undifferentiated form:
+
+```text
+General
+Structure
+Connections
+Agents
+Release Control
+Access
+Danger Zone
+```
+
+### General
+
+General contains stable Project identity:
+
+- name
+- slug and Project ID
+- description and kind
+- entry route
+
+### Structure
+
+Structure presents the Project's Nodes, responsibility boundaries, current accepted Node Versions, and declared dependencies.
+
+It answers:
+
+- Which Nodes form this Project?
+- What durable problem does each Node own?
+- Which Node Versions are currently accepted?
+- Which Nodes must be checked or released together?
+
+A Node row opens its Node Workbench. A repository is shown as a Source Binding, not as the structural parent of the Node.
+
+### Connections
+
+Connections shows which Workspace-authorized external systems the Project may use:
+
+- GitHub or another Source provider
+- Codex
+- Claude
+- VS Code
+- later execution clients
+
+Workspace authorization is performed once. Project configuration grants or denies use of that connection within the Project.
+
+### Agents
+
+Agents stores reusable Project identities such as:
+
+- UI Agent
+- Backend Agent
+- Documentation Agent
+
+An Agent profile contains:
+
+- name and responsibility
+- prompt and operating procedure
+- allowed Nodes, paths, and Resources
+- allowed tools and actions
+- required Checks
+- Checkpoint, Submission, and Preview permission
+
+One Agent identity may be reused by several external Sessions. For example, several Codex Sessions may divide sidebar, top navigation, and component tasks while operating under the same UI Agent identity.
+
+Agent configuration does not carry Production authority by default.
+
+### Release Control
+
+Release Control configures the fixed Topoo Release Controller:
+
+```text
+Topoo Release Controller
+Managed by Topoo
+Locked
+```
+
+The Release Controller is not a free-acting Agent with a mutable personality. It is a deterministic program, state machine, authority model, and SOP.
+
+The surface configures:
+
+- dependency and integration order
+- stale-base handling
+- file and Resource conflict handling
+- required integrated Checks
+- Preview policy
+- Production approval policy
+- same-Artifact promotion enforcement
+- retention and rollback policy
+
+### Access
+
+Access explains and configures separate authority layers:
+
+| Authority | Allowed outcome |
+|---|---|
+| Project operator | Configure Nodes, Agent profiles, Environments, and release policy. |
+| Agent Session | Read authorized Context, save Checkpoints, run Checks, and create Submissions. |
+| Production approver | Promote one exact accepted Release Artifact Set. |
+
+## Node Workbench
+
+The common Workbench shell surrounds the capability-specific editor.
+
+```text
+Node identity · accepted version · Base Revision
+Source Explorer | Editor | Context / Changes / Checks / Activity / Versions
+Preview · Connect · Node Settings
+```
+
+Node Settings uses:
+
+```text
+General
+Source and Build
+Agents and Context
+Checks
+Resources
+Versions
+```
+
+The Workbench Inspector may show:
+
+- Context: responsibility, dependencies, assigned Agents, allowed scope, and acceptance framing
+- Changes: isolated working Diff and affected scope
+- Checks: deterministic validation against the pinned state
+- Activity: external Sessions, Checkpoints, Submissions, and audit events
+- Versions: immutable accepted Node Versions and consuming Project Releases
+
+## External client connection
+
+The Node Workbench `Connect` action creates a scoped connection grant. It does not create a chat:
+
+```text
+Connect external editor
+
+Project       Topoo Cloud
+Node          Cloud Console
+Agent         UI Agent
+Allowed       Read Context, save Checkpoints, run Checks, create Submission
+Production    Not allowed
+Expires       24 hours
+
+Open in Codex
+Copy connection link
+Advanced MCP configuration
+```
+
+After the Topoo Cloud plugin and account connection have been configured once, the user may begin in the execution client instead:
+
+```text
+Open Codex
+→ create a new Session
+→ state the task
+→ plugin resolves repository and working directory
+→ Topoo resolves Project, Node, Agent, and Base Revision
+→ Session receives the scoped Context Pack and Session Grant
+```
+
+If several Nodes are valid, Topoo asks the user to choose the responsibility scope. It does not ask the user to repeat durable Project context.
+
+## Project Deployments
+
+Deployments is one operational surface with three object views:
+
+```text
+Submissions | Releases | Deployments
+```
+
+### Submissions
+
+Submissions shows work proposed by Agents, GitHub, or manual Source import.
+
+Each record exposes:
+
+- Agent and external Session identity
+- Node and Base Revision
+- Change Summary and reason
+- changed files and affected Resources
+- Checkpoint history
+- Checks
+- stale-base and conflict result
+- review and acceptance history
+
+### Releases
+
+Releases shows the one integrated Project Release Candidate:
+
+```text
+Release Candidate #104
+
+Cloud Console       v39
+Deployment System   v12
+Editor Platform     v21
+Marketplace System  v7
+```
+
+It presents integrated Checks, the immutable Release Artifact Set, Preview, approval, and same-Artifact Production promotion.
+
+Production approval belongs here, not in an Agent Session or Node Workbench.
+
+### Deployments
+
+Deployments shows actual Environment and provider events:
+
+- Release Artifact Set
+- Preview or Production target
+- provider and runtime identity
+- traffic and health
+- logs and operating evidence
+- redeploy and rollback actions
+
+Provider execution does not create a second release authority.
+
+## Environment and Resources
+
+Environment owns:
+
+- Preview and Production targets
+- domains
+- environment variables and secrets
+- deployment protection
+- traffic and rollout policy
+
+Resources has two internal views:
+
+```text
+Resources | Node Bindings
+```
+
+Project creates and owns the Resource. Node Binding grants a Node a named, reviewable relationship to that Resource. Node Workbench may display or request a binding change, but it does not silently create, delete, or replace Project Resources.
+
+## First-time setup
+
+```text
+Workspace Settings
+→ authorize GitHub
+→ install and authorize Topoo Cloud for Codex
+
+Project Settings / Structure
+→ define Nodes and dependencies
+
+Project Settings / Agents
+→ define reusable Agent identities
+
+Node Settings
+→ configure Source, build, Context, Checks, and Resource Bindings
+
+Project Settings / Release Control
+→ configure integration, Preview, approval, promotion, and rollback
+```
+
+## Daily interaction
+
+```text
+Open Codex
+→ create a new external Session
+→ state the task
+→ Topoo resolves Project, Node, Agent, and Base Revision
+→ isolated work and Checkpoints
+→ Submission
+→ Release Controller integration
+→ Preview
+→ Project approval
+→ Production promotion of the same accepted Artifact Set
+```
+
+Topoo preserves the Session identity, Agent identity, Base Revision, Checkpoints, Submission, Change Summary, Checks, approval, Deployment, and rollback evidence. It does not need to persist the full external conversation as the release contract.
+
+## Prototype and acceptance boundary
+
+The first interaction prototype should:
+
+- use the existing Project navigation
+- clearly label illustrative records as prototype data
+- show unavailable integrations as `Not connected` or `Not configured`
+- let reviewers move between Project Settings, Code, Node Workbench, Environment, Resources, and Deployments
+- simulate connection and approval interactions without creating external Sessions or production side effects
+
+After interaction acceptance, the prototype objects become API contracts and are connected incrementally to real control-plane state.
+
