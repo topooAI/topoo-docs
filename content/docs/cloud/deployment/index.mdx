@@ -13,6 +13,7 @@ It owns the path from a Project's source and structure to an accepted release ru
 |---|---|
 | [Project](/docs/cloud/deployment/project) | The complete product, integration boundary, environments, domains, release authority, and operating state. |
 | [Node](/docs/cloud/deployment/node) | A permission-scoped code container that divides attention and responsibility inside a Project. |
+| [Work Sessions and Local Runtime](/docs/cloud/deployment/work-sessions) | One task per external Session, Project-scoped Node permissions, isolated local Workspaces, automatic Checkpoints, and integration. |
 | [Node Workbench and Editors](/docs/cloud/deployment/node-workbench) | The common editing surface plus code and specialized editor modes for a Node. |
 | [Source and Git](/docs/cloud/deployment/source-and-git) | Connected Git providers, Topoo-managed revisions, source provenance, and synchronization. |
 | [Runtime and Resources](/docs/cloud/deployment/runtime) | Execution capacity, persistent resources, bindings, and truthful operating state. |
@@ -24,6 +25,8 @@ It owns the path from a Project's source and structure to an accepted release ru
 ```text
 Project
 ├── Nodes
+├── Work Sessions
+│   └── Session Node Scopes and isolated Workspaces
 ├── Source and Git
 ├── Configuration and Secrets
 ├── Runtime and Resources
@@ -32,7 +35,7 @@ Project
 └── Observability and Audit
 ```
 
-Project is the complete product and final release authority. Nodes divide that Project into bounded code containers that people, teams, and Agents can work on under different permissions. A Node can be edited and versioned independently, but it remains part of the Project and does not gain independent Production authority.
+Project is the complete product and final release authority. Nodes divide that Project into bounded code containers that people, teams, and Agents can work on under different permissions. Work Sessions represent temporary tasks and may link to one or more Nodes. A Node can be edited and versioned independently, but it remains part of the Project and does not gain independent Production authority.
 
 ## Provider boundary
 
@@ -41,7 +44,10 @@ GitHub / Git provider
 → source and version input
 
 Topoo Cloud
-→ Project, Node, permissions, configuration, release, and operations control plane
+→ Project, Node, Work Session, permissions, integration, release, and operations control plane
+
+Topoo Local Runtime
+→ isolated local Workspace, Agent process cwd, Checkpoints, and command execution
 
 Cloudflare / infrastructure provider
 → runtime, network, storage, and execution capacity

@@ -59,7 +59,7 @@ Repository: product-monorepo
 └── packages/ui    → UI System Node
 ```
 
-If two proposed Nodes own the same source scope, produce the same output, and follow the same version and delivery lifecycle, they are one Node with multiple Agents or Sessions rather than two independent Nodes.
+If two proposed Nodes own the same source scope, produce the same output, and follow the same version and delivery lifecycle, they are one Node with multiple Agents or linked Sessions rather than two independent Nodes.
 
 Separating a repository is not enough to create a working product boundary. The consumer must reference a real, immutable version or Artifact from the separated responsibility. Two copied packages with no enforced dependency are not a completed split.
 
@@ -101,7 +101,9 @@ Topoo can implement this behind the control plane with a proven Git backend. Cus
 
 An Agent must not deploy merely because it changed files.
 
-An Agent works under Node scope. A Session is a temporary execution context attached to that Node, while the Node persists identity, prompt, permissions, source scope, Submissions, checks, and version history across Sessions.
+An Agent works under explicit Node scope. A Work Session is a temporary Project-scoped transaction that may hold one or more Node scopes, while each Node persists identity, permissions, source scope, Submissions, checks, and version history across Sessions.
+
+Each writing Session receives an isolated Git worktree or equivalent copy-on-write Workspace. Provider branches and commits may implement that isolation and history, but Topoo creates and records them ambiently instead of making routine Git mechanics the user workflow.
 
 Every Agent submission enters a channel with explicit authority:
 

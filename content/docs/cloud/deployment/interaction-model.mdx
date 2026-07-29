@@ -1,27 +1,30 @@
 ---
 title: "Deployment Configuration and Interaction"
-description: "Where Project, Node, Agent, external Session, Submission, Release, Environment, and Resource controls belong in Topoo Cloud."
+description: "Where Project, Node, Work Session, Agent, Local Runtime, Submission, Release, Environment, and Resource controls belong in Topoo Cloud."
 ---
 
 This page defines the target configuration placement and interaction model for Deployment Control.
 
 It makes the release-control model operable in the current Topoo Cloud information architecture. It is a **target product model and interaction specification**, not a claim that every control described here is already connected to a production backend.
 
-Read it with [Node Workbench and Editors](/docs/cloud/deployment/node-workbench) and [Release Control](/docs/cloud/deployment/release-control).
+Read it with [Work Sessions and Local Runtime](/docs/cloud/deployment/work-sessions), [Node Workbench and Editors](/docs/cloud/deployment/node-workbench), and [Release Control](/docs/cloud/deployment/release-control).
 
 ## Configuration hierarchy
 
-Configuration belongs to three authority levels:
+Configuration and execution state belong to four placement levels:
 
 ```text
 Workspace
 → authorizes external accounts and developer tools
 
 Project
-→ organizes Nodes and owns Agents, Environments, release policy, Production authority, and audit
+→ organizes Nodes and owns Work Sessions, Agents, Environments, release policy, Production authority, and audit
 
 Node
 → owns Source, build contracts, Context, Checks, Resource Bindings, versions, and delivery history
+
+Work Session
+→ represents one temporary Project task and links to one or more authorized Nodes and Base Revisions
 ```
 
 Project Deployments presents the operational flow produced by those configurations:
@@ -34,7 +37,7 @@ Submission
 → Production
 ```
 
-Topoo does not create the conversation Session used by Codex, Claude, VS Code, or another external execution client. It authorizes and records the connection between that Session and a Project, Node, Agent identity, and Base Revision.
+Topoo does not create the conversation interface used by Codex, Claude, VS Code, or another external execution client. It maps that external Session to a Project-scoped Topoo Work Session, Agent identity, one or more Node scopes, Base Revisions, and an isolated Session Workspace.
 
 ## Interaction principle
 
@@ -44,13 +47,14 @@ The user should not operate a Git collaboration checklist for every Agent task. 
 
 ```text
 One-time configuration
-→ connect GitHub and external execution clients
+→ connect GitHub, Topoo Local Runtime, and external execution clients
 → define Project, Nodes, Agent identities, Checks, and release policy
 
 Daily use
 → open a new external Session
 → state the task
-→ Topoo resolves context and isolates working state
+→ Topoo resolves Project and Node scopes
+→ Topoo Local Runtime isolates working state
 → Topoo records Checkpoints, Commits, Change Summary, and Submission
 → clean integration and Preview proceed automatically
 → only exceptions require attention
@@ -64,7 +68,8 @@ The platform interrupts the user only when configured authority, deterministic i
 
 | Configuration | Target surface | Authority |
 |---|---|---|
-| Install the Topoo Cloud plugin and authorize an external execution client | Workspace Settings → Developer Connections | Workspace |
+| Install a Topoo execution-client adapter and authorize an external execution client | Workspace Settings → Developer Connections | Workspace |
+| Install and register Topoo Local Runtime on a development machine | Workspace Settings → Local Runtimes | Workspace |
 | Authorize a Git provider account or organization | Workspace Settings → Source Connections | Workspace |
 | Define which Nodes belong to the Project | Project Settings → Structure | Project |
 | Define Agent identity, responsibility, prompt, SOP, and default permissions | Project Settings → Agents | Project |
@@ -75,13 +80,14 @@ The platform interrupts the user only when configured authority, deterministic i
 | Bind Project Resources to the Node | Node Settings → Resources | Node |
 | Configure Preview, Production, domains, variables, secrets, and traffic policy | Project → Environment | Project |
 | Inspect Submissions, Releases, provider Deployments, approval, and rollback | Project → Deployments | Project |
-| Inspect external Session activity, Checkpoints, Diff, Checks, and versions | Node Workbench → Inspector | Node |
+| Inspect all active and completed Work Sessions | Deployment → Work Sessions | Project |
+| Inspect Session activity filtered to one Node | Node Workbench → Inspector | Node |
 
 Account connection, Project permission, Session authority, and Production approval remain separate grants.
 
 ## Existing Project navigation
 
-The current Project navigation is sufficient:
+The current Project detail navigation may remain:
 
 ```text
 Overview
@@ -93,10 +99,23 @@ Observability
 Settings
 ```
 
-Deployment Control should not add `Files`, `Sessions`, `Agents`, or `Submissions` as new Project-level navigation tabs.
+The Deployment module itself should expose its operational objects directly:
+
+```text
+Projects
+Work Sessions
+Nodes
+Integration
+Previews
+Releases
+Environments
+Policies and Audit
+```
+
+These do not all need to become new tabs inside every Project detail page.
 
 - Files are the content of the Code surface.
-- Sessions are created in external execution clients and appear as Node activity and audit evidence.
+- Work Sessions are Project-scoped operational objects and also appear as filtered Node activity and audit evidence.
 - Agents are durable Project configuration assigned to Nodes.
 - Submissions are operational release inputs presented inside Project Deployments.
 
@@ -114,7 +133,7 @@ GitHub: Connected
 
 Changing the Node changes the repository, branch, root directory, and visible Source scope. This supports several Nodes that share one repository while preserving distinct responsibility and delivery boundaries.
 
-The Code surface does not own Sessions, Submissions, approval, or Production.
+The Code surface may open or inspect a Session Workspace, but it does not own Session policy, integration, approval, or Production.
 
 ## Project Settings
 
@@ -181,7 +200,7 @@ An Agent profile contains:
 - required Checks
 - Checkpoint, Submission, and Preview permission
 
-One Agent identity may be reused by several external Sessions. For example, several Codex Sessions may divide sidebar, top navigation, and component tasks while operating under the same UI Agent identity.
+One Agent identity may be reused by several external Sessions. For example, several Codex Sessions may divide sidebar, top navigation, and component tasks while operating under the same UI Agent identity. Each writing Session still receives its own isolated Session Workspace.
 
 Agent configuration does not carry Production authority by default.
 
@@ -244,7 +263,7 @@ The Workbench Inspector may show:
 - Context: responsibility, dependencies, assigned Agents, allowed scope, and acceptance framing
 - Changes: isolated working Diff and affected scope
 - Checks: deterministic validation against the pinned state
-- Activity: external Sessions, Checkpoints, Submissions, and audit events
+- Activity: Project Work Sessions linked to this Node, Checkpoints, Submissions, and audit events
 - Versions: immutable accepted Node Versions and consuming Project Releases
 
 ## External client connection
@@ -255,9 +274,9 @@ The Node Workbench `Connect` action creates a scoped connection grant. It does n
 Connect external editor
 
 Project       Topoo Cloud
-Node          Cloud Console
+Node scopes   Cloud Console; Domain System
 Agent         UI Agent
-Allowed       Read Context, save Checkpoints, run Checks, create Submission
+Allowed       Read Context, allocate Workspace, save Checkpoints, run Checks, create Submissions
 Production    Not allowed
 Expires       24 hours
 
@@ -266,18 +285,20 @@ Copy connection link
 Advanced MCP configuration
 ```
 
-After the Topoo Cloud plugin and account connection have been configured once, the user may begin in the execution client instead:
+After the execution-client adapter, account connection, and Topoo Local Runtime have been configured once, the user may begin in the execution client instead:
 
 ```text
 Open Codex
 → create a new Session
 → state the task
-→ plugin resolves repository and working directory
-→ Topoo resolves Project, Node, Agent, and Base Revision
-→ Session receives the scoped Context Pack and Session Grant
+→ adapter resolves the Project and external Session identity
+→ Topoo creates a Project-scoped Work Session
+→ Topoo resolves one or more authorized Node scopes and Base Revisions
+→ first write asks Local Runtime for an isolated Session Workspace
+→ Agent process receives the scoped Context Pack, Session Grant, and exact cwd
 ```
 
-If several Nodes are valid, Topoo asks the user to choose the responsibility scope. It does not ask the user to repeat durable Project context.
+If several Nodes are valid, Topoo may infer and expand the allowed scope under policy. It asks the user only when the task requires new authority or the intended boundary is ambiguous. It does not ask the user to repeat durable Project context.
 
 ## Project Deployments
 
@@ -355,7 +376,8 @@ Project creates and owns the Resource. Node Binding grants a Node a named, revie
 ```text
 Workspace Settings
 → authorize GitHub
-→ install and authorize Topoo Cloud for Codex
+→ install and authorize the Topoo Cloud adapter for Codex
+→ install and register Topoo Local Runtime
 
 Project Settings / Structure
 → define Nodes and dependencies
@@ -376,11 +398,12 @@ Project Settings / Release Control
 Open Codex
 → create a new external Session
 → state the task
-→ Topoo resolves Project, Node, Agent, and Base Revision
-→ Topoo creates isolated working state
+→ Topoo creates a Project-scoped Work Session
+→ Topoo resolves Project, Agent, Node scopes, and Base Revisions
+→ first write causes Local Runtime to create isolated working state
 → automatic Drafts and Checkpoints
-→ automatic source Commit and Change Summary
-→ automatic Submission
+→ automatic source Revision and Change Summary at meaningful boundaries
+→ automatic Node-scoped Submissions
 → clean Release Controller integration
 → automatic Preview
 → Production follows the configured approval policy

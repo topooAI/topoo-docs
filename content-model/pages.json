@@ -72,6 +72,14 @@
     "kind": "doc-page"
   },
   {
+    "id": "topoo-cloud-work-sessions",
+    "topicId": "topoo-cloud-work-sessions",
+    "title": "Work Sessions and Local Runtime",
+    "href": "/docs/cloud/deployment/work-sessions",
+    "file": "content/docs/cloud/deployment/work-sessions.mdx",
+    "kind": "doc-page"
+  },
+  {
     "id": "topoo-cloud-node-lifecycle-model",
     "topicId": "topoo-cloud-node-lifecycle-model",
     "title": "Node Workbench and Editors",

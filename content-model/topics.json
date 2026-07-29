@@ -98,6 +98,17 @@
     ]
   },
   {
+    "id": "topoo-cloud-work-sessions",
+    "blockId": "cloud-deployment",
+    "order": 35,
+    "label": "Work Sessions & Local Runtime",
+    "href": "/docs/cloud/deployment/work-sessions",
+    "description": "Project-scoped task Sessions, isolated local Workspaces, client adapters, automatic Checkpoints, and integration.",
+    "pageIds": [
+      "topoo-cloud-work-sessions"
+    ]
+  },
+  {
     "id": "topoo-cloud-node-lifecycle-model",
     "blockId": "cloud-deployment",
     "order": 40,

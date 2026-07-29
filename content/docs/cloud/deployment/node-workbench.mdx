@@ -7,7 +7,7 @@ This page defines the canonical lifecycle objects shared by all Topoo Nodes.
 
 It is a **target product model**. It does not mean that the current Node editors, version ledger, release controller, or deployment system already implement every object described here.
 
-Read this model together with [Project and Node Model](/docs/cloud/deployment/node) and [Deployment Control Plan](/docs/cloud/deployment/release-control).
+Read this model together with [Project and Node Model](/docs/cloud/deployment/node), [Work Sessions and Local Runtime](/docs/cloud/deployment/work-sessions), and [Deployment Control Plan](/docs/cloud/deployment/release-control).
 
 ## Canonical statement
 
@@ -24,12 +24,12 @@ A Website, service, workflow, component, schema, document, or Agent definition i
 | Object | Canonical responsibility |
 |---|---|
 | Project | Organizes Nodes and owns environments, domains, Production authority, integrated releases, observability, audit, and rollback. |
-| Node | Owns one durable problem and responsibility boundary, including scope, Source, Sessions, Submissions, versions, dependencies, and delivery history. |
+| Node | Owns one durable problem and responsibility boundary, including scope, Source, linked Session evidence, Submissions, versions, dependencies, and delivery history. |
 | Node Workbench | Presents the Node's editor, changes, Submissions, versions, Checks, Artifacts, Previews, deployments, and logs in one operating surface. |
 | Source Binding | Connects a Node to one or more repository roots, packages, uploaded snapshots, or Topoo-hosted source scopes. |
 | Source Revision | Identifies one immutable canonical source state. It may map to a Git commit, imported snapshot, or Topoo-hosted commit. |
 | Agent | Acts under a Node's identity, permissions, prompt, scope, and operating procedure. |
-| Session | Provides temporary execution attention for one bounded task. A Session does not create a new Node or carry Production authority. |
+| Work Session | Provides one temporary Project-scoped work transaction and links to one or more Node scopes. A Session does not create a new Node or carry Production authority. |
 | Submission | Proposes a bounded change against a pinned Base Revision, with actor, intent, affected scope, Diff, summary, and evidence. |
 | Change Summary | Explains what changed, why it changed, who requested and performed it, what may be affected, and which validation was performed. |
 | Check | Records a deterministic validation result against a Submission, Node Version, or integrated Project Release Candidate. |
@@ -46,15 +46,18 @@ A Website, service, workflow, component, schema, document, or Agent definition i
 
 ```text
 Project
-└── Node
-    ├── Source Binding
-    ├── Source Revisions
-    ├── Agents and Sessions
-    ├── Submissions and Change Summaries
-    ├── Checks
-    ├── Node Versions
-    ├── Artifacts
-    └── Node Previews
+├── Nodes
+│   └── Node
+│       ├── Source Binding
+│       ├── Source Revisions
+│       ├── linked Session evidence
+│       ├── Submissions and Change Summaries
+│       ├── Checks
+│       ├── Node Versions
+│       ├── Artifacts
+│       └── Node Previews
+└── Work Sessions
+    └── Session Node Scopes and isolated Workspaces
 
 Accepted Node Versions
 → Project Release Candidate
@@ -122,11 +125,11 @@ These are capabilities and adapters, not separate release systems.
 
 ## External Agent Session connection
 
-Topoo does not need to own the conversation interface used by every Agent. Codex, Claude, VS Code, and other execution clients may create Sessions outside Topoo while Topoo remains the authority for Project identity, Node scope, Source, Submissions, and releases.
+Topoo does not need to own the conversation interface used by every Agent. Codex, Claude, VS Code, and other execution clients may create Sessions outside Topoo while Topoo remains the authority for Project identity, Work Session identity, Node scopes, isolated Workspaces, Source, Submissions, and releases.
 
 The target user outcome is:
 
-> **After Topoo and the execution client are connected once, the user starts a new Session by stating the task. The user does not repeat the Project, Node, repository, Agent prompt, Checks, or deployment policy in every conversation.**
+> **After Topoo, the execution client, and Topoo Local Runtime are connected once, the user starts a new Session by stating the task. The user does not repeat the Project, Nodes, repository, Agent prompt, Checks, or deployment policy in every conversation.**
 
 For example:
 
@@ -142,15 +145,16 @@ The client resolves the rest from Topoo:
 Task
 → identify the connected repository and working directory
 → resolve the Topoo Project
-→ resolve or confirm the responsible Node
-→ load the Agent identity and Node Context Pack
+→ create the Project-scoped Work Session
+→ resolve or confirm one or more responsible Nodes
+→ load the Agent identity and Context Packs
 → issue a scoped Session Grant
-→ lock the Base Revision
-→ create isolated working state
-→ produce Checkpoints, a Submission, Checks, and Preview
+→ lock Base Revisions
+→ lazily create an isolated Session Workspace through Local Runtime
+→ produce Checkpoints, Node Submissions, Checks, and Preview
 ```
 
-If one task unambiguously maps to one Node, this resolution is automatic. If the task crosses Nodes or the current repository maps to several valid responsibility scopes, Topoo asks the user to choose the affected Node or authorize a multi-Node task. This is scope confirmation, not a request to restate project context.
+If one task unambiguously maps to one Node, this resolution is automatic. If the task crosses Nodes, Topoo records several Session Node Scopes. It asks the user only when that expansion requires new authority or the boundary is ambiguous. This is scope confirmation, not a request to restate Project context.
 
 ### Persistent context and automatic resolution
 
@@ -164,11 +168,12 @@ Topoo persists long-lived context under Project, Node, and Agent objects:
 
 A repository may also carry a non-secret `topoo.app.json` manifest that identifies its Project binding, Node roots, build contracts, Artifact contracts, and context-discovery address. Git remote identity, current working directory, and this manifest allow an installed Topoo client to resolve the active context without storing credentials in the repository.
 
-The Node Context Pack returned to an authorized Session contains the minimum structured context required for the task:
+The Context Pack returned to an authorized Session contains the minimum structured context required for the task:
 
 ```text
-Node Context Pack
-├── Project and Node identity
+Session Context Pack
+├── Project and Work Session identity
+├── authorized Node identities and Base Revisions
 ├── responsibility and acceptance framing
 ├── Agent identity, prompt, permissions, and SOP
 ├── Source Bindings and Base Revision
@@ -188,19 +193,20 @@ Topoo should support both directions:
 Topoo Project
 → Node
 → Open in Codex or another client
-→ start an externally hosted Session already bound to Project, Node, and Agent
+→ start an externally hosted Session already bound to Project, initial Node scope, and Agent
 ```
 
 ```text
 Codex or another client
 → open a connected repository
 → Topoo plugin resolves Git remote, working directory, and topoo.app.json
-→ start a Session under the matching Project and Node
+→ create a Work Session under the matching Project
+→ Local Runtime allocates a separate Workspace on first write
 ```
 
 The `Open in` action launches or hands off to the external client. It does not move the chat interface into Topoo and does not make Topoo the owner of the external conversation.
 
-### Topoo Cloud plugin
+### Execution-client adapter and Local Runtime
 
 The distributable Codex integration should be a `Topoo Cloud` plugin rather than only a prompt template. Its target package may contain:
 
@@ -212,12 +218,26 @@ The distributable Codex integration should be a `Topoo Cloud` plugin rather than
 
 Installation and account connection happen once. A workspace may make the plugin available or preinstall it for eligible roles. New Sessions then use the existing account connection and request a new scoped Session Grant.
 
-The plugin is an external entry to the same Topoo control plane:
+The plugin is an external entry to the same Topoo control plane. It is not the component that guarantees local filesystem isolation.
+
+Topoo Local Runtime is a separate machine-level service or supervised CLI that:
+
+- registers the local machine and available repositories
+- creates a Git worktree or copy-on-write Session Workspace
+- launches or binds the Agent process to the exact Workspace cwd
+- runs authorized commands inside that Workspace
+- reports heartbeats, Checkpoints, and source state
+- recovers, freezes, and safely cleans up Session Workspaces
+
+The complete path is:
 
 ```text
 Codex ──┐
-Claude ─┼→ Topoo MCP and API → Project → Node → Session → Submission
-VS Code ┘
+Claude ─┼→ adapter → Topoo MCP and API → Project Work Session
+VS Code ┘                                  │
+                                          ├→ Node scopes and Session Grant
+                                          ├→ Topoo Local Runtime → isolated Workspace
+                                          └→ Node Submissions → Integration Controller
 ```
 
 ### Authorization layers
@@ -227,7 +247,7 @@ Account connection, Session authority, and Production authority are different gr
 | Layer | Purpose | Expected lifetime |
 |---|---|---|
 | Account connection | Connect an execution client to the user's Topoo account through browser authorization. | Persistent until revoked. |
-| Session Grant | Bind one client Session to a Workspace, Project, Node, Agent identity, Base Revision, and allowed actions. | Short-lived and revocable. |
+| Session Grant | Bind one client Session to a Workspace, Project, Agent identity, Node scopes, Base Revisions, local Workspace lease, and allowed actions. | Short-lived and revocable. |
 | Production Approval | Authorize promotion of one exact accepted Release Artifact Set. | Single action. |
 
 The primary remote connection should use browser-based OAuth authorization. A one-time device or claim code is a fallback for clients that cannot complete a normal browser redirect, not the default prompt interface. Long-lived API keys must not be pasted into conversations, URLs, manifests, or Change Summaries.
@@ -239,8 +259,8 @@ A normal Agent Session may read its Context Pack, create Checkpoints and Submiss
 A provider-specific capability such as Cloudflare deployment is an upstream execution tool, not the Topoo product model.
 
 ```text
-Topoo Cloud plugin
-→ resolves Project, Node, Submission, Release Candidate, approval, and audit
+Topoo Cloud adapter and control plane
+→ resolve Project, Work Session, Node scopes, Submissions, Release Candidate, approval, and audit
 → Topoo Release Controller
 → invokes Cloudflare or another provider adapter
 → records the resulting Artifact, Deployment, and operating evidence
@@ -315,7 +335,7 @@ For a single-Node Project, Topoo may automatically create a Project Release Cand
 
 1. Every editor changes the same canonical, versionable Source model.
 2. Specialized no-code editors are Source adapters, not separate data silos.
-3. A Session creates isolated working state; it does not define long-lived responsibility.
+3. A writing Session receives isolated working state; it does not define long-lived responsibility.
 4. A Submission is proposed work and never carries implicit Production authority.
 5. A Node Version is immutable and pins its accepted evidence.
 6. An Artifact is derived from an exact Node Version and build contract.
@@ -334,4 +354,4 @@ A ready Preview persists its Base Release and Artifact identity. Approving it cr
 
 This is the first real lifecycle segment. It does not yet provide managed external Session isolation, automatic Drafts and Checkpoints, enforced Agent identity, Base Revision validation, Diff and affected-scope evidence, stale-base and conflict detection, or automatic integration.
 
-The complete Topoo Cloud plugin, automatic Project and Node resolution, OAuth-backed MCP access, Session Grant, immutable Node Version ledger, common Workbench lifecycle panels, Project Release Candidate composition, Release Artifact Set, policy-driven promotion, and unified rollback chain remain target capabilities until independently implemented and accepted.
+The complete Topoo Cloud adapter, Topoo Local Runtime, automatic Project and Node-scope resolution, OAuth-backed MCP access, Session Grant, isolated Session Workspace, immutable Node Version ledger, common Workbench lifecycle panels, Project Release Candidate composition, Release Artifact Set, policy-driven promotion, and unified rollback chain remain target capabilities until independently implemented and accepted.

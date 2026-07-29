@@ -7,7 +7,7 @@ A Cloud Project is the integration boundary of Topoo Cloud.
 
 It is also the externally unified product and release subject. Customers, domains, environments, permissions, Production promotion, observability, and audit resolve to the Project even when many independent responsibility domains contribute to it.
 
-Read [Project and Node Model](/docs/cloud/deployment/node) as the canonical definition of the two objects, and [Node Workbench and Lifecycle Model](/docs/cloud/deployment/node-workbench) for the shared Source, editor, version, Artifact, and release objects.
+Read [Project and Node Model](/docs/cloud/deployment/node) as the canonical definition of the two objects, [Work Sessions and Local Runtime](/docs/cloud/deployment/work-sessions) for the execution boundary, and [Node Workbench and Lifecycle Model](/docs/cloud/deployment/node-workbench) for the shared Source, editor, version, Artifact, and release objects.
 
 It is not only:
 
@@ -27,7 +27,7 @@ A Cloud Project owns or binds:
 - problem-oriented Nodes and their dependency topology
 - product modules such as sites, workflows, components, data, and forms
 - source bindings such as repository, branch, package, and root path
-- Agent, Session, Submission, and Node delivery relationships
+- Project-scoped Work Sessions, Agent identities, Session Node Scopes, Submissions, and Node delivery relationships
 - runtime and execution policy for runtime-capable Nodes
 - databases, object storage, queues, domains, secrets, and AI capabilities
 - Project Release Candidates and accepted Node versions
@@ -41,7 +41,7 @@ This ownership does not mean every capability must be implemented inside the Pro
 
 Node is the Project's durable decomposition boundary for a problem domain.
 
-For a small product, Project may create and hide one default Node. For a large product, Project organizes many Nodes so different Agents, Sessions, programs, source scopes, and review paths can work in parallel without sharing one undifferentiated context.
+For a small product, Project may create and hide one default Node. For a large product, Project organizes many Nodes while Project-scoped Work Sessions link temporary tasks to one or more authorized Nodes. Different Agents, programs, source scopes, and review paths can work in parallel without sharing one undifferentiated context or mutable working copy.
 
 Project does not treat every file, folder, repository, package, Agent, or Session as a Node. A Node exists when a responsibility needs persistent scope, context, versions, submissions, dependencies, and delivery history.
 
@@ -96,7 +96,7 @@ These are responsibility boundaries, not a requirement that every item must alwa
 
 Every controlled operation must resolve to:
 
-`Workspace -> Cloud Project -> Node -> Agent or Session -> Submission -> Node Version or delivery record`
+`Workspace -> Cloud Project -> Work Session -> Session Node Scope -> Node Submission -> Node Version or delivery record`
 
 Every runtime operation additionally resolves through:
 

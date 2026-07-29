@@ -61,12 +61,12 @@ automatic version records
 = multi-Agent work that is traceable without silently overwriting accepted results
 ```
 
-This plan uses the canonical [Project and Node Model](/docs/cloud/deployment/node), [Node Workbench and Lifecycle Model](/docs/cloud/deployment/node-workbench), and [Deployment Configuration and Interaction Model](/docs/cloud/deployment/interaction-model):
+This plan uses the canonical [Project and Node Model](/docs/cloud/deployment/node), [Work Sessions and Local Runtime](/docs/cloud/deployment/work-sessions), [Node Workbench and Lifecycle Model](/docs/cloud/deployment/node-workbench), and [Deployment Configuration and Interaction Model](/docs/cloud/deployment/interaction-model):
 
 - Project is the externally unified product and Production authority.
 - Node is the persistent, permission-scoped code container and attention boundary inside a Project.
-- Agent is an actor operating under Node scope.
-- Session is a temporary execution context attached to a Node.
+- Agent is an actor operating under explicit Node and Resource scopes.
+- Work Session is a temporary Project-scoped transaction linked to one or more Nodes and an isolated Workspace.
 - Submission is proposed work, not release authority.
 - Node Version is an immutable accepted Node state.
 - Artifact is an immutable output produced from an exact Node Version and build contract.
@@ -100,7 +100,7 @@ GitHub is the first connected provider. Topoo does not expose GitHub as the cust
 
 Provider-specific branches, worktrees, Pull Requests, rebases, and merge operations are implementation details when Topoo can operate them safely. They remain available for interoperability and expert inspection, but they are not the normal customer workflow.
 
-An Agent Session creates a bounded Submission under a Node against a known base revision. It does not deploy merely because it changed files.
+A Work Session may create one or more bounded Node Submissions against known Base Revisions. It does not deploy merely because it changed files.
 
 One Project release controller:
 
@@ -116,7 +116,7 @@ One Project release controller:
 
 ## Control-plane model
 
-`Git provider → Topoo Source Revision → Agent Session → Node Submission → Node Version → optional Node Artifact → Project Release Candidate → Release Artifact Set → Preview → Approval → Production → Rollback`
+`Git provider → Topoo Source Revision → Project Work Session → Node Submission(s) → Node Version(s) → optional Node Artifacts → Project Release Candidate → Release Artifact Set → Preview → Approval → Production → Rollback`
 
 ### Target release controller flow
 
@@ -147,7 +147,7 @@ Each object answers a different question:
 | Source revision | Which exact code state is being considered? |
 | Node | Which problem, responsibility, attention, and delivery boundary owns the work? |
 | Node Workbench | Where are Source editing and the Node lifecycle presented together? |
-| Session | Which temporary execution context performed the task? |
+| Work Session | Which temporary Project task, external client Session, Node scopes, and isolated Workspace performed the work? |
 | Submission | Who proposed what bounded change against which Node and Base Revision? |
 | Change Summary | What changed, why did it change, and what may be affected? |
 | Check | Which deterministic validation ran against which exact state? |
@@ -198,11 +198,13 @@ Every build and deployment must point to exact Source Revisions, immutable Node 
 
 Represent Agent work as a proposed change with identity, base revision, affected scope, checks, and authority. Submitting work and deploying work remain separate actions.
 
-### Establish external Agent connections
+### Establish external Agent connections and local isolation
 
-Publish a Topoo Cloud execution-client plugin backed by a remote Topoo MCP server and browser-based OAuth. Persist Project, Node, and Agent context in Topoo so a new Codex, Claude, or VS Code Session can begin from the user's task rather than a repeated context prompt.
+Publish execution-client adapters backed by a remote Topoo MCP or API service and browser-based OAuth. A Codex plugin is the first adapter, not the complete isolation system. Persist Project, Node, Agent, and Work Session context in Topoo so a new Codex, Claude, or VS Code Session can begin from the user's task rather than a repeated context prompt.
 
-Resolve repository, working directory, `topoo.app.json`, Project, Node, Agent identity, and Base Revision into a scoped Session Grant. Treat one-time claim codes as a compatibility path for clients without a browser redirect, not as long-lived credentials or the primary task interface.
+Add Topoo Local Runtime to allocate one Git worktree, snapshot, or copy-on-write Workspace for each writing Session and bind the Agent process to that exact cwd.
+
+Resolve repository, `topoo.app.json`, Project, Agent identity, Node scopes, Base Revisions, and the local Workspace lease into a scoped Session Grant. Treat one-time claim codes as a compatibility path for clients without a browser redirect, not as long-lived credentials or the primary task interface.
 
 ### Establish deterministic integration
 
@@ -218,7 +220,9 @@ After the provider-independent release model is stable, Topoo can add a Git-comp
 
 ## Ownership boundary
 
-The Deployment system owns source connection, synchronization, Submissions, Node Version integration, candidates, Artifacts, Release Artifact Sets, promotion, and rollback.
+The Deployment system owns source connection, Work Sessions, Session Grants, local Workspace contracts, synchronization, Submissions, Node Version integration, candidates, Artifacts, Release Artifact Sets, promotion, and rollback.
+
+Topoo Local Runtime owns supervised filesystem and process execution on the registered development machine. It follows Cloud policy but does not own integration or Production authority.
 
 The Dashboard owns the presentation of those real states. It must consume stable read-only contracts and must not infer success from placeholders.
 
@@ -227,6 +231,8 @@ The documentation records the product model and acceptance boundary. It does not
 ## What not to do
 
 - do not let Agents deploy directly from uncommitted local files
+- do not let two writing Sessions use the same mutable checkout
+- do not treat a Codex plugin as the component that guarantees local filesystem isolation
 - do not rebuild when promoting an accepted Preview Release Artifact Set to Production
 - do not treat a Branch as an immutable release
 - do not create a separate release path for every source provider

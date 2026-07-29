@@ -1,0 +1,290 @@
+---
+title: "Work Sessions and Local Runtime"
+description: "How one task per external Session becomes isolated, recoverable, and automatically integrated without exposing routine Git operations."
+---
+
+This page defines the target execution architecture for ambient multi-Agent work in Topoo Cloud.
+
+The intended user habit is simple:
+
+> **One small requirement may start as one new Codex, Claude, VS Code, or other execution-client Session. Topoo adapts to that habit; the user does not need to manage a Branch, worktree, Commit, Pull Request, or merge checklist for every task.**
+
+This is a target capability. The current P34 implementation does not yet provide managed local Session isolation or automatic integration. See [Source Implementation Status](/docs/cloud/deployment/source-status) for the audited boundary.
+
+## Canonical relationship
+
+Node and Work Session solve different problems:
+
+- **Node** is a persistent code container, attention boundary, permission scope, and version boundary.
+- **Work Session** is a temporary Project-scoped work transaction for one task.
+
+The canonical hierarchy is:
+
+```text
+Workspace
+└── Project
+    ├── Nodes
+    │   ├── Deployment System
+    │   ├── Domain System
+    │   ├── Database System
+    │   └── Editor System
+    ├── Work Sessions
+    │   ├── Session A ── scope ── Domain System
+    │   ├── Session B ── scope ── Node Editor + Project Editor
+    │   └── Session C ── scope ── Database System + Runtime
+    ├── Integration Queue
+    └── Releases and Deployments
+```
+
+A Work Session belongs to one Project and may be linked to one or more Nodes through explicit Session Node Scopes.
+
+This corrects a model that makes every Session a child of exactly one Node. A small requirement often crosses several durable responsibility boundaries. Topoo must preserve those Node boundaries without forcing the user to split one coherent task into several conversations.
+
+For a narrowly authorized external team, a Session Grant may allow only one Node. For an internal task, the same model may authorize several Nodes.
+
+## Conversation Session and Work Session
+
+An execution client owns its conversation interface. Topoo owns the delivery transaction associated with that conversation.
+
+```text
+Codex conversation Session
+        │ external_session_id
+        ▼
+Topoo Work Session
+        │ Project, Agent, Node scopes, Base Revisions, policy
+        ▼
+Session Workspace
+        │ isolated mutable source
+        ▼
+Checkpoints and Node Submissions
+```
+
+Topoo does not need the full conversation transcript to release software. It needs the durable execution evidence:
+
+- external client and Session identity
+- Project and Agent identity
+- authorized Node and Resource scopes
+- Base Revision for every affected Node
+- Session Workspace identity
+- Checkpoints and recoverable state
+- changed files, affected Resources, and Change Summary
+- Checks, Submissions, integration results, and final immutable versions
+
+## Why a Codex plugin is not enough
+
+A Topoo Cloud plugin or Codex integration is useful, but it is only the execution-client adapter.
+
+It can:
+
+- authenticate the user and external Session
+- resolve the current Project
+- obtain a scoped Session Grant
+- provide Project and Node Context Packs
+- report task lifecycle events
+- invoke Topoo commands and open Topoo review surfaces
+
+It cannot by itself guarantee filesystem isolation for every local Agent process, allocate Git worktrees, prevent another process from writing to the original checkout, retain durable control-plane state, or integrate concurrent changes.
+
+The complete architecture requires three Topoo-owned layers:
+
+| Layer | Responsibility |
+|---|---|
+| Execution-client adapter | Connect Codex, Claude, VS Code, or another client to the same Topoo Session API. A Codex plugin, MCP server, CLI adapter, or native integration may implement this layer. |
+| Topoo Local Runtime | Create and supervise the isolated local Workspace, launch the Agent with the exact working directory, record local state, run commands, and clean up safely. |
+| Topoo Cloud control plane | Persist Sessions, grants, Node scopes, Base Revisions, Checkpoints, Submissions, policies, integration jobs, immutable versions, Releases, and audit evidence. |
+
+GitHub or another Git provider remains a source-history and portability provider. It is not the authority for Topoo Session identity, Node permissions, integration policy, or Production.
+
+## Local PC isolation
+
+If two Agent processes use the same checkout path, they edit the same mutable files. Git history does not isolate uncommitted filesystem state.
+
+Topoo Local Runtime must give every writing Session a distinct physical Workspace:
+
+```text
+P34_TOPOO_CLOUD
+├── integration checkout
+└── Topoo-managed Session Workspaces
+    ├── session-a → isolated Git worktree
+    ├── session-b → isolated Git worktree
+    └── session-c → isolated Git worktree
+```
+
+For Git-backed source, the default implementation is one hidden Session reference plus one Git worktree per writing Session.
+
+For Topoo-hosted or uploaded source without a customer-facing Git workflow, Topoo may use a copy-on-write snapshot or overlay with the same Session Workspace contract.
+
+Every command and file operation issued by the external Agent must run inside the assigned Session Workspace. The integration checkout and another Session's Workspace are not writable through that Session Grant.
+
+## Lazy Workspace allocation
+
+Opening a conversation should not immediately create a heavy local Workspace.
+
+```text
+Create external Session
+→ create lightweight Topoo Work Session
+→ read-only discussion or audit
+→ no Workspace required
+
+First authorized write or execution action
+→ pin Base Revisions
+→ allocate isolated Session Workspace
+→ bind Agent process cwd
+→ begin Checkpoint recording
+```
+
+This allows users to create many exploratory Sessions while allocating worktrees only to Sessions that actually modify source.
+
+## Ambient daily flow
+
+```text
+Open a new execution-client Session
+→ state the requirement
+→ adapter identifies the Project and requests a Session Grant
+→ Topoo creates a Project-scoped Work Session
+→ Topoo resolves or expands authorized Node scopes
+→ first write lazily allocates an isolated Session Workspace
+→ Local Runtime binds the Agent to that Workspace
+→ Topoo records Drafts and recoverable Checkpoints
+→ completed work is partitioned into Node-scoped Submissions
+→ Integration Controller checks Base Revisions and overlapping scope
+→ clean work integrates automatically
+→ immutable Node Versions enter one Project Release Candidate
+→ integrated Checks and Preview run
+→ Production follows the configured approval policy
+```
+
+One Project-scoped Session may produce several Node Submissions. Each Node Submission pins that Node's Base Revision and affected scope so Node version history remains deterministic.
+
+## Routine operations and exceptions
+
+The normal Vibe Coding path does not ask the user to:
+
+- create or name Branches
+- create worktrees
+- write routine Commit messages
+- push every intermediate change
+- open Pull Requests
+- rebase clean work
+- confirm deterministic integration
+- manually assemble a Preview
+
+Topoo records continuous working state as Drafts and Checkpoints. It creates a Git-compatible Commit or immutable Source Revision only at meaningful boundaries; it does not turn every keystroke into a visible Commit.
+
+User attention is reserved for:
+
+- requested permission outside the current Session Grant
+- ambiguous semantic conflict
+- failed Check that policy cannot repair
+- destructive schema, secret, security, or critical-resource change
+- Production approval required by policy
+
+## Target control-plane records
+
+The minimum first-class model is:
+
+```text
+work_sessions
+session_node_scopes
+session_workspaces
+session_checkpoints
+session_submissions
+integration_jobs
+integration_conflicts
+```
+
+### `work_sessions`
+
+Records:
+
+- Workspace, Project, external client, and external Session identity
+- Agent identity and Session status
+- read-only or writing mode
+- created, active, submitted, integrated, abandoned, and archived timestamps
+- Session Grant and audit relationship
+
+### `session_node_scopes`
+
+Records:
+
+- one or more authorized Nodes
+- primary Node when one is useful for context
+- Base Revision per Node
+- allowed source paths, Resources, tools, and actions
+- scope expansion requests and decisions
+
+### `session_workspaces`
+
+Records:
+
+- local runtime and machine identity
+- filesystem Workspace identity, not a customer-visible absolute path
+- Git worktree, snapshot, or overlay strategy
+- hidden source reference and head revision
+- lease, heartbeat, recovery, retention, and cleanup state
+
+### `session_checkpoints`
+
+Records:
+
+- Session and Workspace identity
+- recoverable source state or patch
+- parent Checkpoint
+- Change Summary
+- exact time and initiating action
+
+### Submissions and integration
+
+A Submission records the Session, Agent, affected Node, Base Revision, head revision or patch, changed paths, affected Resources, Checks, and intent.
+
+The Integration Controller uses a fresh integration Workspace. It does not merge inside an Agent's mutable Workspace.
+
+## Required P34 changes
+
+P34 should evolve in this order:
+
+1. create first-class Project-scoped Work Sessions and Session Node Scopes
+2. implement short-lived Session Grants
+3. add a Topoo Local Runtime protocol and registered local runtime identity
+4. allocate one isolated Workspace for each writing Session
+5. replace shared Node Draft storage with Session-scoped Drafts and Checkpoints
+6. require Base Revision and affected-scope evidence on every Submission
+7. add stale-base, overlapping-file, and Resource-conflict detection
+8. integrate in a clean controller-owned Workspace
+9. publish immutable Node Versions without losing another accepted Session
+10. compose exact Node Versions into one Project Release Candidate
+
+The current browser editor must not use one shared `Node.metadata.codeDrafts[path]` record as the canonical mutable state for several Sessions. Editable state must be keyed by Session and path, then promoted only through Submission and integration.
+
+## Product surfaces
+
+The Deployment module should expose:
+
+```text
+Projects
+Work Sessions
+Nodes
+Integration
+Previews
+Releases
+Environments
+Policies and Audit
+```
+
+Project detail may preserve its existing navigation. Work Sessions can appear as a Deployment-level operational view and as filtered evidence inside the affected Node Workbenches.
+
+## Acceptance criteria
+
+This capability is complete only when:
+
+1. two writing Sessions under one Project never share mutable filesystem state
+2. two Sessions may work on the same Node and same file without overwriting during editing
+3. one Session may be authorized for and submit changes to several Nodes
+4. read-only Sessions do not allocate unnecessary Workspaces
+5. every write and command is bound to the assigned Session Workspace
+6. Drafts and Checkpoints recover one Session without changing another
+7. every Node Submission pins its Base Revision and affected scope
+8. clean changes integrate automatically in a controller-owned Workspace
+9. unresolved conflicts become one explicit exception instead of silent replacement
+10. accepted concurrent work survives in immutable Node Versions and the Project Release Candidate
+11. routine Git mechanics remain available for audit without becoming the normal user workflow

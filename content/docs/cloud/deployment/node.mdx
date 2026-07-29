@@ -82,7 +82,7 @@ Node owns the durable working and delivery boundary for one problem domain:
 - problem statement, scope, and acceptance framing
 - Agent identity, prompt, permissions, and operating procedure
 - linked source scope such as repository, branch, root path, or package
-- Sessions and their bounded tasks
+- Work Session links and their Node-scoped Submissions
 - Submissions, checks, summaries, and review state
 - immutable Node revisions and delivery versions
 - dependencies, consumers, and affected Project surfaces
@@ -109,33 +109,37 @@ A no-code editor must change canonical structured Source and produce a reviewabl
 
 The current Code editor direction should therefore evolve into a general Node Workbench shell. Deep code-editing or visual-editing engines can progress independently while every editor uses the same lifecycle objects.
 
-## Agent and Session relationship
+## Agent and Work Session relationship
 
-Node carries long-lived responsibility. Session carries short-lived attention.
+Node carries long-lived responsibility. Work Session carries short-lived attention.
 
 ```text
-Node
-├── durable problem and scope
-├── Agent identity, prompt, permissions, and SOP
-├── source and resource boundaries
-├── version and delivery history
-└── Sessions
-    ├── Session 1: optimize the sidebar
-    ├── Session 2: optimize the top bar
-    └── Session 3: refine a component
+Project
+├── Nodes
+│   ├── UI System
+│   ├── Deployment System
+│   └── Domain System
+└── Work Sessions
+    ├── Session 1 ── scope ── UI System
+    ├── Session 2 ── scope ── Deployment System
+    └── Session 3 ── scope ── UI System + Domain System
 ```
 
-One Node may receive work from multiple Agents and many Sessions. One Session is not a Node, and creating a new Session does not create a new responsibility boundary.
+A Work Session belongs to one Project and links to one or more Nodes through explicit Session Node Scopes. One Node may receive work from multiple Agents and many Sessions. One Session is not a Node, and creating a new Session does not create a new responsibility boundary.
 
-Sessions may be created in Codex, VS Code, Claude, or another execution client. Topoo does not need to own the chat interface. Topoo provides the Node identity, scoped connection, authority, and Submission channel that the external Session uses.
+This Project-scoped relationship supports the normal habit of opening one new execution-client Session for one small requirement. A narrowly authorized contractor Session may be restricted to one Node, while an internal task may cross several Nodes without weakening their separate permissions, Base Revisions, checks, or version histories.
+
+Sessions may be created in Codex, VS Code, Claude, or another execution client. Topoo does not need to own the chat interface. Topoo provides the Project identity, Node scopes, isolated Session Workspace, authority, and Submission channels that the external Session uses.
+
+Read [Work Sessions and Local Runtime](/docs/cloud/deployment/work-sessions) for the isolation and execution architecture.
 
 ## Submission and release relationship
 
 Agent work must move through explicit authority boundaries:
 
 ```text
-Session
-→ Submission
+Project-scoped Work Session
+→ one or more Node Submissions
 → immutable Node Version
 → optional Node Artifact
 → Project Release Candidate
@@ -217,8 +221,9 @@ Repository sharing does not remove conflict risk. Shared files, lockfiles, build
 The following decision rule prevents artificial Node proliferation:
 
 - use different Nodes when responsibilities, permission scopes, version histories, Checks, Artifacts, dependencies, or delivery decisions are genuinely different
-- use one Node with multiple Agents or Sessions when the work changes the same source scope, produces the same output, and follows one lifecycle
+- use one Node with multiple Agents or linked Sessions when the work changes the same source scope, produces the same output, and follows one lifecycle
 - use Sessions to divide temporary tasks such as sidebar, top bar, and component refinements; do not create a Node for every task
+- allow one coherent Session to link to several Nodes when the requirement genuinely crosses durable responsibility boundaries
 - do not claim that two Nodes are independently deliverable until shared dependencies and accepted versions are explicit
 
 ## Package and runtime examples
@@ -264,7 +269,7 @@ The following rules must remain true:
 1. Project is the external product, environment, domain, and Production authority.
 2. Node is the persistent, permission-scoped code container and attention boundary inside a Project.
 3. Agent is an actor working under Node scope; it is not the Node itself.
-4. Session is an ephemeral execution context attached to a Node.
+4. Work Session is an ephemeral Project-scoped work transaction linked to one or more Nodes.
 5. Submission is proposed work, not deployment authority.
 6. A Node Version is immutable after publication and pins its Source Revision, accepted Submissions, Checks, and dependencies.
 7. A Project Release pins the accepted Node Versions and their immutable Artifact relationships.

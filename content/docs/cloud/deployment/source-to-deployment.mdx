@@ -131,14 +131,14 @@ An Agent submission is a proposed change, not an instruction to overwrite the cu
 
 ## Multi-Agent isolation
 
-A Project may have ten or more Agents working at the same time across several Nodes. One Node may also receive work from several Sessions or Agents. Concurrency must not mean that the Agents share one mutable working copy or overwrite one another's unfinished work.
+A Project may have ten or more Agents working at the same time across several Nodes. One Node may also receive work from several Sessions or Agents, and one coherent task may cross several Nodes. Concurrency must not mean that the Agents share one mutable working copy or overwrite one another's unfinished work.
 
-Node carries the durable problem, responsibility, identity, prompt, permissions, source scope, and delivery history. Session is a temporary execution context that may be created in Codex, VS Code, Claude, or another client and attached to that Node.
+Node carries the durable problem, responsibility, permissions, source scope, and delivery history. Work Session is a temporary Project-scoped transaction that may be created in Codex, VS Code, Claude, or another client and linked to one or more authorized Nodes.
 
 Each Agent task receives:
 
 - a bounded task and expected base revision
-- an isolated branch or working state
+- an isolated Git worktree, snapshot, or equivalent Session Workspace
 - an explicit source and resource scope
 - its own change summary, checks, and submission record
 
