@@ -1,0 +1,112 @@
+---
+title: "Source Control Development Plan"
+description: "The implementation sequence for Topoo-managed source, GitHub synchronization, and Project repository lifecycle."
+---
+
+The deployment plane is not the next product bottleneck. Topoo can already turn a captured Source Revision into a build, immutable Artifact, verified Preview, Production promotion, and deployment record.
+
+The missing product is the source-control plane in front of that deployment path: a Project must be able to own code, versions, branches, collaboration, provider synchronization, and repository lifecycle without being structurally dependent on GitHub.
+
+## Outcome
+
+When this plan is complete, a user can choose either Topoo or GitHub for day-to-day version management without changing the Project deployment model.
+
+```text
+Topoo managed ─────┐
+GitHub managed ────┼─→ canonical Source Revision → existing build and release path
+Detached snapshot ┘
+```
+
+The same GitHub repository may be imported several times. Each import remains an independent Project. Creating or deleting a Project never silently creates or deletes a provider repository.
+
+## Current boundary
+
+### Completed
+
+- permanent Project identity separate from display name and repository label
+- GitHub installation, repository selection, branch and commit reads
+- immutable imported and uploaded source snapshots
+- source browsing and persisted repository/synchronization records
+- build configuration, build runs, immutable Artifacts, Preview verification, Production promotion, redeploy, rollback, and audit foundations
+
+### Not completed
+
+- a real Topoo-managed repository with commits, branches, history, diffs, and merge behavior
+- explicit Topoo-managed, GitHub-managed, and detached-snapshot authority policy
+- Topoo-to-GitHub repository, branch, commit, and Pull Request delivery
+- bidirectional reconciliation and conflict handling
+- independent Project/provider-repository deletion and recovery workflows
+- complete collaboration, review, merge-queue, and protected-branch controls
+
+## Delivery sequence
+
+### 1. Source authority and identity
+
+**Problem:** Project identity, source location, and synchronization authority are still coupled in parts of the current model.
+
+**Approach:** Add one explicit source-authority record per Project. Preserve immutable `project_id`; model Topoo source namespace, provider bindings, provider repository identity, default branch, synchronization cursors, and conversion history separately.
+
+**Acceptance:** Three Projects imported from the same repository keep independent histories, resources, domains, releases, and deletion behavior.
+
+### 2. Topoo-managed repository core
+
+**Problem:** The current Topoo editor can persist drafts and snapshots, but it is not a complete version-control service.
+
+**Approach:** Implement versioned file trees, commits, branches, tags, diffs, history, protected references, and immutable Source Revisions behind Project and Node APIs. Use a Git-compatible backend or storage model that can export normal Git history.
+
+**Acceptance:** With GitHub unavailable, a user can create a Project, edit files, commit, branch, review history, build, deploy, and roll back entirely inside Topoo.
+
+### 3. GitHub-managed inbound synchronization
+
+**Problem:** Import exists, but provider changes and failure recovery are incomplete.
+
+**Approach:** Complete push, branch, tag, deletion, Pull Request, and Check event handling. Persist webhook cursors, retry state, replay evidence, repository permission diagnostics, and manual reconciliation.
+
+**Acceptance:** A GitHub commit produces one exact Topoo Source Revision, duplicate events remain idempotent, missed events can be reconciled, and provider failures do not erase the last usable snapshot.
+
+### 4. Topoo-to-GitHub delivery
+
+**Problem:** The UI can describe a GitHub destination, but Topoo does not yet create and update real provider history.
+
+**Approach:** Add explicit repository creation or attachment, blob/tree/commit creation, branch update, Pull Request creation, protected-reference policy, retry, idempotency, and provider audit adapters.
+
+**Acceptance:** A Topoo-managed change can publish to a selected GitHub branch or Pull Request, and the resulting provider revision reconciles back to the same Topoo source history without duplication.
+
+### 5. Conflict and collaboration control
+
+**Problem:** Bidirectional writes and parallel Agents can produce stale bases or overlapping changes.
+
+**Approach:** Pin base revisions, compute diffs, detect stale and overlapping changes, create Topoo Change Requests, run required Checks, and integrate accepted changes deterministically.
+
+**Acceptance:** Two independent changes integrate without overwriting each other; a real conflict stops with one understandable resolution task and complete audit evidence.
+
+### 6. Project and provider lifecycle
+
+**Problem:** Project deletion and provider-repository deletion are currently easy to conflate.
+
+**Approach:** Separate archive, detach provider, delete Topoo source, and delete Topoo-created GitHub repository into distinct operations. Require an additional destructive confirmation and audit record before deleting a provider repository.
+
+**Acceptance:** Deleting one repeated import does not change the upstream repository or sibling Projects. An imported repository is never deleted by default.
+
+### 7. Product surface and hardening
+
+**Problem:** Users cannot safely choose a source authority if synchronization, conflicts, and lifecycle are hidden or represented by placeholder controls.
+
+**Approach:** Expose source authority, last synchronized revision, pending local and provider changes, branch/history views, conflict state, retry, detach, export, and destructive actions in the existing Project Code and Settings surfaces. Add rate-limit handling, secret-scope checks, backup, restore, quotas, webhook replay, and operational metrics.
+
+**Acceptance:** UI labels map to real operations; unavailable operations are disabled or identified as not completed; all provider and source mutations are auditable and recoverable.
+
+## Release rule
+
+Source-control work must feed the existing immutable deployment path. Preview and Production must reuse the same accepted Artifact; GitHub synchronization must not introduce a second build path or make Production depend on a live provider call.
+
+## End-to-end acceptance
+
+The source-control plane is ready only when all of the following pass:
+
+1. local upload → Topoo edit → commit → branch → Preview → Production while GitHub is unavailable
+2. GitHub import → Topoo branch change → GitHub Pull Request → webhook reconciliation → exact Source Revision → deployment
+3. one GitHub repository imported three times → three independent Projects, domains, secrets, histories, and releases
+4. deleting one Project leaves the upstream repository and the other two Projects unchanged
+5. stale-base and overlapping-change states are visible and cannot silently overwrite accepted work
+6. every Source Revision traces to actor, reason, diff, checks, provider evidence, Artifact, deployment, and rollback target

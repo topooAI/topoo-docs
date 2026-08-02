@@ -344,6 +344,14 @@
     "kind": "doc-page"
   },
   {
+    "id": "topoo-cloud-source-control-plan",
+    "topicId": "topoo-cloud-source-control-plan",
+    "title": "Source Control Development Plan",
+    "href": "/docs/cloud/deployment/source-control-plan",
+    "file": "content/docs/cloud/deployment/source-control-plan.mdx",
+    "kind": "doc-page"
+  },
+  {
     "id": "topoo-cloud-deployment-control-plan",
     "topicId": "topoo-cloud-deployment-control-plan",
     "title": "Release Control",

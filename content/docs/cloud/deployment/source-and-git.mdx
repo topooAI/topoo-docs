@@ -15,14 +15,17 @@ The canonical objects and editor relationship are defined in [Node Workbench and
 
 GitHub is the first external provider. It is not the Topoo product model and it is not the only long-term source mode.
 
-## Two source modes
+## Three source-authority modes
+
+Every Project has its own permanent `project_id` and source namespace. Project name, repository name, branch, slug, and domain are labels or bindings; none of them is the Project identity.
 
 | Mode | Source of truth | Customer experience |
 |---|---|---|
-| Connected repository | GitHub or another connected Git provider | Connect an existing repository and keep using its branches and reviews. |
-| Topoo-hosted source | Topoo Git | Create, edit, review, and release source without requiring an external Git account. |
+| Topoo managed | Topoo Source | Create, edit, version, review, and release source inside Topoo. GitHub can be attached later as an optional mirror or delivery target. |
+| GitHub managed | GitHub | Keep GitHub as the canonical repository. Topoo imports exact revisions, reconciles provider events, and deploys accepted source. |
+| Detached snapshot | Topoo Source Revision | Upload or import an immutable package without maintaining a live provider connection. The Project can later be converted to Topoo managed or connected to GitHub. |
 
-Both modes must produce the same Topoo-facing objects:
+All three modes must produce the same Topoo-facing objects:
 
 - repository identity
 - branch or reference
@@ -77,13 +80,47 @@ For a connected GitHub repository:
 8. Preview and Production promotion reuse that accepted Release Artifact Set.
 9. The deployment record preserves Source Revisions, Submissions, Checks, Node Versions, Artifacts, Environment, operator, approval, and time.
 
-GitHub remains the repository source of truth in this mode. Topoo adds the cloud operating model and release ledger around it.
+GitHub remains the repository source of truth in this mode. Topoo adds the cloud operating model and release ledger around it. A Project may keep deploying a previously captured immutable Source Revision during a temporary GitHub outage.
 
-## Topoo-hosted source
+## Repeated imports create independent Projects
+
+Importing the same GitHub repository more than once creates independent Topoo Projects. Each import receives its own:
+
+- permanent `project_id`
+- Topoo source namespace and revision history
+- environments, resources, secrets, checks, releases, and rollback history
+- generated Preview and Production addresses
+- source-authority and synchronization policy
+
+The imports may initially point to the same repository, branch, and commit. They do not share Project identity or deployment state.
+
+Topoo must not create three new GitHub repositories merely because one GitHub repository was imported three times. A provider repository is created only when the user explicitly enables a Topoo-to-GitHub mirror or write-back workflow.
+
+## Bidirectional GitHub synchronization
+
+Bidirectional synchronization is a Project policy, not an automatic side effect of import.
+
+For **GitHub managed** Projects, GitHub changes flow into Topoo through installation permissions, webhooks, reconciliation, and exact-revision import. Topoo changes must be delivered back through an explicit branch, commit, and Pull Request or protected-reference workflow.
+
+For **Topoo managed** Projects, Topoo remains canonical. The user may publish selected branches or releases to a newly created or existing GitHub repository. Provider status is visible as synchronization evidence, not as the Project identity.
+
+Every outbound operation must be idempotent, retryable, auditable, and conflict-aware. Topoo must show the last synchronized revision, pending local and remote changes, rejected provider operations, and the recovery action.
+
+## Repository lifecycle
+
+Project lifecycle and provider-repository lifecycle are separate:
+
+- archiving or deleting an imported Project detaches its provider binding; it does not delete the upstream repository
+- deleting a Topoo-created GitHub repository is a separate destructive action with explicit confirmation and audit evidence
+- deleting one of several Projects imported from the same repository must not affect the others
+- disconnecting GitHub must preserve captured Source Revisions, Artifacts, Deployments, and audit history
+- reconnecting must reconcile from recorded cursors rather than silently replacing Topoo state
+
+## Topoo-managed source
 
 Customers who do not use GitHub still need real source-control guarantees.
 
-Topoo-hosted source therefore needs a Git-compatible service, not only a custom table of file versions. The complete capability includes:
+Topoo-managed source therefore needs a Git-compatible version service, not only a custom table of file drafts. The complete capability includes:
 
 - repository creation and deletion
 - clone, fetch, pull, and push
@@ -147,4 +184,6 @@ This is the fixed integration path behind the visual control plane. It prevents 
 
 Topoo source must never trap the customer.
 
-A Topoo-hosted repository must be exportable as normal Git history. A connected repository must be disconnectable without losing Topoo deployment and audit history. Runtime artifacts remain linked to their exact source revision in either mode.
+A Topoo-managed repository must be exportable as normal Git history. A connected repository must be disconnectable without losing Topoo deployment and audit history. Runtime artifacts remain linked to their exact source revision in every mode.
+
+The current implementation boundary and the delivery sequence are documented in [Source Implementation Status](/docs/cloud/deployment/source-status) and [Source Control Development Plan](/docs/cloud/deployment/source-control-plan).

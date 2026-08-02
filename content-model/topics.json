@@ -437,6 +437,17 @@
     ]
   },
   {
+    "id": "topoo-cloud-source-control-plan",
+    "blockId": "cloud-deployment",
+    "order": 60,
+    "label": "Source Control Development Plan",
+    "href": "/docs/cloud/deployment/source-control-plan",
+    "description": "Implementation sequence for Topoo-managed source, GitHub synchronization, and Project repository lifecycle.",
+    "pageIds": [
+      "topoo-cloud-source-control-plan"
+    ]
+  },
+  {
     "id": "topoo-cloud-deployment-control-plan",
     "blockId": "cloud-deployment",
     "order": 80,
